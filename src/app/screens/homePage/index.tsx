@@ -1,5 +1,9 @@
-import { Container } from "@mui/material";
+import MostPopular from "./MostPopular";
+import NewLaptops from "./Newlaptops";
 
-export default function HomePage() {
-    return <Container>Home</Container>
+export default function  HomePage() {
+    return <div className="homepage">
+        <MostPopular />
+        <NewLaptops />
+    </div>
 }
