@@ -7,6 +7,7 @@ import OrdersPage from "./screens/ordersPage";
 import MemberPage from "./screens/userPage";
 import HelpPage from "./screens/helpPage";
 import "../css/navbar.css";
+import Footer from "./components/footer";
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
         <Route path="/member-page" element={<MemberPage />} />
         <Route path="/help" element={<HelpPage />} />
       </Routes>
+      <Footer/>
     </>
   );
 }
