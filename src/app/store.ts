@@ -1,10 +1,9 @@
-// src/app/store.ts
 import { configureStore } from "@reduxjs/toolkit";
+import HomePageReducer from "./screens/homePage/slice";
 
 export const store = configureStore({
   reducer: {
-    // add your slices here later, e.g.:
-    // products: productsReducer,
+    homePage: HomePageReducer,
   },
 });
 
