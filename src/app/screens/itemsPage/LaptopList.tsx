@@ -237,7 +237,7 @@ export default function LaptopList({
         <FilterChips label="Storage" options={STORAGE_OPTIONS} value={storage} onChange={setStorage} />
 
         {/* Price Range */}
-        <Box sx={{ mb: 4 }}>
+        {/* <Box sx={{ mb: 4 }}>
           <Typography sx={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: 2, textTransform: "uppercase", mb: 1.5 }}>
             Price: ${priceRange[0]} — ${priceRange[1]}
           </Typography>
@@ -252,7 +252,7 @@ export default function LaptopList({
               "& .MuiSlider-rail": { bgcolor: "rgba(255,255,255,0.1)" },
             }}
           />
-        </Box>
+        </Box> */}
 
         {/* Products Grid */}
         {paginated.length === 0 ? (

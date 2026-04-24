@@ -2,57 +2,20 @@ import { Box, Container, Typography, IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import StarIcon from "@mui/icons-material/Star";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { createSelector } from "@reduxjs/toolkit";
+import { retrieveTopLaptops } from "./selector";
+import type { Item } from "../../../lib/types/item";
+import { useSelector } from "react-redux";
+import { serverApi } from "../../../lib/config";
 
-interface Laptop {
-  image: string;
-  name: string;
-  brand: string;
-  views: number;
-  rating: number;
-  description: string;
-  price: number;
-}
+const MostSoldLaptopsRetriever = createSelector(
+  retrieveTopLaptops,
+  (topLaptops) => ({ topLaptops })
+);
 
-const laptops: Laptop[] = [
-  {
-    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&h=400&fit=crop",
-    name: "ProBook X1",
-    brand: "HP",
-    views: 134,
-    rating: 4.8,
-    description: "Ultra-slim business laptop with 16hr battery",
-    price: 1299,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=400&fit=crop",
-    name: "MacBook Pro 14",
-    brand: "Apple",
-    views: 298,
-    rating: 4.9,
-    description: "M3 chip, Liquid Retina XDR display, all-day",
-    price: 1999,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600&h=400&fit=crop",
-    name: "XPS 15",
-    brand: "Dell",
-    views: 201,
-    rating: 4.7,
-    description: "4K OLED touch display, Intel Core i9, RTX",
-    price: 1799,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1611078489935-0cb964de46d6?w=600&h=400&fit=crop",
-    name: "ThinkPad X1 Carbon",
-    brand: "Lenovo",
-    views: 140,
-    rating: 4.6,
-    description: "Lightweight carbon fiber build, vPro security",
-    price: 1499,
-  },
-];
+function LaptopCard({ item }: { item: Item }) {
+  const image = `${serverApi}/${item.laptopImages[0]}`;
 
-function LaptopCard({ image, name, brand, views, rating, description, price }: Laptop) {
   return (
     <Box
       sx={{
@@ -69,12 +32,11 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
         "&:hover img": { transform: "scale(1.05)" },
       }}
     >
-      {/* Image */}
       <Box sx={{ position: "relative", height: 260, overflow: "hidden" }}>
         <Box
           component="img"
           src={image}
-          alt={name}
+          alt={item.laptopName}
           sx={{
             width: "100%",
             height: "100%",
@@ -92,7 +54,6 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
           }}
         />
 
-        {/* Brand badge */}
         <Box
           sx={{
             position: "absolute",
@@ -112,10 +73,9 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
             lineHeight: 1.6,
           }}
         >
-          {brand}
+          {item.laptopBrand}
         </Box>
 
-        {/* Rating badge */}
         <Box
           sx={{
             position: "absolute",
@@ -136,10 +96,9 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
           }}
         >
           <StarIcon sx={{ fontSize: 11, color: "#fbbf24" }} />
-          {rating}
+          {item.laptopViews > 100 ? "4.8" : "4.5"}
         </Box>
 
-        {/* Name + Views */}
         <Box
           sx={{
             position: "absolute",
@@ -152,7 +111,7 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
           }}
         >
           <Typography sx={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>
-            {name}
+            {item.laptopName}
           </Typography>
           <Box
             sx={{
@@ -167,14 +126,13 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
             }}
           >
             <Typography sx={{ color: "#94a3b8", fontSize: 11, fontWeight: 600 }}>
-              {views}
+              {item.laptopViews}
             </Typography>
             <VisibilityIcon sx={{ color: "#64748b", fontSize: 13 }} />
           </Box>
         </Box>
       </Box>
 
-      {/* Bottom strip */}
       <Box
         sx={{
           px: 2,
@@ -186,7 +144,6 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
           bgcolor: "#13151f",
         }}
       >
-        {/* Left: dot + description */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
           <Box
             sx={{
@@ -208,7 +165,7 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
                 textOverflow: "ellipsis",
               }}
             >
-              {name}
+              {item.laptopName}
             </Typography>
             <Typography
               sx={{
@@ -219,15 +176,14 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
                 textOverflow: "ellipsis",
               }}
             >
-              {description}
+              {item.laptopDesc}
             </Typography>
           </Box>
         </Box>
 
-        {/* Right: price + cart button */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 }}>
           <Typography sx={{ fontSize: 15, fontWeight: 800, color: "#3b82f6" }}>
-            ${price.toLocaleString()}
+            ${item.laptopPrice.toLocaleString()}
           </Typography>
           <IconButton
             size="small"
@@ -250,6 +206,8 @@ function LaptopCard({ image, name, brand, views, rating, description, price }: L
 }
 
 export default function MostSelled() {
+  const { topLaptops } = useSelector(MostSoldLaptopsRetriever);
+
   return (
     <Box sx={{ bgcolor: "#f5f6f8", py: 10 }}>
       <Container maxWidth="lg">
@@ -279,22 +237,28 @@ export default function MostSelled() {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
-          {laptops.map((laptop, i) => (
-            <Box
-              key={i}
-              sx={{
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 12px)",
-                  md: "calc(25% - 18px)",
-                },
-              }}
-            >
-              <LaptopCard {...laptop} />
-            </Box>
-          ))}
-        </Box>
+        {topLaptops.length !== 0 ? (
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+            {topLaptops.map((item: Item) => (
+              <Box
+                key={item._id}
+                sx={{
+                  width: {
+                    xs: "100%",
+                    sm: "calc(50% - 12px)",
+                    md: "calc(25% - 18px)",
+                  },
+                }}
+              >
+                <LaptopCard item={item} />
+              </Box>
+            ))}
+          </Box>
+        ) : (
+          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>
+            No laptops available
+          </Box>
+        )}
       </Container>
     </Box>
   );

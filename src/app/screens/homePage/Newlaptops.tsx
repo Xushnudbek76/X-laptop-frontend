@@ -2,70 +2,20 @@ import { Box, Container, Typography, IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import BoltIcon from "@mui/icons-material/Bolt";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { createSelector } from "@reduxjs/toolkit";
+import { retrieveNewLaptops } from "./selector";
+import { useSelector } from "react-redux";
+import type { Item } from "../../../lib/types/item";
+import { serverApi } from "../../../lib/config";
 
-type LaptopSize = "THIN" | "GAMING" | "STANDARD" | null;
+const NewLaptopsRetriever = createSelector(
+  retrieveNewLaptops,
+  (newLaptops) => ({ newLaptops })
+);
 
-interface NewLaptop {
-  image: string;
-  name: string;
-  brand: string;
-  price: number;
-  views: number;
-  size: LaptopSize;
-  isNew?: boolean;
-  specs: string;
-}
+function NewLaptopCard({ laptop }: { laptop: Item }) {
+  const image = `${serverApi}/${laptop.laptopImages[0]}`;
 
-const newLaptops: NewLaptop[] = [
-  {
-    image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&h=400&fit=crop",
-    name: "ROG Zephyrus G16",
-    brand: "ASUS",
-    price: 2499,
-    views: 44,
-    size: "GAMING",
-    isNew: true,
-    specs: "Ryzen 9 / 32GB / RTX 4090",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&h=400&fit=crop",
-    name: "Gram 17",
-    brand: "LG",
-    price: 1599,
-    views: 21,
-    size: "THIN",
-    isNew: true,
-    specs: "i7 / 16GB / Iris Xe",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&h=400&fit=crop",
-    name: "Spectre x360",
-    brand: "HP",
-    price: 1899,
-    views: 38,
-    size: "STANDARD",
-    isNew: false,
-    specs: "i7 / 16GB / Iris Xe",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&h=400&fit=crop",
-    name: "Swift X 14",
-    brand: "Acer",
-    price: 1099,
-    views: 0,
-    size: null,
-    isNew: true,
-    specs: "Ryzen 7 / 16GB / RTX 3050",
-  },
-];
-
-const sizeColors: Record<string, string> = {
-  GAMING: "#7c3aed",
-  THIN: "#0891b2",
-  STANDARD: "#2563eb",
-};
-
-function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }: NewLaptop) {
   return (
     <Box
       sx={{
@@ -82,12 +32,11 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
         "&:hover img": { transform: "scale(1.05)" },
       }}
     >
-      {/* Image */}
       <Box sx={{ position: "relative", height: 260, overflow: "hidden" }}>
         <Box
           component="img"
           src={image}
-          alt={name}
+          alt={laptop.laptopName}
           sx={{
             width: "100%",
             height: "100%",
@@ -105,49 +54,47 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
           }}
         />
 
-        {/* Size badge */}
-        {size && (
-          <Box
-            sx={{
-              position: "absolute",
-              top: 12,
-              left: 12,
-              bgcolor: sizeColors[size],
-              color: "#fff",
-              fontWeight: 700,
-              fontSize: 10,
-              letterSpacing: "0.08em",
-              borderRadius: 1,
-              px: 1,
-              py: 0.35,
-              lineHeight: 1.6,
-            }}
-          >
-            {size}
-          </Box>
-        )}
+        {/* Category badge */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 12,
+            left: 12,
+            bgcolor: "rgba(37,99,235,0.15)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(59,130,246,0.3)",
+            color: "#60a5fa",
+            fontWeight: 700,
+            fontSize: 10,
+            letterSpacing: "0.08em",
+            borderRadius: 1,
+            px: 1,
+            py: 0.35,
+            lineHeight: 1.6,
+          }}
+        >
+          {laptop.laptopCategory}
+        </Box>
 
-        {/* NEW badge */}
-        {isNew && (
-          <Box
-            sx={{
-              position: "absolute",
-              top: 12,
-              right: 12,
-              bgcolor: "#16a34a",
-              color: "#fff",
-              fontWeight: 700,
-              fontSize: 10,
-              letterSpacing: "0.08em",
-              borderRadius: 1,
-              px: 1,
-              py: 0.35,
-              lineHeight: 1.6,
-            }}
-          >
-            NEW
-          </Box>
-        )}
+        {/* Condition badge */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            bgcolor: laptop.laptopCondition === "NEW" ? "#16a34a" : "#d97706",
+            color: "#fff",
+            fontWeight: 700,
+            fontSize: 10,
+            letterSpacing: "0.08em",
+            borderRadius: 1,
+            px: 1,
+            py: 0.35,
+            lineHeight: 1.6,
+          }}
+        >
+          {laptop.laptopCondition}
+        </Box>
 
         {/* Price + views */}
         <Box
@@ -162,7 +109,7 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
           }}
         >
           <Typography sx={{ fontSize: 16, fontWeight: 800, color: "#3b82f6" }}>
-            ${price.toLocaleString()}
+            ${laptop.laptopPrice.toLocaleString()}
           </Typography>
           <Box
             sx={{
@@ -177,7 +124,7 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
             }}
           >
             <Typography sx={{ color: "#94a3b8", fontSize: 11, fontWeight: 600 }}>
-              {views}
+              {laptop.laptopViews}
             </Typography>
             <VisibilityIcon sx={{ color: "#64748b", fontSize: 13 }} />
           </Box>
@@ -196,7 +143,6 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
           bgcolor: "#13151f",
         }}
       >
-        {/* Left: name + specs */}
         <Box sx={{ minWidth: 0 }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
             <Typography
@@ -209,7 +155,7 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
                 textOverflow: "ellipsis",
               }}
             >
-              {name}
+              {laptop.laptopName}
             </Typography>
             <Typography
               sx={{
@@ -221,18 +167,17 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
                 flexShrink: 0,
               }}
             >
-              {brand}
+              {laptop.laptopBrand}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             <BoltIcon sx={{ fontSize: 12, color: "#2563eb" }} />
             <Typography sx={{ fontSize: 11, color: "#475569", fontWeight: 500 }}>
-              {specs}
+              {laptop.laptopCpu} · {laptop.laptopRam} · {laptop.laptopStorage}
             </Typography>
           </Box>
         </Box>
 
-        {/* Right: cart button */}
         <IconButton
           size="small"
           sx={{
@@ -254,6 +199,8 @@ function NewLaptopCard({ image, name, brand, price, views, size, isNew, specs }:
 }
 
 export default function NewLaptops() {
+  const { newLaptops } = useSelector(NewLaptopsRetriever);
+
   return (
     <Box sx={{ bgcolor: "#0f1117", py: 10 }}>
       <Container maxWidth="lg">
@@ -283,22 +230,28 @@ export default function NewLaptops() {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
-          {newLaptops.map((laptop, i) => (
-            <Box
-              key={i}
-              sx={{
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 12px)",
-                  md: "calc(25% - 18px)",
-                },
-              }}
-            >
-              <NewLaptopCard {...laptop} />
-            </Box>
-          ))}
-        </Box>
+        {newLaptops.length !== 0 ? (
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+            {newLaptops.map((laptop: Item) => (
+              <Box
+                key={laptop._id}
+                sx={{
+                  width: {
+                    xs: "100%",
+                    sm: "calc(50% - 12px)",
+                    md: "calc(25% - 18px)",
+                  },
+                }}
+              >
+                <NewLaptopCard laptop={laptop} />
+              </Box>
+            ))}
+          </Box>
+        ) : (
+          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>
+            No new laptops available
+          </Box>
+        )}
       </Container>
     </Box>
   );
