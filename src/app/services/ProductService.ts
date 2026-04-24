@@ -14,9 +14,13 @@ class ItemService {
       let url = `${this.path}/item/all?order=${input.order}&page=${input.page}&limit=${input.limit}`;
       if (input.laptopCategory)
         url += `&laptopCategory=${input.laptopCategory}`;
+      if (input.laptopRam !== undefined) url += `&laptopRam=${input.laptopRam}`;
+      if (input.laptopStorage !== undefined)
+        url += `&laptopStorage=${input.laptopStorage}`;
       if (input.search) url += `&search=${input.search}`;
 
       const result = await axios.get(url);
+      console.log(result.data)
       return result.data;
     } catch (error) {
       console.log("Error, getItems", error);
