@@ -1,17 +1,23 @@
-import { useState } from "react";
-import { Box, Stack, Container, Rating, Chip, Divider, Button } from "@mui/material";
+import { useState, useEffect, useRef } from "react";
+import { Box, Stack, Container, Rating, Chip, Divider, Button, CircularProgress } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import { FreeMode, Navigation } from "swiper/modules";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { useParams } from "react-router-dom";
 import "swiper/css";
-import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import "swiper/css/thumbs";
- 
+import type { CartItem } from "../../../lib/types/cart";
+import type { Item } from "../../../lib/types/item";
+import { LaptopStatus } from "../../../lib/enums/item.enum";
+import ItemService from "../../services/ProductService";
+import { serverApi } from "../../../lib/config";
+
+const itemService = new ItemService();
+
 const reviews = [
   {
     id: 1,
@@ -44,7 +50,7 @@ const reviews = [
     color: "#f59e0b",
   },
 ];
- 
+
 const ratingBars = [
   { label: "5", pct: 62 },
   { label: "4", pct: 20 },
@@ -52,30 +58,72 @@ const ratingBars = [
   { label: "2", pct: 5 },
   { label: "1", pct: 3 },
 ];
- 
-const specs = [
-  { label: "Processor", value: "Apple M3 Max" },
-  { label: "RAM", value: "36 GB Unified" },
-  { label: "Storage", value: "1 TB SSD" },
-  { label: "Display", value: '16.2" Liquid XDR' },
-  { label: "GPU", value: "40-core GPU" },
-  { label: "Battery", value: "Up to 22 hrs" },
-];
- 
-const images = [
-  "https://via.placeholder.com/600x400?text=Laptop+1",
-  "https://via.placeholder.com/600x400?text=Laptop+2", 
-  "https://via.placeholder.com/600x400?text=Laptop+3",
-];
- 
-export default function ChosenLaptop() {
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+
+interface ItemProps {
+  handleAddToCart: (product: CartItem) => void;
+}
+
+export default function ChosenLaptop(props: ItemProps) {
+  const { handleAddToCart } = props;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [item, setItem] = useState<Item | null>(null);
+  const [loading, setLoading] = useState(true);
+  const mainSwiperRef = useRef<SwiperType | null>(null);
   const { laptopId } = useParams<{ laptopId: string }>();
- 
+  const [cartAdded, setCartAdded] = useState<string[]>([]);
+  useEffect(() => {
+    if (!laptopId) return;
+    setLoading(true);
+    itemService
+      .getItem(laptopId)
+      .then((data) => setItem(data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [laptopId]);
+
+  if (loading) {
+    return (
+      <Box sx={{ bgcolor: "#0a0f1e", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <CircularProgress sx={{ color: "#2563eb" }} />
+      </Box>
+    );
+  }
+
+  if (!item) {
+    return (
+      <Box sx={{ bgcolor: "#0a0f1e", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#8892a4", fontSize: 16 }}>
+        Product not found.
+      </Box>
+    );
+  }
+
+  const specs = [
+    { label: "Processor", value: item.laptopCpu },
+    { label: "RAM", value: item.laptopRam },
+    { label: "Storage", value: item.laptopStorage },
+    { label: "Display", value: `${item.laptopDisplaySize}"` },
+    { label: "GPU", value: item.laptopGpu ?? "Integrated" },
+    { label: "Category", value: item.laptopCategory },
+  ];
+
+  const inStock = item.laptopStatus === LaptopStatus.PROCESS && item.laptopLeftCount > 0;
+  const images = item.laptopImages.length > 0
+    ? item.laptopImages
+    : ["https://via.placeholder.com/600x400?text=No+Image"];
+
+  const addToCart = (e: React.MouseEvent, laptop: Item) => {
+    e.stopPropagation();
+
+    handleAddToCart(laptop as unknown as CartItem);
+
+    setCartAdded((prev) =>
+      prev.includes(laptop._id) ? prev : [...prev, laptop._id]
+    );
+  };
+  
   return (
     <Box sx={{ bgcolor: "#0a0f1e", minHeight: "100vh", pb: 10 }}>
- 
-      {/* Title */}
+
       <Box sx={{
         textAlign: "center",
         fontSize: 24,
@@ -87,10 +135,10 @@ export default function ChosenLaptop() {
       }}>
         Product Detail
       </Box>
- 
+
       <Container maxWidth="lg" sx={{ pt: 2 }}>
         <Stack direction={{ xs: "column", md: "row" }} spacing={4} sx={{ mb: 8 }}>
- 
+
           {/* ── Slider ── */}
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Box sx={{
@@ -104,18 +152,19 @@ export default function ChosenLaptop() {
               },
             }}>
               <Swiper
-                loop={true}
+                loop={false}
                 spaceBetween={10}
                 navigation={true}
-                thumbs={{ swiper: thumbsSwiper }}
-                modules={[FreeMode, Navigation, Thumbs]}
+                modules={[FreeMode, Navigation]}
+                onSwiper={(s) => (mainSwiperRef.current = s)}
+                onSlideChange={(s) => setActiveIndex(s.activeIndex)}
               >
                 {images.map((src, i) => (
                   <SwiperSlide key={i}>
                     <Box
                       component="img"
-                      src={src}
-                      alt={`laptop-${i}`}
+                      src={`${serverApi}/${src}`}
+                      alt={`${item.laptopName}-${i}`}
                       sx={{
                         width: "100%",
                         height: { xs: 240, md: 360 },
@@ -129,36 +178,23 @@ export default function ChosenLaptop() {
                 ))}
               </Swiper>
             </Box>
- 
+
             {/* Thumbnails */}
-            <Box sx={{
-              mt: 1.5,
-              "& .swiper-slide": {
-                borderRadius: "10px",
-                overflow: "hidden",
-                border: "1px solid rgba(255,255,255,0.08)",
-                opacity: 0.5,
-                cursor: "pointer",
-                transition: "opacity 0.2s, border-color 0.2s",
-              },
-              "& .swiper-slide-thumb-active": {
-                opacity: 1,
-                borderColor: "#2563eb",
-              },
-            }}>
+            <Box sx={{ mt: 1.5 }}>
               <Swiper
-                onSwiper={setThumbsSwiper}
                 spaceBetween={8}
                 slidesPerView={3}
                 freeMode={true}
-                watchSlidesProgress={true}
-                modules={[FreeMode, Thumbs]}
+                modules={[FreeMode]}
               >
                 {images.map((src, i) => (
-                  <SwiperSlide key={i}>
+                  <SwiperSlide key={i} onClick={() => {
+                    mainSwiperRef.current?.slideTo(i);
+                    setActiveIndex(i);
+                  }}>
                     <Box
                       component="img"
-                      src={src}
+                      src={`${serverApi}/${src}`}
                       alt={`thumb-${i}`}
                       sx={{
                         width: "100%",
@@ -167,6 +203,13 @@ export default function ChosenLaptop() {
                         bgcolor: "#1a1a2e",
                         p: 1,
                         display: "block",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        opacity: activeIndex === i ? 1 : 0.5,
+                        border: activeIndex === i
+                          ? "1px solid #2563eb"
+                          : "1px solid rgba(255,255,255,0.08)",
+                        transition: "opacity 0.2s, border-color 0.2s",
                       }}
                     />
                   </SwiperSlide>
@@ -174,7 +217,7 @@ export default function ChosenLaptop() {
               </Swiper>
             </Box>
           </Box>
- 
+
           {/* ── Info Panel ── */}
           <Box sx={{
             flex: 1,
@@ -189,35 +232,40 @@ export default function ChosenLaptop() {
           }}>
             {/* Chips */}
             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-              <Chip label="Apple" size="small" sx={{ bgcolor: "rgba(37,99,235,0.15)", color: "#3b82f6", border: "1px solid rgba(37,99,235,0.3)", fontSize: 11 }} />
-              <Chip label="Laptop" size="small" sx={{ bgcolor: "rgba(255,255,255,0.05)", color: "#8892a4", border: "1px solid rgba(255,255,255,0.08)", fontSize: 11 }} />
+              <Chip label={item.laptopBrand} size="small" sx={{ bgcolor: "rgba(37,99,235,0.15)", color: "#3b82f6", border: "1px solid rgba(37,99,235,0.3)", fontSize: 11 }} />
+              <Chip label={item.laptopCondition} size="small" sx={{ bgcolor: "rgba(255,255,255,0.05)", color: "#8892a4", border: "1px solid rgba(255,255,255,0.08)", fontSize: 11 }} />
               <Chip
-                label="In Stock"
+                label={inStock ? "In Stock" : "Out of Stock"}
                 size="small"
-                icon={<Box sx={{ width: 6, height: 6, borderRadius: "50%", bgcolor: "#4ade80", ml: "8px !important" }} />}
-                sx={{ bgcolor: "rgba(74,222,128,0.12)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.3)", fontSize: 11 }}
+                icon={<Box sx={{ width: 6, height: 6, borderRadius: "50%", bgcolor: inStock ? "#4ade80" : "#f87171", ml: "8px !important" }} />}
+                sx={{
+                  bgcolor: inStock ? "rgba(74,222,128,0.12)" : "rgba(248,113,113,0.12)",
+                  color: inStock ? "#4ade80" : "#f87171",
+                  border: `1px solid ${inStock ? "rgba(74,222,128,0.3)" : "rgba(248,113,113,0.3)"}`,
+                  fontSize: 11,
+                }}
               />
             </Box>
- 
+
             {/* SKU */}
             <Box sx={{ fontSize: 11, color: "#8892a4", fontFamily: "monospace" }}>
-              SKU: APL-MBP16-M3 — ID: {laptopId}
+              SKU: {item.laptopBrand.slice(0, 3).toUpperCase()}-{item.laptopCategory.slice(0, 3).toUpperCase()} — ID: {item._id}
             </Box>
- 
+
             {/* Name */}
             <Box sx={{ fontSize: { xs: 22, md: 28 }, fontWeight: 700, color: "#e8eaf0", lineHeight: 1.2, letterSpacing: "-0.4px" }}>
-              MacBook Pro 16" M3 Max
+              {item.laptopName}
             </Box>
- 
+
             {/* Rating */}
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <Rating defaultValue={4.2} precision={0.5} readOnly sx={{ "& .MuiRating-iconFilled": { color: "#f59e0b" } }} />
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, fontSize: 13, color: "#8892a4" }}>
                 <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
-                <span>342</span>
+                <span>{item.laptopViews}</span>
               </Box>
             </Box>
- 
+
             {/* Specs */}
             <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>
               {specs.map((s) => (
@@ -236,39 +284,45 @@ export default function ChosenLaptop() {
                 </Box>
               ))}
             </Box>
- 
+
             {/* Description */}
-            <Box sx={{ fontSize: 14, color: "#8892a4", lineHeight: 1.7 }}>
-              The ultimate pro laptop for developers and creatives. The M3 Max chip delivers
-              extraordinary performance for demanding workflows — from compiling massive
-              codebases to 8K video editing.
-            </Box>
- 
+            {item.laptopDesc && (
+              <Box sx={{ fontSize: 14, color: "#8892a4", lineHeight: 1.7 }}>
+                {item.laptopDesc}
+              </Box>
+            )}
+
             <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
- 
+
             {/* Price */}
             <Box sx={{ display: "flex", alignItems: "baseline", gap: 1.5 }}>
               <Box sx={{ fontFamily: "monospace", fontSize: { xs: 28, md: 36 }, fontWeight: 700, color: "#e8eaf0" }}>
-                $2,499
+                ${item.laptopPrice.toLocaleString()}
               </Box>
-              <Box sx={{ fontSize: 18, color: "#8892a4", textDecoration: "line-through" }}>
-                $2,799
-              </Box>
-              <Chip label="-11%" size="small" sx={{ bgcolor: "rgba(74,222,128,0.12)", color: "#4ade80", border: "1px solid rgba(74,222,128,0.3)", fontSize: 11, fontWeight: 600 }} />
+              {item.laptopLeftCount <= 5 && item.laptopLeftCount > 0 && (
+                <Box sx={{ fontSize: 12, color: "#f59e0b" }}>
+                  Only {item.laptopLeftCount} left
+                </Box>
+              )}
             </Box>
- 
+
             {/* Buttons */}
             <Box sx={{ display: "flex", gap: 1.5 }}>
               <Button
                 variant="contained"
+                disabled={!inStock || cartAdded.includes(item._id)}
                 startIcon={<ShoppingBasketIcon />}
+                onClick={(e) => { if (inStock) addToCart(e, item); }}
                 sx={{
-                  flex: 1, bgcolor: "#2563eb", borderRadius: "10px", py: 1.5,
+                  flex: 1,
+                  bgcolor: cartAdded.includes(item._id) ? "#10b981" : "#2563eb",
+                  borderRadius: "10px", py: 1.5,
                   fontWeight: 600, textTransform: "none", fontSize: 14,
-                  "&:hover": { bgcolor: "#1d4ed8" },
+                  "&:hover": { bgcolor: cartAdded.includes(item._id) ? "#059669" : "#1d4ed8" },
+                  "&.Mui-disabled": { bgcolor: "rgba(37,99,235,0.3)", color: "#8892a4" },
                 }}
               >
-                Add to Basket
+              {cartAdded.includes(item._id) ? "Added to Basket" : "Add to Basket"}
               </Button>
               <Button
                 variant="outlined"
@@ -283,17 +337,14 @@ export default function ChosenLaptop() {
             </Box>
           </Box>
         </Stack>
- 
+
         {/* ══ Reviews ══ */}
         <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.08)", pt: 5 }}>
- 
-          {/* Header */}
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3, pb: 2, borderBottom: "1px solid rgba(255,255,255,0.08)", flexWrap: "wrap", gap: 1 }}>
             <Box sx={{ fontSize: 20, fontWeight: 600, color: "#e8eaf0" }}>Customer Reviews</Box>
             <Box sx={{ fontSize: 13, color: "#8892a4" }}>128 verified purchases</Box>
           </Box>
- 
-          {/* Rating Summary */}
+
           <Box sx={{ display: "flex", gap: 4, bgcolor: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", p: 3, mb: 3, flexWrap: "wrap" }}>
             <Box sx={{ textAlign: "center" }}>
               <Box sx={{ fontFamily: "monospace", fontSize: 52, fontWeight: 700, color: "#e8eaf0", lineHeight: 1 }}>4.2</Box>
@@ -312,8 +363,7 @@ export default function ChosenLaptop() {
               ))}
             </Box>
           </Box>
- 
-          {/* Review Cards */}
+
           <Stack spacing={2}>
             {reviews.map((r) => (
               <Box key={r.id} sx={{ bgcolor: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", p: 2.5 }}>
@@ -353,4 +403,3 @@ export default function ChosenLaptop() {
     </Box>
   );
 }
- 

@@ -3,18 +3,24 @@ import ChosenLaptop from "./ChosenLaptop";
 import LaptopList from "./LaptopList";
 import { Box } from "@mui/material";
 import StoreMap from "./StoreMap";
+import type { CartItem } from "../../../lib/types/cart";
 
-export default function ItemsPage() {
+interface ItemsPageProps {
+  onAdd: (item: CartItem) => void;
+  }
 
+export default function ItemsPage( props: ItemsPageProps) {
+
+  const { onAdd } = props;
 
   return (
     <Routes>
-      <Route path=":laptopId" element={<ChosenLaptop />} />
+      <Route path=":laptopId" element={<ChosenLaptop handleAddToCart={onAdd}/>} />
       <Route
         index
         element={
           <Box sx={{ bgcolor: "#0a0f1e", minHeight: "100vh" }}>
-            <LaptopList/>
+            <LaptopList handleAddToCart={onAdd}/>
             <StoreMap />
           </Box>
         }

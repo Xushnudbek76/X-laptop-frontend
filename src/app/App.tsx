@@ -8,15 +8,27 @@ import HelpPage from "./screens/helpPage";
 import "../css/navbar.css";
 import Footer from "./components/footer";
 import ItemsPage from "./screens/itemsPage";
+import useBasket from "./components/hooks/useBasket";
 
 function App() {
   const location = useLocation();
+  const {cartItems, handleAddToCart, handleRemoveFromCart, handleDeleteFromCart, handleDeleteAll} = useBasket();
+
   return (
     <>
-      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
+      {location.pathname === "/" ? <HomeNavbar  /> : <OtherNavbar
+  cartItems={cartItems}
+  onAdd={handleAddToCart}
+  onRemove={handleRemoveFromCart}
+  onDelete={handleDeleteFromCart}
+  onDeleteAll={handleDeleteAll}
+/>}
       <Routes>
   <Route path="/" element={<HomePage />} />
-  <Route path="/laptops/*" element={<ItemsPage />} />  
+  <Route path="/laptops/*"  element={<ItemsPage
+
+  onAdd={handleAddToCart}
+/>} />  
   <Route path="/orders" element={<OrdersPage />} />
   <Route path="/member-page" element={<MemberPage />} />
   <Route path="/help" element={<HelpPage />} />

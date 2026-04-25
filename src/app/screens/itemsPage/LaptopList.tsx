@@ -14,6 +14,7 @@ import { retrieveProducts } from "./selector";
 import { serverApi } from "../../../lib/config";
 import ItemService from "../../services/ProductService";
 import { LaptopCategory, LaptopRam, LaptopStorage } from "../../../lib/enums/item.enum";
+import type { CartItem } from "../../../lib/types/cart";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Item[]) => dispatch(setProducts(data)),
@@ -68,7 +69,12 @@ const FilterChips = ({ label, options, value, onChange, getLabel }: {
   </Box>
 );
 
-export default function LaptopList() {
+interface ItemsProps {
+  handleAddToCart: (product: CartItem) => void;
+}
+
+export default function LaptopList(props: ItemsProps) {
+  const { handleAddToCart } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const navigate = useNavigate();
@@ -98,6 +104,7 @@ export default function LaptopList() {
 
   useEffect(() => {
     if (searchText === "") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProductSearch((prev) => ({ ...prev, search: "", page: 1 }));
     }
   }, [searchText]);
@@ -138,7 +145,7 @@ export default function LaptopList() {
     }));
   };
 
-  const paginationHandler = (_e: ChangeEvent<any>, value: number) => {
+  const paginationHandler = (_e: ChangeEvent<unknown>, value: number) => {
     setProductSearch((prev) => ({ ...prev, page: value }));
   };
 
@@ -155,8 +162,14 @@ export default function LaptopList() {
     setWishlist((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
   };
 
-  const addToCart = (id: string) => {
-    setCartAdded((prev) => [...prev, id]);
+  const addToCart = (e: React.MouseEvent, laptop: Item) => {
+    e.stopPropagation();
+
+    handleAddToCart(laptop as unknown as CartItem);
+
+    setCartAdded((prev) =>
+      prev.includes(laptop._id) ? prev : [...prev, laptop._id]
+    );
   };
 
   return (
@@ -387,7 +400,7 @@ export default function LaptopList() {
                         ${laptop.laptopPrice.toLocaleString()}
                       </Typography>
                       <Box
-                        onClick={(e) => { e.stopPropagation(); if (inStock) addToCart(laptop._id); }}
+                        onClick={(e) => { if (inStock) addToCart(e, laptop); }}
                         sx={{
                           display: "flex", alignItems: "center", gap: 0.6,
                           px: { xs: 1, md: 1.5 }, py: 0.7, borderRadius: "8px",

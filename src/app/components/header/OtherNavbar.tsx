@@ -1,4 +1,3 @@
-// src/app/components/header/OtherNavbar.tsx
 import { useState } from "react";
 import {
   AppBar, Toolbar, Box, Button, IconButton,
@@ -8,6 +7,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useLocation } from "react-router-dom";
+import type { CartItem } from "../../../lib/types/cart";
+import Basket from "./Basket";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -20,11 +21,19 @@ const authNavLinks = [
   { label: "My Page", path: "/member-page" },
 ];
 
-export default function OtherNavbar() {
+interface OtherNavbarProps {
+  cartItems: CartItem[];
+  onAdd: (item: CartItem) => void;
+  onRemove: (item: CartItem) => void;
+  onDelete: (item: CartItem) => void;
+  onDeleteAll: () => void;
+}
+export default function OtherNavbar(props: OtherNavbarProps) {
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
   const navigate = useNavigate();
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const authMember = null; // replace with: useSelector((state: RootState) => state.yourSlice.authMember)
+  const authMember = null; 
 
   const isActive = (path: string) => location.pathname === path;
   const allLinks = authMember ? [...navLinks, ...authNavLinks] : navLinks;
@@ -65,9 +74,16 @@ export default function OtherNavbar() {
 
           {/* Desktop Right — cart + login/signup OR avatar */}
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 1, ml: "auto" }}>
-            <IconButton size="small" sx={{ border: "1px solid rgba(0,0,0,0.1)", borderRadius: 2, p: 0.75 }}>
+            {/* <IconButton size="small" sx={{ border: "1px solid rgba(0,0,0,0.1)", borderRadius: 2, p: 0.75 }}>
               <ShoppingCartOutlinedIcon sx={{ fontSize: 18, color: "#64748b" }} />
-            </IconButton>
+            </IconButton> */}
+            <Basket
+  cartItems={cartItems}
+  onAdd={onAdd}
+  onRemove={onRemove}
+  onDelete={onDelete}
+  onDeleteAll={onDeleteAll}
+/>
 
             {!authMember ? (
               <>

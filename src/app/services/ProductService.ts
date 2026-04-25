@@ -20,10 +20,19 @@ class ItemService {
       if (input.search) url += `&search=${input.search}`;
 
       const result = await axios.get(url);
-      console.log(result.data)
       return result.data;
     } catch (error) {
       console.log("Error, getItems", error);
+      throw error;
+    }
+  }
+ 
+  public async getItem(id: string): Promise<Item> {
+    try {
+      const result = await axios.get(`${this.path}/item/${id}`);
+      return result.data;
+    } catch (error) {
+      console.log("Error, getItem", error);
       throw error;
     }
   }
