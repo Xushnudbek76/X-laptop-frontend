@@ -11,6 +11,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import type { CartItem } from "../../../lib/types/cart";
 import Basket from "./Basket";
 import { useGlobals } from "../hooks/useGlobals";
+import { serverApi } from "../../../lib/config";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -131,7 +132,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               ) : (
                 <>
                   <Avatar
-                    src={authMember?.memberImage ?? "/icons/default-user.svg"}
+                    src={authMember?.memberImage ? `${serverApi}/${authMember.memberImage}` : "/icons/default-user.svg"}
                     onClick={handleLogoutClick}
                     sx={{
                       width: 38, height: 38, cursor: "pointer",

@@ -1,15 +1,18 @@
 import React from "react";
-import { Box, Button, Stack, Typography, IconButton, Drawer} from "@mui/material";
+import { Box, Button, Stack, Typography, IconButton, Drawer } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { serverApi } from "../../../lib/config";
 import type { CartItem } from "../../../lib/types/cart";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import OrderService from "../../services/OrderService";
+import { useGlobals } from "../hooks/useGlobals";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -23,8 +26,32 @@ export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const { authMember, setOrderBuilder } = useGlobals();
 
-  const totalPrice = cartItems.reduce((a, c) => a + (c.laptopPrice ?? 0) * (c.quantity ?? 1), 0);
+  const totalPrice = (cartItems ?? []).reduce(
+    (a, c) => a + (c.laptopPrice ?? 0) * (c.quantity ?? 1),
+    0
+  );
+
+  const proceedOrderHandler = async () => {
+    try {
+      if (!authMember) {
+        toast.error("Please login first.");
+        return;
+      }
+      const orderService = new OrderService();
+      await orderService.createOrder(cartItems);
+      onDeleteAll();
+      setOrderBuilder(new Date());
+      setOpen(false);
+      navigate("/orders");
+      toast.success("Order placed successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Order failed. Please try again.");
+    }
+  };
+
   return (
     <>
       <IconButton
@@ -169,8 +196,7 @@ export default function Basket(props: BasketProps) {
                           onClick={() => onRemove(item)}
                           sx={{
                             width: 26, height: 26, borderRadius: "7px",
-                            bgcolor: "rgba(255,255,255,0.06)",
-                            color: "#94a3b8",
+                            bgcolor: "rgba(255,255,255,0.06)", color: "#94a3b8",
                             "&:hover": { bgcolor: "rgba(255,255,255,0.1)", color: "#fff" },
                           }}
                         >
@@ -184,8 +210,7 @@ export default function Basket(props: BasketProps) {
                           onClick={() => onAdd(item)}
                           sx={{
                             width: 26, height: 26, borderRadius: "7px",
-                            bgcolor: "rgba(59,130,246,0.15)",
-                            color: "#60a5fa",
+                            bgcolor: "rgba(59,130,246,0.15)", color: "#60a5fa",
                             "&:hover": { bgcolor: "rgba(59,130,246,0.25)", color: "#fff" },
                           }}
                         >
@@ -228,7 +253,7 @@ export default function Basket(props: BasketProps) {
             <Button
               fullWidth
               startIcon={<ShoppingCartIcon />}
-              onClick={() => { setOpen(false); navigate("/orders"); }}
+              onClick={proceedOrderHandler}
               sx={{
                 bgcolor: "#2563eb", color: "#fff", fontWeight: 700,
                 borderRadius: "12px", py: 1.4, textTransform: "none", fontSize: 15,

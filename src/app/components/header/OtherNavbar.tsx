@@ -129,7 +129,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               ) : (
                 <>
                   <Avatar
-                    src={authMember?.memberImage ? `${serverApi}${authMember.memberImage}` : "/icons/default-user.svg"}
+                    src={authMember?.memberImage ? `${serverApi}/${authMember.memberImage}` : "/icons/default-user.svg"}
                     onClick={handleLogoutClick}
                     sx={{
                       width: 38, height: 38, cursor: "pointer",
@@ -188,7 +188,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           {authMember ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Avatar
-                src={authMember?.memberImage ?? "/icons/default-user.svg"}
+                src={authMember?.memberImage ? `${serverApi}/${authMember.memberImage}` : "/icons/default-user.svg"}
                 sx={{ width: 32, height: 32, border: "2px solid rgba(59,130,246,0.5)" }}
               />
               <Box sx={{ fontSize: 13, color: "#e8eaf0" }}>{authMember?.memberNick ?? "Member"}</Box>

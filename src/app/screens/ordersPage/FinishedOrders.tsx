@@ -1,32 +1,37 @@
 import { Box, Chip, Typography } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import OrderCard from "./OrderCard";
-import { FINISHED_ORDERS } from "./data";
+import { retrieveFinishedOrders } from "./selector";
+import type { Order } from "../../../lib/types/orders";
+
+const finishedOrdersRetriever = createSelector(
+  retrieveFinishedOrders,
+  (finishedOrders) => ({ finishedOrders })
+);
 
 export default function FinishedOrders() {
+  const { finishedOrders } = useSelector(finishedOrdersRetriever);
+
   return (
     <TabPanel value="3" sx={{ p: 0 }}>
-      {FINISHED_ORDERS.map((order, i) => (
+      {finishedOrders.map((order: Order) => (
         <OrderCard
-          key={i}
+          key={order._id}
           order={order}
           actions={
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              {order.date && (
-                <Typography sx={{ fontSize: 12, color: "#8892a4" }}>
-                  {order.date}
-                </Typography>
-              )}
+              <Typography sx={{ fontSize: 12, color: "#8892a4" }}>
+                {new Date(order.updatedAt).toLocaleDateString()}
+              </Typography>
               <Chip
                 label="Completed"
                 size="small"
                 icon={
                   <CheckCircleOutlineIcon
-                    sx={{
-                      fontSize: "14px !important",
-                      color: "#4ade80 !important",
-                    }}
+                    sx={{ fontSize: "14px !important", color: "#4ade80 !important" }}
                   />
                 }
                 sx={{
@@ -43,16 +48,11 @@ export default function FinishedOrders() {
         />
       ))}
 
-      {FINISHED_ORDERS.length === 0 && (
-        <Box
-          sx={{
-            textAlign: "center",
-            py: 8,
-            bgcolor: "#1a1a2e",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "16px",
-          }}
-        >
+      {finishedOrders.length === 0 && (
+        <Box sx={{
+          textAlign: "center", py: 8, bgcolor: "#1a1a2e",
+          border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px",
+        }}>
           <CheckCircleOutlineIcon sx={{ fontSize: 40, color: "#8892a4", mb: 1 }} />
           <Typography sx={{ fontSize: 14, color: "#8892a4" }}>
             No finished orders yet

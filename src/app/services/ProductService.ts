@@ -29,7 +29,7 @@ class ItemService {
  
   public async getItem(id: string): Promise<Item> {
     try {
-      const result = await axios.get(`${this.path}/item/${id}`);
+      const result = await axios.get(`${this.path}/item/${id}`, { withCredentials: true });
       return result.data;
     } catch (error) {
       console.log("Error, getItem", error);
