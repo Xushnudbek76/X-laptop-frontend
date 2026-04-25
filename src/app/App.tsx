@@ -12,6 +12,8 @@ import useBasket from "./components/hooks/useBasket";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
 import AuthenticationModal from "./components/auth";
+import MemberService from "./services/MemberService";
+import { useGlobals } from "./components/hooks/useGlobals";
 function App() {
   const location = useLocation();
   const {cartItems, handleAddToCart, handleRemoveFromCart, handleDeleteFromCart, handleDeleteAll} = useBasket();
@@ -20,6 +22,7 @@ function App() {
 const [signupOpen, setSignupOpen] = useState<boolean>(false);
 const [loginOpen, setLoginOpen] = useState<boolean>(false);
 const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const {setAuthMember} = useGlobals();
 
 const handleSignupClose = () => setSignupOpen(false);
 const handleLoginClose = () => setLoginOpen(false);

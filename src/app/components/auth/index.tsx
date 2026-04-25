@@ -9,6 +9,7 @@ import type { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import { MemberType } from "../../../lib/enums/member.enum";
 import { toast } from "sonner";
+import { useGlobals } from "../hooks/useGlobals";
 
 const memberService = new MemberService();
 
@@ -37,7 +38,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const {setAuthMember} = useGlobals();
   const [loginInput, setLoginInput] = useState<LoginInput>({
     memberNick: "",
     memberPassword: "",
@@ -57,7 +58,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       const result = await memberService.login(loginInput);
       toast.success("Logged in successfully!");
       handleLoginClose();
-      
+      setAuthMember(result);
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       toast.error(error?.response?.data?.message ?? "Login failed.");
@@ -74,7 +75,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       const result = await memberService.signup(signupInput);
       toast.success("Signup successful! Welcome to X-Laptop.");
       handleSignupClose();
-     
+      setAuthMember(result);
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       toast.error(error?.response?.data?.message ?? "Signup failed.");

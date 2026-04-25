@@ -10,6 +10,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { CartItem } from "../../../lib/types/cart";
 import Basket from "./Basket";
+import { useGlobals } from "../hooks/useGlobals";
+import { serverApi } from "../../../lib/config";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -46,7 +48,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const authMember = null; // replace with your auth state
+    const {authMember} = useGlobals();
 
   const isActive = (path: string) => location.pathname === path;
   const allLinks = authMember ? [...navLinks, ...authNavLinks] : navLinks;
@@ -127,7 +129,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               ) : (
                 <>
                   <Avatar
-                    src={authMember?.memberImage ?? "/icons/default-user.svg"}
+                    src={authMember?.memberImage ? `${serverApi}${authMember.memberImage}` : "/icons/default-user.svg"}
                     onClick={handleLogoutClick}
                     sx={{
                       width: 38, height: 38, cursor: "pointer",

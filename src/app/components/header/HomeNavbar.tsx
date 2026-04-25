@@ -10,6 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { CartItem } from "../../../lib/types/cart";
 import Basket from "./Basket";
+import { useGlobals } from "../hooks/useGlobals";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -46,7 +47,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const authMember = null; // replace with your auth state
+  const {authMember} = useGlobals();
 
   const isActive = (path: string) => location.pathname === path;
   const allLinks = authMember ? [...navLinks, ...authNavLinks] : navLinks;

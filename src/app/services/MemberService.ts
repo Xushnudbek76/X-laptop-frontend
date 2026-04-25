@@ -28,7 +28,7 @@ class MemberService {
       withCredentials: true,
     });
     localStorage.setItem("memberData", JSON.stringify(result.data.member));
-    
+
     return result.data.member;
   } catch (error) {
     console.log("Error, login:", error);
@@ -49,6 +49,19 @@ public async signup(input: MemberInput): Promise<Member> {
     throw error;
   }
 }
+
+public async logout(): Promise<boolean> {
+  try {
+   const result = await axios.post(`${this.path}/member/logout`, {}, {
+      withCredentials: true,
+    });
+    localStorage.removeItem("memberData");
+    return result.data.logout;
+  } catch (error) {
+    console.log("Error, logout:", error);
+    throw error;
+  }
+}
 }
 
-export default MemberService
+export default MemberService;
