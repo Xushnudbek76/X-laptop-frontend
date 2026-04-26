@@ -12,8 +12,11 @@ const NewLaptopsRetriever = createSelector(
   retrieveNewLaptops,
   (newLaptops) => ({ newLaptops })
 );
-
-function NewLaptopCard({ laptop }: { laptop: Item }) {
+interface NewLaptopCardProps {
+  laptop: Item;
+  handleAddToCart: (item: Item) => void;
+}
+function NewLaptopCard({ laptop, handleAddToCart }: NewLaptopCardProps) {
   const image = `${serverApi}/${laptop.laptopImages[0]}`;
 
   return (
@@ -173,12 +176,13 @@ function NewLaptopCard({ laptop }: { laptop: Item }) {
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             <BoltIcon sx={{ fontSize: 12, color: "#2563eb" }} />
             <Typography sx={{ fontSize: 11, color: "#475569", fontWeight: 500 }}>
-              {laptop.laptopCpu} · {laptop.laptopRam} · {laptop.laptopStorage}
+              {laptop.laptopCpu} · {laptop.laptopRam} GB · {laptop.laptopStorage} GB
             </Typography>
           </Box>
         </Box>
 
         <IconButton
+          onClick={() => handleAddToCart(laptop)}
           size="small"
           sx={{
             bgcolor: "#2563eb",
@@ -197,9 +201,12 @@ function NewLaptopCard({ laptop }: { laptop: Item }) {
     </Box>
   );
 }
-
-export default function NewLaptops() {
+interface NewLaptopsProps {
+  handleAddToCart: (item: Item) => void;
+}
+export default function NewLaptops(props: NewLaptopsProps) {
   const { newLaptops } = useSelector(NewLaptopsRetriever);
+  const { handleAddToCart } = props;
 
   return (
     <Box sx={{ bgcolor: "#0f1117", py: 10 }}>
@@ -243,7 +250,7 @@ export default function NewLaptops() {
                   },
                 }}
               >
-                <NewLaptopCard laptop={laptop} />
+                <NewLaptopCard laptop={laptop} handleAddToCart={handleAddToCart} />
               </Box>
             ))}
           </Box>

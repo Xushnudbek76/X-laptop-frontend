@@ -377,10 +377,10 @@ export default function LaptopList(props: ItemsProps) {
 
                       <Box sx={{ display: "flex", gap: 0.8, flexWrap: "wrap", mb: 1 }}>
                         <Box sx={{ fontSize: 10, fontWeight: 600, color: "#93c5fd", bgcolor: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)", borderRadius: "5px", px: 0.8, py: 0.2 }}>
-                          {laptop.laptopRam}
+                          {laptop.laptopRam} GB
                         </Box>
                         <Box sx={{ fontSize: 10, fontWeight: 600, color: "#93c5fd", bgcolor: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)", borderRadius: "5px", px: 0.8, py: 0.2 }}>
-                          {laptop.laptopStorage}
+                          {laptop.laptopStorage} GB
                         </Box>
                       </Box>
 

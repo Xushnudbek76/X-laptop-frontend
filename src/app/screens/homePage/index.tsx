@@ -11,14 +11,19 @@ import { useEffect } from "react";
 import type { Member } from "../../../lib/types/member";
 import ItemService from "../../services/ProductService";
 import MemberService from "../../services/MemberService";
+import type { CartItem } from "../../../lib/types/cart";
 
+interface HomePageProps {
+  onAdd: (item: CartItem) => void;
+  }
 
 const actionDispatch = (dispatch: Dispatch) => ({
     setTopLaptops: (data: Item[]) => dispatch(setTopLaptops(data)),
     setNewLaptops: (data: Item[]) => dispatch(setNewLaptops(data)),
     setTopUsers: (data: Member[]) => dispatch(setTopUsers(data)),
 })
-export default function  HomePage() {
+export default function  HomePage(props: HomePageProps) {
+    const { onAdd } = props;
     const {setTopLaptops, setNewLaptops, setTopUsers} = actionDispatch(useDispatch());
 
     useEffect(() => {
@@ -48,8 +53,8 @@ export default function  HomePage() {
         .catch(err => console.log(err));
     }, []);
     return <div className="homepage">
-        <MostPopular />
-        <NewLaptops />
+        <MostPopular handleAddToCart={onAdd} />
+        <NewLaptops handleAddToCart={onAdd} />
         <CompanyVideo/>
         <ActiveUsers/>
         <News/>

@@ -213,17 +213,19 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 Engineered from aerospace-grade titanium. Crafted for those who
                 define the future. Unrivaled performance meets editorial elegance.
               </Typography>
-              <Button
-                variant="contained"
-                onClick={() => setSignupOpen(true)}
-                sx={{
-                  fontSize: 15, fontWeight: 600, textTransform: "none",
-                  px: 3.5, py: 1.5, borderRadius: 2,
-                  bgcolor: "#3b82f6", "&:hover": { bgcolor: "#2563eb" },
-                }}
-              >
-                Sign Up →
-              </Button>
+              {!authMember ? (
+                <Button
+                  variant="contained"
+                  onClick={() => setSignupOpen(true)}
+                  sx={{
+                    fontSize: 15, fontWeight: 600, textTransform: "none",
+                    px: 3.5, py: 1.5, borderRadius: 2,
+                    bgcolor: "#3b82f6", "&:hover": { bgcolor: "#2563eb" },
+                  }}
+                >
+                  Sign Up →
+                </Button>
+              ) : null}
 
               <Stack direction="row" sx={{ mt: 6.5, justifyContent: { xs: "center", md: "flex-start" } }}>
                 {[

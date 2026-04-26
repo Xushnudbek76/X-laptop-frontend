@@ -13,7 +13,11 @@ const MostSoldLaptopsRetriever = createSelector(
   (topLaptops) => ({ topLaptops })
 );
 
-function LaptopCard({ item }: { item: Item }) {
+interface LaptopCardProps {
+  item: Item;
+  handleAddToCart: (item: Item) => void;
+}
+function LaptopCard({ item, handleAddToCart }: LaptopCardProps) {
   const image = `${serverApi}/${item.laptopImages[0]}`;
 
   return (
@@ -186,6 +190,7 @@ function LaptopCard({ item }: { item: Item }) {
             ${item.laptopPrice.toLocaleString()}
           </Typography>
           <IconButton
+            onClick={() => handleAddToCart(item)}
             size="small"
             sx={{
               bgcolor: "#2563eb",
@@ -204,10 +209,12 @@ function LaptopCard({ item }: { item: Item }) {
     </Box>
   );
 }
-
-export default function MostSelled() {
+interface MostPopularProps {
+  handleAddToCart: (item: Item) => void;
+}
+export default function MostSelled(props: MostPopularProps) {
   const { topLaptops } = useSelector(MostSoldLaptopsRetriever);
-
+  const { handleAddToCart } = props;
   return (
     <Box sx={{ bgcolor: "#f5f6f8", py: 10 }}>
       <Container maxWidth="lg">
@@ -250,7 +257,7 @@ export default function MostSelled() {
                   },
                 }}
               >
-                <LaptopCard item={item} />
+                <LaptopCard item={item} handleAddToCart={handleAddToCart} />
               </Box>
             ))}
           </Box>
