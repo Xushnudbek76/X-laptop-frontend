@@ -7,6 +7,7 @@ import { retrieveTopLaptops } from "./selector";
 import type { Item } from "../../../lib/types/item";
 import { useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
+import type { CartItem } from "../../../lib/types/cart";
 
 const MostSoldLaptopsRetriever = createSelector(
   retrieveTopLaptops,
@@ -15,7 +16,7 @@ const MostSoldLaptopsRetriever = createSelector(
 
 interface LaptopCardProps {
   item: Item;
-  handleAddToCart: (item: Item) => void;
+  handleAddToCart: (item: CartItem) => void;
 }
 function LaptopCard({ item, handleAddToCart }: LaptopCardProps) {
   const image = `${serverApi}/${item.laptopImages[0]}`;
@@ -210,7 +211,7 @@ function LaptopCard({ item, handleAddToCart }: LaptopCardProps) {
   );
 }
 interface MostPopularProps {
-  handleAddToCart: (item: Item) => void;
+  handleAddToCart: (item: CartItem) => void;
 }
 export default function MostSelled(props: MostPopularProps) {
   const { topLaptops } = useSelector(MostSoldLaptopsRetriever);

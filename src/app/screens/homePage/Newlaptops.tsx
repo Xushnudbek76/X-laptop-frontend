@@ -7,6 +7,7 @@ import { retrieveNewLaptops } from "./selector";
 import { useSelector } from "react-redux";
 import type { Item } from "../../../lib/types/item";
 import { serverApi } from "../../../lib/config";
+import type { CartItem } from "../../../lib/types/cart";
 
 const NewLaptopsRetriever = createSelector(
   retrieveNewLaptops,
@@ -202,7 +203,7 @@ function NewLaptopCard({ laptop, handleAddToCart }: NewLaptopCardProps) {
   );
 }
 interface NewLaptopsProps {
-  handleAddToCart: (item: Item) => void;
+  handleAddToCart: (item: CartItem) => void;
 }
 export default function NewLaptops(props: NewLaptopsProps) {
   const { newLaptops } = useSelector(NewLaptopsRetriever);

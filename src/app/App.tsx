@@ -75,7 +75,7 @@ const handleLogoutRequest = async () => {
 />}
         <Toaster position="top-right" richColors/>
       <Routes>
-  <Route path="/" element={<HomePage />} />
+  <Route path="/" element={<HomePage onAdd={handleAddToCart}/>} />
   <Route path="/laptops/*"  element={<ItemsPage
 
   onAdd={handleAddToCart}

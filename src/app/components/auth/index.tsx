@@ -57,6 +57,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     try {
       const result = await memberService.login(loginInput);
       toast.success("Logged in successfully!");
+      
       handleLoginClose();
       setAuthMember(result);
     } catch (err: unknown) {

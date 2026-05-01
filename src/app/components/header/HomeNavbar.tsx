@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar, Toolbar, Box, Button, IconButton,
   Drawer, List, ListItem, ListItemButton, ListItemText,
@@ -53,7 +53,9 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   const isActive = (path: string) => location.pathname === path;
   const allLinks = authMember ? [...navLinks, ...authNavLinks] : navLinks;
   const isHome = location.pathname === "/";
-
+  useEffect(() => {
+  handleCloseLogout(); 
+}, [authMember]);
   return (
     <Box sx={{ bgcolor: "#0a0f1e", minHeight: isHome ? "100vh" : "auto" }}>
 
