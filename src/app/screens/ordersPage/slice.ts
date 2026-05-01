@@ -1,4 +1,3 @@
-// src/app/stores/orderSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Order } from "../../../lib/types/orders";
 

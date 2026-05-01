@@ -37,8 +37,7 @@ export default function OrdersPage() {
   const finishedOrders = useSelector(retrieveFinishedOrders);
 
   const [value, setValue] = useState("1");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+  const [orderInquiry] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
     orderStatus: OrderStatus.PAUSE,

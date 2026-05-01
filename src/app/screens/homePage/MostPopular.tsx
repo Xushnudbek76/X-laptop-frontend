@@ -7,7 +7,7 @@ import { retrieveTopLaptops } from "./selector";
 import type { Item } from "../../../lib/types/item";
 import { useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
-import type { CartItem } from "../../../lib/types/cart";
+import type {  CartItem } from "../../../lib/types/cart";
 
 const MostSoldLaptopsRetriever = createSelector(
   retrieveTopLaptops,
@@ -191,7 +191,7 @@ function LaptopCard({ item, handleAddToCart }: LaptopCardProps) {
             ${item.laptopPrice.toLocaleString()}
           </Typography>
           <IconButton
-            onClick={() => handleAddToCart(item)}
+            onClick={() => handleAddToCart({ ...item, quantity: 1 })}
             size="small"
             sx={{
               bgcolor: "#2563eb",

@@ -15,7 +15,7 @@ const NewLaptopsRetriever = createSelector(
 );
 interface NewLaptopCardProps {
   laptop: Item;
-  handleAddToCart: (item: Item) => void;
+  handleAddToCart: (item: CartItem) => void;
 }
 function NewLaptopCard({ laptop, handleAddToCart }: NewLaptopCardProps) {
   const image = `${serverApi}/${laptop.laptopImages[0]}`;
@@ -183,7 +183,7 @@ function NewLaptopCard({ laptop, handleAddToCart }: NewLaptopCardProps) {
         </Box>
 
         <IconButton
-          onClick={() => handleAddToCart(laptop)}
+          onClick={() => handleAddToCart({ ...laptop, quantity: 1 })}
           size="small"
           sx={{
             bgcolor: "#2563eb",

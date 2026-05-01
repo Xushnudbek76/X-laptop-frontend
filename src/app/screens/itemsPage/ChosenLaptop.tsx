@@ -73,6 +73,7 @@ export default function ChosenLaptop(props: ItemProps) {
   const [cartAdded, setCartAdded] = useState<string[]>([]);
   useEffect(() => {
     if (!laptopId) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     itemService
       .getItem(laptopId)
