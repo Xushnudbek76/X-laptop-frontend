@@ -9,10 +9,7 @@ import type { Item } from "../../../lib/types/item";
 import { serverApi } from "../../../lib/config";
 import type { CartItem } from "../../../lib/types/cart";
 
-const NewLaptopsRetriever = createSelector(
-  retrieveNewLaptops,
-  (newLaptops) => ({ newLaptops })
-);
+const NewLaptopsRetriever = createSelector(retrieveNewLaptops, (newLaptops) => ({ newLaptops }));
 interface NewLaptopCardProps {
   laptop: Item;
   handleAddToCart: (item: CartItem) => void;
@@ -256,9 +253,7 @@ export default function NewLaptops(props: NewLaptopsProps) {
             ))}
           </Box>
         ) : (
-          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>
-            No new laptops available
-          </Box>
+          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>No new laptops available</Box>
         )}
       </Container>
     </Box>

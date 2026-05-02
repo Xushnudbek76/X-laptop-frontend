@@ -16,11 +16,11 @@ const xlaptop = {
     },
     primary: {
       contrastText: common.white,
-      main: "#1a1a2e",       // deep navy
+      main: "#1a1a2e", // deep navy
     },
     secondary: {
       contrastText: common.white,
-      main: "#3b82f6",       // electric blue
+      main: "#3b82f6", // electric blue
     },
     text: {
       primary: "#1a1a2e",

@@ -3,10 +3,7 @@ import type { RootState } from "../../store";
 
 const selectOrderState = (state: RootState) => state.order;
 
-export const retrievePausedOrders = createSelector(
-  selectOrderState,
-  (order) => order.pausedOrders
-);
+export const retrievePausedOrders = createSelector(selectOrderState, (order) => order.pausedOrders);
 
 export const retrieveProcessOrders = createSelector(
   selectOrderState,

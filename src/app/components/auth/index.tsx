@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Box, Modal, Fade, Backdrop, TextField, Button, IconButton, InputAdornment, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Modal,
+  Fade,
+  Backdrop,
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  CircularProgress,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -38,7 +48,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const {setAuthMember} = useGlobals();
+  const { setAuthMember } = useGlobals();
   const [loginInput, setLoginInput] = useState<LoginInput>({
     memberNick: "",
     memberPassword: "",
@@ -57,13 +67,12 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     try {
       const result = await memberService.login(loginInput);
       toast.success("Logged in successfully!");
-      
+
       handleLoginClose();
       setAuthMember(result);
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       toast.error(error?.response?.data?.message ?? "Login failed.");
-
     } finally {
       setLoading(false);
     }
@@ -80,7 +89,6 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       toast.error(error?.response?.data?.message ?? "Signup failed.");
-
     } finally {
       setLoading(false);
     }
@@ -102,16 +110,27 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   return (
     <>
       {/* ── Login Modal ── */}
-      <Modal open={loginOpen} onClose={handleLoginClose} closeAfterTransition slots={{ backdrop: Backdrop }} slotProps={{ backdrop: { timeout: 400 } }}>
+      <Modal
+        open={loginOpen}
+        onClose={handleLoginClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{ backdrop: { timeout: 400 } }}
+      >
         <Fade in={loginOpen}>
           <Box sx={modalBoxSx}>
             {/* Header */}
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}>
+            <Box
+              sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}
+            >
               <Box>
                 <Box sx={{ fontSize: 22, fontWeight: 700, color: "#e8eaf0" }}>Welcome back</Box>
                 <Box sx={{ fontSize: 13, color: "#8892a4", mt: 0.5 }}>Sign in to your account</Box>
               </Box>
-              <IconButton onClick={handleLoginClose} sx={{ color: "#8892a4", "&:hover": { color: "#e8eaf0" } }}>
+              <IconButton
+                onClick={handleLoginClose}
+                sx={{ color: "#8892a4", "&:hover": { color: "#e8eaf0" } }}
+              >
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
@@ -137,8 +156,15 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)} sx={{ color: "#8892a4" }}>
-                        {showPassword ? <VisibilityOffIcon fontSize="small" /> : <VisibilityIcon fontSize="small" />}
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        sx={{ color: "#8892a4" }}
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon fontSize="small" />
+                        ) : (
+                          <VisibilityIcon fontSize="small" />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -147,7 +173,17 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
               />
 
               {error && (
-                <Box sx={{ fontSize: 13, color: "#f87171", bgcolor: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.2)", borderRadius: "8px", px: 1.5, py: 1 }}>
+                <Box
+                  sx={{
+                    fontSize: 13,
+                    color: "#f87171",
+                    bgcolor: "rgba(248,113,113,0.1)",
+                    border: "1px solid rgba(248,113,113,0.2)",
+                    borderRadius: "8px",
+                    px: 1.5,
+                    py: 1,
+                  }}
+                >
                   {error}
                 </Box>
               )}
@@ -155,12 +191,19 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
               <Button
                 fullWidth
                 variant="contained"
-                startIcon={loading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : <LoginIcon />}
+                startIcon={
+                  loading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : <LoginIcon />
+                }
                 disabled={loading}
                 onClick={handleLogin}
                 sx={{
-                  bgcolor: "#2563eb", borderRadius: "10px", py: 1.4,
-                  fontWeight: 600, textTransform: "none", fontSize: 15, mt: 1,
+                  bgcolor: "#2563eb",
+                  borderRadius: "10px",
+                  py: 1.4,
+                  fontWeight: 600,
+                  textTransform: "none",
+                  fontSize: 15,
+                  mt: 1,
                   "&:hover": { bgcolor: "#1d4ed8" },
                   "&.Mui-disabled": { bgcolor: "rgba(37,99,235,0.4)", color: "#8892a4" },
                 }}
@@ -173,16 +216,27 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       </Modal>
 
       {/* ── Signup Modal ── */}
-      <Modal open={signupOpen} onClose={handleSignupClose} closeAfterTransition slots={{ backdrop: Backdrop }} slotProps={{ backdrop: { timeout: 400 } }}>
+      <Modal
+        open={signupOpen}
+        onClose={handleSignupClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{ backdrop: { timeout: 400 } }}
+      >
         <Fade in={signupOpen}>
           <Box sx={modalBoxSx}>
             {/* Header */}
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}>
+            <Box
+              sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}
+            >
               <Box>
                 <Box sx={{ fontSize: 22, fontWeight: 700, color: "#e8eaf0" }}>Create account</Box>
                 <Box sx={{ fontSize: 13, color: "#8892a4", mt: 0.5 }}>Join X-Laptop today</Box>
               </Box>
-              <IconButton onClick={handleSignupClose} sx={{ color: "#8892a4", "&:hover": { color: "#e8eaf0" } }}>
+              <IconButton
+                onClick={handleSignupClose}
+                sx={{ color: "#8892a4", "&:hover": { color: "#e8eaf0" } }}
+              >
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
@@ -216,8 +270,15 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)} sx={{ color: "#8892a4" }}>
-                        {showPassword ? <VisibilityOffIcon fontSize="small" /> : <VisibilityIcon fontSize="small" />}
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        sx={{ color: "#8892a4" }}
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon fontSize="small" />
+                        ) : (
+                          <VisibilityIcon fontSize="small" />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -226,7 +287,17 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
               />
 
               {error && (
-                <Box sx={{ fontSize: 13, color: "#f87171", bgcolor: "rgba(248,113,113,0.1)", border: "1px solid rgba(248,113,113,0.2)", borderRadius: "8px", px: 1.5, py: 1 }}>
+                <Box
+                  sx={{
+                    fontSize: 13,
+                    color: "#f87171",
+                    bgcolor: "rgba(248,113,113,0.1)",
+                    border: "1px solid rgba(248,113,113,0.2)",
+                    borderRadius: "8px",
+                    px: 1.5,
+                    py: 1,
+                  }}
+                >
                   {error}
                 </Box>
               )}
@@ -234,12 +305,23 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
               <Button
                 fullWidth
                 variant="contained"
-                startIcon={loading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : <PersonAddIcon />}
+                startIcon={
+                  loading ? (
+                    <CircularProgress size={16} sx={{ color: "#fff" }} />
+                  ) : (
+                    <PersonAddIcon />
+                  )
+                }
                 disabled={loading}
                 onClick={handleSignup}
                 sx={{
-                  bgcolor: "#2563eb", borderRadius: "10px", py: 1.4,
-                  fontWeight: 600, textTransform: "none", fontSize: 15, mt: 1,
+                  bgcolor: "#2563eb",
+                  borderRadius: "10px",
+                  py: 1.4,
+                  fontWeight: 600,
+                  textTransform: "none",
+                  fontSize: 15,
+                  mt: 1,
                   "&:hover": { bgcolor: "#1d4ed8" },
                   "&.Mui-disabled": { bgcolor: "rgba(37,99,235,0.4)", color: "#8892a4" },
                 }}

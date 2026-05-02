@@ -15,82 +15,87 @@ import MemberService from "./services/MemberService";
 import { useGlobals } from "./components/hooks/useGlobals";
 function App() {
   const location = useLocation();
-  const {cartItems, handleAddToCart, handleRemoveFromCart, handleDeleteFromCart, handleDeleteAll} = useBasket();
+  const {
+    cartItems,
+    handleAddToCart,
+    handleRemoveFromCart,
+    handleDeleteFromCart,
+    handleDeleteAll,
+  } = useBasket();
 
+  const [signupOpen, setSignupOpen] = useState<boolean>(false);
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const { setAuthMember } = useGlobals();
 
-const [signupOpen, setSignupOpen] = useState<boolean>(false);
-const [loginOpen, setLoginOpen] = useState<boolean>(false);
-const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-const {setAuthMember} = useGlobals();
+  const handleSignupClose = () => setSignupOpen(false);
+  const handleLoginClose = () => setLoginOpen(false);
 
-const handleSignupClose = () => setSignupOpen(false);
-const handleLoginClose = () => setLoginOpen(false);
+  const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
 
-const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
-  setAnchorEl(e.currentTarget);
-};
+  const handleCloseLogout = () => {
+    setAnchorEl(null);
+  };
 
-const handleCloseLogout = () => {
-  setAnchorEl(null);
-};
-
-const handleLogoutRequest = async () => {
-  try {
-    const memberService = new MemberService();
-    await memberService.logout();
-    toast.success("Logged out successfully!");
-    setAuthMember(null);
-  } catch (error) {
-    console.log(error);
-    toast.error("Logout failed. Please try again.");
-  }
-};
+  const handleLogoutRequest = async () => {
+    try {
+      const memberService = new MemberService();
+      await memberService.logout();
+      toast.success("Logged out successfully!");
+      setAuthMember(null);
+    } catch (error) {
+      console.log(error);
+      toast.error("Logout failed. Please try again.");
+    }
+  };
   return (
     <>
-      {location.pathname === "/" ? <HomeNavbar 
-      cartItems={cartItems}
-      onAdd={handleAddToCart}
-      onRemove={handleRemoveFromCart}
-      onDelete={handleDeleteFromCart}
-      onDeleteAll={handleDeleteAll}
-      setSignupOpen={setSignupOpen}
-      setLoginOpen={setLoginOpen}
-      anchorEl={anchorEl}
-      handleLogoutClick={handleLogoutClick}
-      handleCloseLogout={handleCloseLogout}
-      handleLogoutRequest={handleLogoutRequest}
-      /> : <OtherNavbar
-  cartItems={cartItems}
-  onAdd={handleAddToCart}
-  onRemove={handleRemoveFromCart}
-  onDelete={handleDeleteFromCart}
-  onDeleteAll={handleDeleteAll}
-  setSignupOpen={setSignupOpen}
-  setLoginOpen={setLoginOpen}
-  anchorEl={anchorEl}
-  handleLogoutClick={handleLogoutClick}
-  handleCloseLogout={handleCloseLogout}
-  handleLogoutRequest={handleLogoutRequest}
-/>}
-        <Toaster position="top-right" richColors/>
+      {location.pathname === "/" ? (
+        <HomeNavbar
+          cartItems={cartItems}
+          onAdd={handleAddToCart}
+          onRemove={handleRemoveFromCart}
+          onDelete={handleDeleteFromCart}
+          onDeleteAll={handleDeleteAll}
+          setSignupOpen={setSignupOpen}
+          setLoginOpen={setLoginOpen}
+          anchorEl={anchorEl}
+          handleLogoutClick={handleLogoutClick}
+          handleCloseLogout={handleCloseLogout}
+          handleLogoutRequest={handleLogoutRequest}
+        />
+      ) : (
+        <OtherNavbar
+          cartItems={cartItems}
+          onAdd={handleAddToCart}
+          onRemove={handleRemoveFromCart}
+          onDelete={handleDeleteFromCart}
+          onDeleteAll={handleDeleteAll}
+          setSignupOpen={setSignupOpen}
+          setLoginOpen={setLoginOpen}
+          anchorEl={anchorEl}
+          handleLogoutClick={handleLogoutClick}
+          handleCloseLogout={handleCloseLogout}
+          handleLogoutRequest={handleLogoutRequest}
+        />
+      )}
+      <Toaster position="top-right" richColors />
       <Routes>
-  <Route path="/" element={<HomePage onAdd={handleAddToCart}/>} />
-  <Route path="/laptops/*"  element={<ItemsPage
-
-  onAdd={handleAddToCart}
-/>} />  
-  <Route path="/orders" element={<OrdersPage />} />
-  <Route path="/member-page" element={<MemberPage />} />
-  <Route path="/help" element={<HelpPage />} />
-
-    </Routes>
-      <Footer/>
+        <Route path="/" element={<HomePage onAdd={handleAddToCart} />} />
+        <Route path="/laptops/*" element={<ItemsPage onAdd={handleAddToCart} />} />
+        <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/member-page" element={<MemberPage />} />
+        <Route path="/help" element={<HelpPage />} />
+      </Routes>
+      <Footer />
       <AuthenticationModal
-  signupOpen={signupOpen}
-  loginOpen={loginOpen}
-  handleLoginClose={handleLoginClose}
-  handleSignupClose={handleSignupClose}
-/>
+        signupOpen={signupOpen}
+        loginOpen={loginOpen}
+        handleLoginClose={handleLoginClose}
+        handleSignupClose={handleSignupClose}
+      />
     </>
   );
 }

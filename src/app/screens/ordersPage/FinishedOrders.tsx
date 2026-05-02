@@ -7,10 +7,9 @@ import OrderCard from "./OrderCard";
 import { retrieveFinishedOrders } from "./selector";
 import type { Order } from "../../../lib/types/orders";
 
-const finishedOrdersRetriever = createSelector(
-  retrieveFinishedOrders,
-  (finishedOrders) => ({ finishedOrders })
-);
+const finishedOrdersRetriever = createSelector(retrieveFinishedOrders, (finishedOrders) => ({
+  finishedOrders,
+}));
 
 export default function FinishedOrders() {
   const { finishedOrders } = useSelector(finishedOrdersRetriever);
@@ -49,14 +48,17 @@ export default function FinishedOrders() {
       ))}
 
       {finishedOrders.length === 0 && (
-        <Box sx={{
-          textAlign: "center", py: 8, bgcolor: "#1a1a2e",
-          border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px",
-        }}>
+        <Box
+          sx={{
+            textAlign: "center",
+            py: 8,
+            bgcolor: "#1a1a2e",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "16px",
+          }}
+        >
           <CheckCircleOutlineIcon sx={{ fontSize: 40, color: "#8892a4", mb: 1 }} />
-          <Typography sx={{ fontSize: 14, color: "#8892a4" }}>
-            No finished orders yet
-          </Typography>
+          <Typography sx={{ fontSize: 14, color: "#8892a4" }}>No finished orders yet</Typography>
         </Box>
       )}
     </TabPanel>

@@ -7,12 +7,11 @@ import { retrieveTopLaptops } from "./selector";
 import type { Item } from "../../../lib/types/item";
 import { useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
-import type {  CartItem } from "../../../lib/types/cart";
+import type { CartItem } from "../../../lib/types/cart";
 
-const MostSoldLaptopsRetriever = createSelector(
-  retrieveTopLaptops,
-  (topLaptops) => ({ topLaptops })
-);
+const MostSoldLaptopsRetriever = createSelector(retrieveTopLaptops, (topLaptops) => ({
+  topLaptops,
+}));
 
 interface LaptopCardProps {
   item: Item;
@@ -263,9 +262,7 @@ export default function MostSelled(props: MostPopularProps) {
             ))}
           </Box>
         ) : (
-          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>
-            No laptops available
-          </Box>
+          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>No laptops available</Box>
         )}
       </Container>
     </Box>

@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Box, Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
+} from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useSelector } from "react-redux";
@@ -12,10 +21,9 @@ import OrderService from "../../services/OrderService";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import type { Order, OrderUpdateInput } from "../../../lib/types/orders";
 
-const processOrdersRetriever = createSelector(
-  retrieveProcessOrders,
-  (processOrders) => ({ processOrders })
-);
+const processOrdersRetriever = createSelector(retrieveProcessOrders, (processOrders) => ({
+  processOrders,
+}));
 
 interface ProcessOrdersProps {
   setValue: (input: string) => void;
@@ -32,7 +40,10 @@ export default function ProcessOrders({ setValue }: ProcessOrdersProps) {
 
   const finishOrderHandler = async (orderId: string) => {
     try {
-      if (!authMember) { toast.error("Please login first."); return; }
+      if (!authMember) {
+        toast.error("Please login first.");
+        return;
+      }
       const input: OrderUpdateInput = { orderId, orderStatus: OrderStatus.FINISH };
       await new OrderService().updateOrder(input);
       setValue("3");
@@ -68,9 +79,14 @@ export default function ProcessOrders({ setValue }: ProcessOrdersProps) {
                 size="small"
                 onClick={() => setConfirmDialog({ open: true, orderId: order._id })}
                 sx={{
-                  borderRadius: "10px", textTransform: "none", fontSize: 12, fontWeight: 600,
-                  bgcolor: "#0ea5e9", "&:hover": { bgcolor: "#0284c7" },
-                  boxShadow: "none", whiteSpace: "nowrap",
+                  borderRadius: "10px",
+                  textTransform: "none",
+                  fontSize: 12,
+                  fontWeight: 600,
+                  bgcolor: "#0ea5e9",
+                  "&:hover": { bgcolor: "#0284c7" },
+                  boxShadow: "none",
+                  whiteSpace: "nowrap",
                 }}
               >
                 Verify & Fulfil
@@ -81,10 +97,15 @@ export default function ProcessOrders({ setValue }: ProcessOrdersProps) {
       ))}
 
       {processOrders.length === 0 && (
-        <Box sx={{
-          textAlign: "center", py: 8, bgcolor: "#1a1a2e",
-          border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px",
-        }}>
+        <Box
+          sx={{
+            textAlign: "center",
+            py: 8,
+            bgcolor: "#1a1a2e",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: "16px",
+          }}
+        >
           <AccessTimeIcon sx={{ fontSize: 40, color: "#8892a4", mb: 1 }} />
           <Typography sx={{ fontSize: 14, color: "#8892a4" }}>No orders in process</Typography>
         </Box>
@@ -114,7 +135,9 @@ export default function ProcessOrders({ setValue }: ProcessOrdersProps) {
           <Button
             onClick={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}
             sx={{
-              textTransform: "none", borderRadius: "10px", color: "#8892a4",
+              textTransform: "none",
+              borderRadius: "10px",
+              color: "#8892a4",
               border: "1px solid rgba(255,255,255,0.1)",
               "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
             }}
@@ -125,8 +148,11 @@ export default function ProcessOrders({ setValue }: ProcessOrdersProps) {
             variant="contained"
             onClick={handleConfirm}
             sx={{
-              textTransform: "none", borderRadius: "10px", fontWeight: 600,
-              bgcolor: "#0ea5e9", "&:hover": { bgcolor: "#0284c7" },
+              textTransform: "none",
+              borderRadius: "10px",
+              fontWeight: 600,
+              bgcolor: "#0ea5e9",
+              "&:hover": { bgcolor: "#0284c7" },
               boxShadow: "none",
             }}
           >

@@ -1,6 +1,6 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 /* Swiper fix */
 .swiper {
@@ -11,6 +11,6 @@ body {
 .swiper-slide {
   height: auto;
 }
-@import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";

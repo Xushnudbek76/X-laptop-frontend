@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { Box, Container, Stack, Tab, Tabs, Accordion, AccordionSummary, AccordionDetails, Typography, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Container,
+  Stack,
+  Tab,
+  Tabs,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  Button,
+  TextField,
+} from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -8,7 +20,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { faq } from "../../../lib/data/faq";
 import { terms } from "../../../lib/data/terms";
- 
+
 const sx = {
   page: {
     bgcolor: "#0a0f1e",
@@ -44,10 +56,10 @@ const sx = {
     mb: { xs: 3, md: 5 },
   },
 };
- 
+
 export default function HelpPage() {
   const [value, setValue] = useState("1");
- 
+
   return (
     <Box sx={sx.page}>
       {/* Hero */}
@@ -57,7 +69,7 @@ export default function HelpPage() {
           Find answers to common questions, read our terms, or get in touch with our team.
         </Box>
       </Box>
- 
+
       <Container maxWidth="md">
         <TabContext value={value}>
           {/* Tabs */}
@@ -94,35 +106,41 @@ export default function HelpPage() {
               </Tabs>
             </Box>
           </Box>
- 
+
           {/* ── Terms ── */}
           <TabPanel value="1" sx={{ p: 0 }}>
-            <Box sx={{
-              bgcolor: "#1a1a2e",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: "16px",
-              p: { xs: 2.5, md: 4 },
-              maxHeight: { xs: "none", md: 560 },
-              overflowY: "auto",
-              "&::-webkit-scrollbar": { width: 4 },
-              "&::-webkit-scrollbar-track": { bgcolor: "transparent" },
-              "&::-webkit-scrollbar-thumb": { bgcolor: "rgba(37,99,235,0.4)", borderRadius: 2 },
-            }}>
+            <Box
+              sx={{
+                bgcolor: "#1a1a2e",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "16px",
+                p: { xs: 2.5, md: 4 },
+                maxHeight: { xs: "none", md: 560 },
+                overflowY: "auto",
+                "&::-webkit-scrollbar": { width: 4 },
+                "&::-webkit-scrollbar-track": { bgcolor: "transparent" },
+                "&::-webkit-scrollbar-thumb": { bgcolor: "rgba(37,99,235,0.4)", borderRadius: 2 },
+              }}
+            >
               {terms.map((term, i) => (
-                <Box key={i} sx={{
-                  fontSize: { xs: 13, md: 14 },
-                  color: "#8892a4",
-                  lineHeight: 1.8,
-                  mb: 2,
-                  pb: 2,
-                  borderBottom: i < terms.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
-                }}>
+                <Box
+                  key={i}
+                  sx={{
+                    fontSize: { xs: 13, md: 14 },
+                    color: "#8892a4",
+                    lineHeight: 1.8,
+                    mb: 2,
+                    pb: 2,
+                    borderBottom:
+                      i < terms.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                  }}
+                >
                   {term}
                 </Box>
               ))}
             </Box>
           </TabPanel>
- 
+
           {/* ── FAQ ── */}
           <TabPanel value="2" sx={{ p: 0 }}>
             <Stack spacing={1.5}>
@@ -150,17 +168,23 @@ export default function HelpPage() {
                       "& .MuiAccordionSummary-content": { my: 1.5 },
                     }}
                   >
-                    <Typography sx={{ fontSize: { xs: 13, md: 14 }, fontWeight: 600, color: "#e8eaf0" }}>
+                    <Typography
+                      sx={{ fontSize: { xs: 13, md: 14 }, fontWeight: 600, color: "#e8eaf0" }}
+                    >
                       {item.question}
                     </Typography>
                   </AccordionSummary>
-                  <AccordionDetails sx={{
-                    px: { xs: 2, md: 3 },
-                    pt: 0,
-                    pb: 2.5,
-                    borderTop: "1px solid rgba(255,255,255,0.06)",
-                  }}>
-                    <Typography sx={{ fontSize: { xs: 13, md: 14 }, color: "#8892a4", lineHeight: 1.75 }}>
+                  <AccordionDetails
+                    sx={{
+                      px: { xs: 2, md: 3 },
+                      pt: 0,
+                      pb: 2.5,
+                      borderTop: "1px solid rgba(255,255,255,0.06)",
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontSize: { xs: 13, md: 14 }, color: "#8892a4", lineHeight: 1.75 }}
+                    >
                       {item.answer}
                     </Typography>
                   </AccordionDetails>
@@ -168,42 +192,64 @@ export default function HelpPage() {
               ))}
             </Stack>
           </TabPanel>
- 
+
           {/* ── Contact ── */}
           <TabPanel value="3" sx={{ p: 0 }}>
             <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
               {/* Contact Info */}
-              <Box sx={{
-                bgcolor: "#1a1a2e",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "16px",
-                p: { xs: 2.5, md: 3 },
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
-                flex: "0 0 auto",
-                width: { xs: "100%", md: 240 },
-              }}>
+              <Box
+                sx={{
+                  bgcolor: "#1a1a2e",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "16px",
+                  p: { xs: 2.5, md: 3 },
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 3,
+                  flex: "0 0 auto",
+                  width: { xs: "100%", md: 240 },
+                }}
+              >
                 <Box>
-                  <Box sx={{ fontSize: 16, fontWeight: 700, color: "#e8eaf0", mb: 0.5 }}>Get in touch</Box>
+                  <Box sx={{ fontSize: 16, fontWeight: 700, color: "#e8eaf0", mb: 0.5 }}>
+                    Get in touch
+                  </Box>
                   <Box sx={{ fontSize: 13, color: "#8892a4", lineHeight: 1.6 }}>
                     We're happy to help. Reach out and we'll get back to you within 24 hours.
                   </Box>
                 </Box>
- 
+
                 {[
-                  { icon: <EmailIcon sx={{ fontSize: 16, color: "#3b82f6" }} />, label: "Email", value: "support@xlaptop.com" },
-                  { icon: <PhoneIcon sx={{ fontSize: 16, color: "#3b82f6" }} />, label: "Phone", value: "+82 10-1234-5678" },
-                  { icon: <LocationOnIcon sx={{ fontSize: 16, color: "#3b82f6" }} />, label: "Location", value: "Suwon, South Korea" },
+                  {
+                    icon: <EmailIcon sx={{ fontSize: 16, color: "#3b82f6" }} />,
+                    label: "Email",
+                    value: "support@xlaptop.com",
+                  },
+                  {
+                    icon: <PhoneIcon sx={{ fontSize: 16, color: "#3b82f6" }} />,
+                    label: "Phone",
+                    value: "+82 10-1234-5678",
+                  },
+                  {
+                    icon: <LocationOnIcon sx={{ fontSize: 16, color: "#3b82f6" }} />,
+                    label: "Location",
+                    value: "Suwon, South Korea",
+                  },
                 ].map((c) => (
                   <Box key={c.label} sx={{ display: "flex", gap: 1.5, alignItems: "flex-start" }}>
-                    <Box sx={{
-                      width: 32, height: 32, borderRadius: "8px",
-                      bgcolor: "rgba(37,99,235,0.12)",
-                      border: "1px solid rgba(37,99,235,0.25)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      flexShrink: 0,
-                    }}>
+                    <Box
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "8px",
+                        bgcolor: "rgba(37,99,235,0.12)",
+                        border: "1px solid rgba(37,99,235,0.25)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexShrink: 0,
+                      }}
+                    >
                       {c.icon}
                     </Box>
                     <Box>
@@ -213,7 +259,7 @@ export default function HelpPage() {
                   </Box>
                 ))}
               </Box>
- 
+
               {/* Form */}
               <Box
                 component="form"
@@ -230,13 +276,25 @@ export default function HelpPage() {
                 }}
               >
                 <Box sx={{ fontSize: 16, fontWeight: 700, color: "#e8eaf0" }}>Send a message</Box>
- 
+
                 {[
-                  { label: "Your name", name: "name", placeholder: "Type your name here", multiline: false },
-                  { label: "Your email", name: "email", placeholder: "Type your email here", multiline: false },
+                  {
+                    label: "Your name",
+                    name: "name",
+                    placeholder: "Type your name here",
+                    multiline: false,
+                  },
+                  {
+                    label: "Your email",
+                    name: "email",
+                    placeholder: "Type your email here",
+                    multiline: false,
+                  },
                 ].map((f) => (
                   <Box key={f.name}>
-                    <Box sx={{ fontSize: 12, color: "#8892a4", mb: 0.75, fontWeight: 500 }}>{f.label}</Box>
+                    <Box sx={{ fontSize: 12, color: "#8892a4", mb: 0.75, fontWeight: 500 }}>
+                      {f.label}
+                    </Box>
                     <TextField
                       fullWidth
                       name={f.name}
@@ -258,9 +316,11 @@ export default function HelpPage() {
                     />
                   </Box>
                 ))}
- 
+
                 <Box>
-                  <Box sx={{ fontSize: 12, color: "#8892a4", mb: 0.75, fontWeight: 500 }}>Message</Box>
+                  <Box sx={{ fontSize: 12, color: "#8892a4", mb: 0.75, fontWeight: 500 }}>
+                    Message
+                  </Box>
                   <TextField
                     fullWidth
                     name="message"
@@ -282,7 +342,7 @@ export default function HelpPage() {
                     }}
                   />
                 </Box>
- 
+
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button
                     type="submit"
@@ -309,4 +369,3 @@ export default function HelpPage() {
     </Box>
   );
 }
- 

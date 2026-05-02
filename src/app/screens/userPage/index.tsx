@@ -31,28 +31,34 @@ export default function UserPage() {
   return (
     <Box sx={{ bgcolor: "#0a0f1e", minHeight: "100vh", pb: 8 }}>
       {/* Header */}
-      <Box sx={{
-        bgcolor: "#111827", borderBottom: "1px solid rgba(255,255,255,0.06)",
-        px: { xs: 2, md: 4 }, py: 2.5,
-        display: "flex", alignItems: "center", gap: 1.5,
-      }}>
+      <Box
+        sx={{
+          bgcolor: "#111827",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          px: { xs: 2, md: 4 },
+          py: 2.5,
+          display: "flex",
+          alignItems: "center",
+          gap: 1.5,
+        }}
+      >
         <PersonOutlineIcon sx={{ color: "#2563eb", fontSize: 22 }} />
-        <Typography sx={{ fontSize: 18, fontWeight: 700, color: "#e8eaf0" }}>
-          My Profile
-        </Typography>
+        <Typography sx={{ fontSize: 18, fontWeight: 700, color: "#e8eaf0" }}>My Profile</Typography>
       </Box>
 
       <Container maxWidth="lg" sx={{ pt: 4 }}>
         <Stack direction={{ xs: "column", md: "row" }} spacing={3} alignItems="flex-start">
-
           {/* ── LEFT: Edit Form ── */}
-          <Box sx={{
-            flex: 1, minWidth: 0,
-            bgcolor: "#1a1a2e",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "16px",
-            p: { xs: 2.5, md: 3.5 },
-          }}>
+          <Box
+            sx={{
+              flex: 1,
+              minWidth: 0,
+              bgcolor: "#1a1a2e",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "16px",
+              p: { xs: 2.5, md: 3.5 },
+            }}
+          >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
               <EditNoteIcon sx={{ color: "#3b82f6", fontSize: 22 }} />
               <Typography sx={{ fontSize: 16, fontWeight: 700, color: "#e8eaf0" }}>
@@ -63,37 +69,55 @@ export default function UserPage() {
           </Box>
 
           {/* ── RIGHT: Profile Card ── */}
-          <Box sx={{
-            width: { xs: "100%", md: 280 },
-            flexShrink: 0,
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-          }}>
+          <Box
+            sx={{
+              width: { xs: "100%", md: 280 },
+              flexShrink: 0,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
             {/* Profile Card */}
-            <Box sx={{
-              bgcolor: "#1a1a2e",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: "16px",
-              overflow: "hidden",
-            }}>
+            <Box
+              sx={{
+                bgcolor: "#1a1a2e",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "16px",
+                overflow: "hidden",
+              }}
+            >
               {/* Banner */}
-              <Box sx={{ height: 70, background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)" }} />
+              <Box
+                sx={{ height: 70, background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)" }}
+              />
 
               {/* Avatar */}
               <Box sx={{ display: "flex", justifyContent: "center", mt: "-35px", mb: 1.5 }}>
                 {authMember.memberImage ? (
                   <Avatar
                     src={`${serverApi}/${authMember.memberImage}`}
-                    sx={{ width: 70, height: 70, border: "3px solid #1a1a2e", boxShadow: "0 4px 14px rgba(0,0,0,0.4)" }}
+                    sx={{
+                      width: 70,
+                      height: 70,
+                      border: "3px solid #1a1a2e",
+                      boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
+                    }}
                   />
                 ) : (
-                  <Box sx={{
-                    width: 70, height: 70, borderRadius: "50%",
-                    bgcolor: "rgba(37,99,235,0.2)", border: "3px solid #1a1a2e",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
-                  }}>
+                  <Box
+                    sx={{
+                      width: 70,
+                      height: 70,
+                      borderRadius: "50%",
+                      bgcolor: "rgba(37,99,235,0.2)",
+                      border: "3px solid #1a1a2e",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
+                    }}
+                  >
                     <PersonOutlineIcon sx={{ color: "#60a5fa", fontSize: 32 }} />
                   </Box>
                 )}
@@ -112,14 +136,23 @@ export default function UserPage() {
                 {/* Info rows */}
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 1.2, mb: 2 }}>
                   {authMember.memberPhone && (
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "center" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        justifyContent: "center",
+                      }}
+                    >
                       <PhoneIcon sx={{ fontSize: 14, color: "#2563eb" }} />
                       <Typography sx={{ fontSize: 13, color: "#8892a4" }}>
                         {authMember.memberPhone}
                       </Typography>
                     </Box>
                   )}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "center" }}>
+                  <Box
+                    sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "center" }}
+                  >
                     <LocationOnOutlinedIcon sx={{ fontSize: 14, color: "#2563eb" }} />
                     <Typography sx={{ fontSize: 13, color: "#8892a4" }}>
                       {authMember.memberAddress ?? "No address"}
@@ -130,7 +163,9 @@ export default function UserPage() {
                 {authMember.memberDesc && (
                   <>
                     <Divider sx={{ borderColor: "rgba(255,255,255,0.06)", mb: 2 }} />
-                    <Typography sx={{ fontSize: 13, color: "#8892a4", lineHeight: 1.6, textAlign: "left" }}>
+                    <Typography
+                      sx={{ fontSize: 13, color: "#8892a4", lineHeight: 1.6, textAlign: "left" }}
+                    >
                       {authMember.memberDesc}
                     </Typography>
                   </>
@@ -143,13 +178,22 @@ export default function UserPage() {
                     <Box
                       key={i}
                       sx={{
-                        width: 34, height: 34, borderRadius: "9px",
+                        width: 34,
+                        height: 34,
+                        borderRadius: "9px",
                         bgcolor: "rgba(255,255,255,0.04)",
                         border: "1px solid rgba(255,255,255,0.08)",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        cursor: "pointer", color: "#8892a4",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        color: "#8892a4",
                         transition: "all 0.2s",
-                        "&:hover": { color: s.color, borderColor: s.color, bgcolor: `${s.color}15` },
+                        "&:hover": {
+                          color: s.color,
+                          borderColor: s.color,
+                          bgcolor: `${s.color}15`,
+                        },
                       }}
                     >
                       {s.icon}
@@ -160,20 +204,29 @@ export default function UserPage() {
             </Box>
 
             {/* Points Card */}
-            <Box sx={{
-              bgcolor: "#1a1a2e",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: "16px",
-              p: 2.5,
-            }}>
+            <Box
+              sx={{
+                bgcolor: "#1a1a2e",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "16px",
+                p: 2.5,
+              }}
+            >
               <Typography sx={{ fontSize: 13, fontWeight: 700, color: "#e8eaf0", mb: 1.5 }}>
                 Member Points
               </Typography>
-              <Box sx={{
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                bgcolor: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)",
-                borderRadius: "12px", px: 2, py: 1.5,
-              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  bgcolor: "rgba(37,99,235,0.08)",
+                  border: "1px solid rgba(37,99,235,0.2)",
+                  borderRadius: "12px",
+                  px: 2,
+                  py: 1.5,
+                }}
+              >
                 <Typography sx={{ fontSize: 13, color: "#8892a4" }}>Available Points</Typography>
                 <Typography sx={{ fontSize: 20, fontWeight: 800, color: "#3b82f6" }}>
                   {authMember.memberPoints.toLocaleString()}

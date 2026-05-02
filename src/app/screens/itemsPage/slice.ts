@@ -1,4 +1,4 @@
-import { createSlice, type PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Item } from "../../../lib/types/item";
 
 interface ItemsPageState {

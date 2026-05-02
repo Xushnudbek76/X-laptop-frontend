@@ -16,25 +16,25 @@ export interface Member {
 }
 
 export interface MemberInput {
-    memberType: MemberType;
-    memberNick: string;
-    memberPhone: string;
-    memberAddress?: string;  
-    memberPassword: string;
-    memberDesc?: string;
-    memberImage?: string;
+  memberType: MemberType;
+  memberNick: string;
+  memberPhone: string;
+  memberAddress?: string;
+  memberPassword: string;
+  memberDesc?: string;
+  memberImage?: string;
 }
 
 export interface LoginInput {
-    memberNick: string;
-    memberPassword: string;
+  memberNick: string;
+  memberPassword: string;
 }
 
 export interface MemberUpdateInput {
-    memberNick?: string;
-    memberPassword?: string;
-    memberPhone?: string;
-    memberAddress?: string;  
-    memberDesc?: string;
-    memberImage?: string;
+  memberNick?: string;
+  memberPassword?: string;
+  memberPhone?: string;
+  memberAddress?: string;
+  memberDesc?: string;
+  memberImage?: string;
 }

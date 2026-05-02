@@ -5,10 +5,7 @@ import { useSelector } from "react-redux";
 import type { Member } from "../../../lib/types/member";
 import { serverApi } from "../../../lib/config";
 
-const ActiveUsersRetriever = createSelector(
-  retrieveTopUsers,
-  (topUsers) => ({ topUsers })
-);
+const ActiveUsersRetriever = createSelector(retrieveTopUsers, (topUsers) => ({ topUsers }));
 
 export default function ActiveUsers() {
   const { topUsers } = useSelector(ActiveUsersRetriever);
@@ -17,13 +14,22 @@ export default function ActiveUsers() {
     <Box sx={{ py: 8, background: "#f4f6f9" }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: "center", mb: 5 }}>
-          <Typography sx={{
-            fontSize: "12px", fontWeight: 700, color: "#2563eb",
-            letterSpacing: "2px", textTransform: "uppercase", mb: 1,
-          }}>
+          <Typography
+            sx={{
+              fontSize: "12px",
+              fontWeight: 700,
+              color: "#2563eb",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              mb: 1,
+            }}
+          >
             Community
           </Typography>
-          <Typography variant="h4" sx={{ fontWeight: 800, color: "#1a1a2e", letterSpacing: "0.5px" }}>
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: 800, color: "#1a1a2e", letterSpacing: "0.5px" }}
+          >
             Active Users
           </Typography>
         </Box>
@@ -71,22 +77,43 @@ export default function ActiveUsers() {
                     sx={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   />
 
-                  <Box sx={{
-                    position: "absolute", bottom: 0, left: 0, right: 0, height: "50%",
-                    background: "linear-gradient(to top, rgba(26,26,46,0.92) 0%, transparent 100%)",
-                  }} />
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: "50%",
+                      background:
+                        "linear-gradient(to top, rgba(26,26,46,0.92) 0%, transparent 100%)",
+                    }}
+                  />
 
-                  <Box className="overlay" sx={{
-                    position: "absolute", inset: 0,
-                    background: "rgba(37,99,235,0.15)",
-                    opacity: 0, transition: "opacity 0.25s ease",
-                  }} />
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "rgba(37,99,235,0.15)",
+                      opacity: 0,
+                      transition: "opacity 0.25s ease",
+                    }}
+                  />
 
-                  <Typography sx={{
-                    position: "absolute", bottom: 16, left: 0, right: 0,
-                    textAlign: "center", color: "#ffffff", fontWeight: 700,
-                    fontSize: "1rem", letterSpacing: "0.4px", zIndex: 2,
-                  }}>
+                  <Typography
+                    sx={{
+                      position: "absolute",
+                      bottom: 16,
+                      left: 0,
+                      right: 0,
+                      textAlign: "center",
+                      color: "#ffffff",
+                      fontWeight: 700,
+                      fontSize: "1rem",
+                      letterSpacing: "0.4px",
+                      zIndex: 2,
+                    }}
+                  >
                     {member.memberNick}
                   </Typography>
                 </Box>
@@ -94,9 +121,7 @@ export default function ActiveUsers() {
             })}
           </Box>
         ) : (
-          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>
-            No active users
-          </Box>
+          <Box sx={{ textAlign: "center", color: "#475569", py: 6 }}>No active users</Box>
         )}
       </Container>
     </Box>

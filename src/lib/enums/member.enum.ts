@@ -1,10 +1,10 @@
 export enum MemberType {
-    USER = 'USER',
-    SHOP = 'SHOP',  
+  USER = "USER",
+  SHOP = "SHOP",
 }
 
 export enum MemberStatus {
-    ACTIVE = "ACTIVE",
-    BLOCK = "BLOCK",
-    DELETE = "DELETE",
+  ACTIVE = "ACTIVE",
+  BLOCK = "BLOCK",
+  DELETE = "DELETE",
 }

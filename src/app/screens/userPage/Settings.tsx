@@ -1,7 +1,5 @@
 import { useState } from "react";
-import {
-  Box, Button, TextField, Typography, Avatar, CircularProgress,
-} from "@mui/material";
+import { Box, Button, TextField, Typography, Avatar, CircularProgress } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { toast } from "sonner";
 import { useGlobals } from "../../components/hooks/useGlobals";
@@ -11,7 +9,9 @@ import { serverApi } from "../../../lib/config";
 
 const inputSx = {
   "& .MuiOutlinedInput-root": {
-    bgcolor: "rgba(255,255,255,0.04)", borderRadius: "10px", color: "#e8eaf0",
+    bgcolor: "rgba(255,255,255,0.04)",
+    borderRadius: "10px",
+    color: "#e8eaf0",
     "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
     "&:hover fieldset": { borderColor: "rgba(37,99,235,0.5)" },
     "&.Mui-focused fieldset": { borderColor: "#2563eb" },
@@ -48,7 +48,10 @@ export function Settings() {
 
   const handleSubmit = async () => {
     try {
-      if (!authMember) { toast.error("Please login first."); return; }
+      if (!authMember) {
+        toast.error("Please login first.");
+        return;
+      }
       if (!memberUpdateInput.memberNick || !memberUpdateInput.memberPhone) {
         toast.error("Username and phone are required.");
         return;
@@ -88,8 +91,11 @@ export function Settings() {
             size="small"
             startIcon={<CloudUploadIcon fontSize="small" />}
             sx={{
-              textTransform: "none", fontSize: 12, fontWeight: 600,
-              borderRadius: "8px", color: "#3b82f6",
+              textTransform: "none",
+              fontSize: 12,
+              fontWeight: 600,
+              borderRadius: "8px",
+              color: "#3b82f6",
               border: "1px solid rgba(59,130,246,0.3)",
               bgcolor: "rgba(59,130,246,0.08)",
               "&:hover": { bgcolor: "rgba(59,130,246,0.15)" },
@@ -103,27 +109,41 @@ export function Settings() {
 
       {/* Fields */}
       <TextField
-        fullWidth label="Username" variant="outlined"
+        fullWidth
+        label="Username"
+        variant="outlined"
         value={memberUpdateInput.memberNick}
         onChange={(e) => setMemberUpdateInput((prev) => ({ ...prev, memberNick: e.target.value }))}
         sx={inputSx}
       />
       <Box sx={{ display: "flex", gap: 2 }}>
         <TextField
-          fullWidth label="Phone" variant="outlined"
+          fullWidth
+          label="Phone"
+          variant="outlined"
           value={memberUpdateInput.memberPhone}
-          onChange={(e) => setMemberUpdateInput((prev) => ({ ...prev, memberPhone: e.target.value }))}
+          onChange={(e) =>
+            setMemberUpdateInput((prev) => ({ ...prev, memberPhone: e.target.value }))
+          }
           sx={inputSx}
         />
         <TextField
-          fullWidth label="Address" variant="outlined"
+          fullWidth
+          label="Address"
+          variant="outlined"
           value={memberUpdateInput.memberAddress}
-          onChange={(e) => setMemberUpdateInput((prev) => ({ ...prev, memberAddress: e.target.value }))}
+          onChange={(e) =>
+            setMemberUpdateInput((prev) => ({ ...prev, memberAddress: e.target.value }))
+          }
           sx={inputSx}
         />
       </Box>
       <TextField
-        fullWidth label="Description" variant="outlined" multiline rows={3}
+        fullWidth
+        label="Description"
+        variant="outlined"
+        multiline
+        rows={3}
         value={memberUpdateInput.memberDesc}
         onChange={(e) => setMemberUpdateInput((prev) => ({ ...prev, memberDesc: e.target.value }))}
         sx={inputSx}
@@ -135,9 +155,14 @@ export function Settings() {
         disabled={loading}
         startIcon={loading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : null}
         sx={{
-          alignSelf: "flex-end", px: 4, py: 1.2,
-          bgcolor: "#2563eb", borderRadius: "10px",
-          fontWeight: 600, textTransform: "none", fontSize: 14,
+          alignSelf: "flex-end",
+          px: 4,
+          py: 1.2,
+          bgcolor: "#2563eb",
+          borderRadius: "10px",
+          fontWeight: 600,
+          textTransform: "none",
+          fontSize: 14,
           "&:hover": { bgcolor: "#1d4ed8" },
           "&.Mui-disabled": { bgcolor: "rgba(37,99,235,0.3)", color: "#8892a4" },
         }}

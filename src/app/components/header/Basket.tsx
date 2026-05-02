@@ -79,22 +79,34 @@ export default function Basket(props: BasketProps) {
         }}
       >
         {/* Header */}
-        <Box sx={{
-          px: 3, py: 2.5,
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
-        }}>
+        <Box
+          sx={{
+            px: 3,
+            py: 2.5,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderBottom: "1px solid rgba(255,255,255,0.07)",
+          }}
+        >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <ShoppingCartIcon sx={{ color: "#3b82f6", fontSize: 22 }} />
             <Typography sx={{ fontWeight: 800, fontSize: 18, color: "#f1f5f9" }}>
               Your Cart
             </Typography>
             {cartItems.length > 0 && (
-              <Box sx={{
-                bgcolor: "rgba(59,130,246,0.15)", border: "1px solid rgba(59,130,246,0.3)",
-                color: "#60a5fa", fontSize: 11, fontWeight: 700,
-                borderRadius: "20px", px: 1.2, py: 0.2,
-              }}>
+              <Box
+                sx={{
+                  bgcolor: "rgba(59,130,246,0.15)",
+                  border: "1px solid rgba(59,130,246,0.3)",
+                  color: "#60a5fa",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  borderRadius: "20px",
+                  px: 1.2,
+                  py: 0.2,
+                }}
+              >
                 {cartItems.length} items
               </Box>
             )}
@@ -105,8 +117,10 @@ export default function Basket(props: BasketProps) {
                 onClick={onDeleteAll}
                 size="small"
                 sx={{
-                  color: "#f87171", bgcolor: "rgba(239,68,68,0.08)",
-                  border: "1px solid rgba(239,68,68,0.2)", borderRadius: "8px",
+                  color: "#f87171",
+                  bgcolor: "rgba(239,68,68,0.08)",
+                  border: "1px solid rgba(239,68,68,0.2)",
+                  borderRadius: "8px",
                   "&:hover": { bgcolor: "rgba(239,68,68,0.15)" },
                 }}
               >
@@ -126,22 +140,34 @@ export default function Basket(props: BasketProps) {
         {/* Items */}
         <Box sx={{ flex: 1, overflowY: "auto", px: 2, py: 2 }}>
           {cartItems.length === 0 ? (
-            <Box sx={{
-              display: "flex", flexDirection: "column",
-              alignItems: "center", justifyContent: "center",
-              height: "100%", gap: 2, py: 8,
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                gap: 2,
+                py: 8,
+              }}
+            >
               <ShoppingCartIcon sx={{ fontSize: 56, color: "rgba(255,255,255,0.08)" }} />
               <Typography sx={{ color: "#475569", fontSize: 15, fontWeight: 600 }}>
                 Your cart is empty
               </Typography>
               <Button
-                onClick={() => { setOpen(false); navigate("/laptops"); }}
+                onClick={() => {
+                  setOpen(false);
+                  navigate("/laptops");
+                }}
                 variant="outlined"
                 size="small"
                 sx={{
-                  color: "#3b82f6", borderColor: "rgba(59,130,246,0.4)",
-                  borderRadius: "10px", textTransform: "none", fontWeight: 600,
+                  color: "#3b82f6",
+                  borderColor: "rgba(59,130,246,0.4)",
+                  borderRadius: "10px",
+                  textTransform: "none",
+                  fontWeight: 600,
                   "&:hover": { borderColor: "#3b82f6", bgcolor: "rgba(59,130,246,0.08)" },
                 }}
               >
@@ -156,10 +182,14 @@ export default function Basket(props: BasketProps) {
                   <Box
                     key={item._id}
                     sx={{
-                      display: "flex", alignItems: "center", gap: 2,
-                      bgcolor: "#161b27", borderRadius: "14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                      bgcolor: "#161b27",
+                      borderRadius: "14px",
                       border: "1px solid rgba(255,255,255,0.06)",
-                      p: 1.5, position: "relative",
+                      p: 1.5,
+                      position: "relative",
                       transition: "border-color 0.2s",
                       "&:hover": { borderColor: "rgba(59,130,246,0.25)" },
                     }}
@@ -170,19 +200,28 @@ export default function Basket(props: BasketProps) {
                       src={imagePath}
                       alt={item.laptopName}
                       sx={{
-                        width: 64, height: 64, borderRadius: "10px",
-                        objectFit: "cover", flexShrink: 0,
+                        width: 64,
+                        height: 64,
+                        borderRadius: "10px",
+                        objectFit: "cover",
+                        flexShrink: 0,
                         bgcolor: "#1e293b",
                       }}
                     />
 
                     {/* Info */}
                     <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography sx={{
-                        fontSize: 13, fontWeight: 700, color: "#e2e8f0",
-                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                        mb: 0.5,
-                      }}>
+                      <Typography
+                        sx={{
+                          fontSize: 13,
+                          fontWeight: 700,
+                          color: "#e2e8f0",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          mb: 0.5,
+                        }}
+                      >
                         {item.laptopName}
                       </Typography>
                       <Typography sx={{ fontSize: 14, fontWeight: 800, color: "#3b82f6", mb: 1 }}>
@@ -195,22 +234,36 @@ export default function Basket(props: BasketProps) {
                           size="small"
                           onClick={() => onRemove(item)}
                           sx={{
-                            width: 26, height: 26, borderRadius: "7px",
-                            bgcolor: "rgba(255,255,255,0.06)", color: "#94a3b8",
+                            width: 26,
+                            height: 26,
+                            borderRadius: "7px",
+                            bgcolor: "rgba(255,255,255,0.06)",
+                            color: "#94a3b8",
                             "&:hover": { bgcolor: "rgba(255,255,255,0.1)", color: "#fff" },
                           }}
                         >
                           <RemoveIcon sx={{ fontSize: 14 }} />
                         </IconButton>
-                        <Typography sx={{ fontSize: 13, fontWeight: 700, color: "#f1f5f9", minWidth: 20, textAlign: "center" }}>
+                        <Typography
+                          sx={{
+                            fontSize: 13,
+                            fontWeight: 700,
+                            color: "#f1f5f9",
+                            minWidth: 20,
+                            textAlign: "center",
+                          }}
+                        >
                           {item.quantity}
                         </Typography>
                         <IconButton
                           size="small"
                           onClick={() => onAdd(item)}
                           sx={{
-                            width: 26, height: 26, borderRadius: "7px",
-                            bgcolor: "rgba(59,130,246,0.15)", color: "#60a5fa",
+                            width: 26,
+                            height: 26,
+                            borderRadius: "7px",
+                            bgcolor: "rgba(59,130,246,0.15)",
+                            color: "#60a5fa",
                             "&:hover": { bgcolor: "rgba(59,130,246,0.25)", color: "#fff" },
                           }}
                         >
@@ -227,8 +280,12 @@ export default function Basket(props: BasketProps) {
                       size="small"
                       onClick={() => onDelete(item)}
                       sx={{
-                        position: "absolute", top: 8, right: 8,
-                        color: "#475569", width: 22, height: 22,
+                        position: "absolute",
+                        top: 8,
+                        right: 8,
+                        color: "#475569",
+                        width: 22,
+                        height: 22,
                         "&:hover": { color: "#f87171" },
                       }}
                     >
@@ -244,8 +301,12 @@ export default function Basket(props: BasketProps) {
         {/* Footer */}
         {cartItems.length > 0 && (
           <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.07)", px: 3, py: 2.5 }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-              <Typography sx={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>Total</Typography>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}
+            >
+              <Typography sx={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>
+                Total
+              </Typography>
               <Typography sx={{ fontSize: 20, fontWeight: 900, color: "#f1f5f9" }}>
                 ${totalPrice.toLocaleString()}
               </Typography>
@@ -255,8 +316,13 @@ export default function Basket(props: BasketProps) {
               startIcon={<ShoppingCartIcon />}
               onClick={proceedOrderHandler}
               sx={{
-                bgcolor: "#2563eb", color: "#fff", fontWeight: 700,
-                borderRadius: "12px", py: 1.4, textTransform: "none", fontSize: 15,
+                bgcolor: "#2563eb",
+                color: "#fff",
+                fontWeight: 700,
+                borderRadius: "12px",
+                py: 1.4,
+                textTransform: "none",
+                fontSize: 15,
                 "&:hover": { bgcolor: "#1d4ed8" },
                 boxShadow: "0 4px 20px rgba(37,99,235,0.35)",
               }}

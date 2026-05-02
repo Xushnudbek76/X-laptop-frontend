@@ -23,8 +23,7 @@ const homePageSlice = createSlice({
   },
 });
 
-export const { setTopLaptops, setNewLaptops, setTopUsers } =
-  homePageSlice.actions;
+export const { setTopLaptops, setNewLaptops, setTopUsers } = homePageSlice.actions;
 
 const HomePageReducer = homePageSlice.reducer;
 
