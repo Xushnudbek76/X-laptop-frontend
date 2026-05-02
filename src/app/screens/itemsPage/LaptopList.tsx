@@ -100,7 +100,8 @@ export default function LaptopList(props: ItemsProps) {
     item.getItems(productSearch)
       .then((data) => setProducts(data))
       .catch((err) => console.log(err));
-  }, [productSearch, setProducts]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(productSearch)]);
 
   useEffect(() => {
     if (searchText === "") {

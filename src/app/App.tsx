@@ -5,7 +5,6 @@ import HomePage from "./screens/homePage";
 import OrdersPage from "./screens/ordersPage";
 import MemberPage from "./screens/userPage";
 import HelpPage from "./screens/helpPage";
-import "../css/navbar.css";
 import Footer from "./components/footer";
 import ItemsPage from "./screens/itemsPage";
 import useBasket from "./components/hooks/useBasket";
@@ -22,7 +21,7 @@ function App() {
 const [signupOpen, setSignupOpen] = useState<boolean>(false);
 const [loginOpen, setLoginOpen] = useState<boolean>(false);
 const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const {setAuthMember} = useGlobals();
+const {setAuthMember} = useGlobals();
 
 const handleSignupClose = () => setSignupOpen(false);
 const handleLoginClose = () => setLoginOpen(false);
