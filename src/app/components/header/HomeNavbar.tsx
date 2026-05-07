@@ -77,7 +77,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   const isHome = location.pathname === "/";
   useEffect(() => {
     handleCloseLogout();
-  }, [authMember]);
+  }, [authMember, handleCloseLogout]);
   return (
     <Box sx={{ bgcolor: "#0a0f1e", minHeight: isHome ? "100vh" : "auto" }}>
       {/* ── NAVBAR ── */}

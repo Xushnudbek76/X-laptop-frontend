@@ -54,7 +54,7 @@ export default function HomePage(props: HomePageProps) {
       .getTopUsers()
       .then((data) => setTopUsers(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [setNewLaptops, setTopLaptops, setTopUsers]);
   return (
     <div className="homepage">
       <MostPopular handleAddToCart={onAdd} />

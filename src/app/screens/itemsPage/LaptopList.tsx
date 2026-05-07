@@ -134,7 +134,6 @@ export default function LaptopList(props: ItemsProps) {
 
   useEffect(() => {
     if (searchText === "") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProductSearch((prev) => ({ ...prev, search: "", page: 1 }));
     }
   }, [searchText]);
