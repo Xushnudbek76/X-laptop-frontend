@@ -1,5 +1,5 @@
 import { type SyntheticEvent, useEffect, useState } from "react";
-import { Box, Container, Stack, Tab, Tabs, Typography, Avatar } from "@mui/material";
+import { Container, Tab, Tabs, Typography, Avatar } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -53,10 +53,7 @@ export default function OrdersPage() {
     const orderService = new OrderService();
     orderService
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
-      .then((data) => {
-        console.log("Paused Orders:", data);
-        setPausedOrders(data);
-      })
+      .then((data) => setPausedOrders(data))
       .catch((err) => console.log(err));
     orderService
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
@@ -72,282 +69,107 @@ export default function OrdersPage() {
   const handleChange = (_: SyntheticEvent, newValue: string) => setValue(newValue);
 
   return (
-    <Box sx={{ bgcolor: "#0a0f1e", minHeight: "100vh", pb: 6 }}>
-      {/* Header */}
-      <Box
-        sx={{
-          bgcolor: "#111827",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-          px: { xs: 2, md: 4 },
-          py: 2.5,
-          display: "flex",
-          alignItems: "center",
-          gap: 1.5,
-        }}
-      >
-        <ShoppingBagOutlinedIcon sx={{ color: "#2563eb", fontSize: 22 }} />
-        <Typography sx={{ fontSize: 18, fontWeight: 700, color: "#e8eaf0" }}>My Orders</Typography>
-      </Box>
+    <section className="orders-page app-page app-page--dark">
+      <div className="app-page-header">
+        <ShoppingBagOutlinedIcon className="app-page-header__icon" />
+        <Typography className="app-page-header__title">My Orders</Typography>
+      </div>
 
-      <Container maxWidth="lg" sx={{ pt: 3 }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={3} alignItems="flex-start">
-          {/* ── LEFT: tabs ── */}
-          <Box sx={{ flex: 1, minWidth: 0 }}>
+      <Container maxWidth="lg" className="orders-page__container">
+        <div className="orders-page__layout">
+          <div className="orders-page__tabs">
             <TabContext value={value}>
-              <Box
-                sx={{
-                  bgcolor: "#1a1a2e",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: "14px",
-                  mb: 2,
-                  overflow: "hidden",
-                }}
-              >
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  sx={{
-                    px: 1,
-                    "& .MuiTabs-indicator": {
-                      bgcolor: "#2563eb",
-                      height: 2,
-                      borderRadius: "2px 2px 0 0",
-                    },
-                    "& .MuiTab-root": {
-                      textTransform: "none",
-                      fontWeight: 600,
-                      fontSize: 13,
-                      color: "#8892a4",
-                      minHeight: 48,
-                      px: 2,
-                      "&.Mui-selected": { color: "#e8eaf0" },
-                    },
-                  }}
-                >
+              <div className="app-shell-card orders-page__tabs-shell">
+                <Tabs value={value} onChange={handleChange}>
                   {[
                     { label: "Paused", count: pausedOrders.length },
                     { label: "Processing", count: processOrders.length },
                     { label: "Finished", count: finishedOrders.length },
-                  ].map((tab, i) => (
+                  ].map((tab, index) => (
                     <Tab
-                      key={i}
-                      value={String(i + 1)}
+                      key={tab.label}
+                      value={String(index + 1)}
                       label={
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <span className="orders-page__tab-label">
                           {tab.label}
-                          <Box
-                            sx={{
-                              bgcolor:
-                                value === String(i + 1)
-                                  ? "rgba(37,99,235,0.2)"
-                                  : "rgba(255,255,255,0.06)",
-                              color: value === String(i + 1) ? "#60a5fa" : "#8892a4",
-                              fontSize: 11,
-                              fontWeight: 700,
-                              borderRadius: "99px",
-                              px: 1,
-                              lineHeight: 1.8,
-                            }}
+                          <span
+                            className={`orders-page__tab-count${
+                              value === String(index + 1) ? " is-active" : ""
+                            }`}
                           >
                             {tab.count}
-                          </Box>
-                        </Box>
+                          </span>
+                        </span>
                       }
                     />
                   ))}
                 </Tabs>
-              </Box>
+              </div>
 
               <PausedOrders setValue={setValue} />
               <ProcessOrders setValue={setValue} />
               <FinishedOrders />
             </TabContext>
-          </Box>
+          </div>
 
-          {/* ── RIGHT: user panel ── */}
-          <Box
-            sx={{
-              width: { xs: "100%", md: 268 },
-              flexShrink: 0,
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-            }}
-          >
-            {/* User card */}
-            <Box
-              sx={{
-                bgcolor: "#1a1a2e",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "16px",
-                overflow: "hidden",
-              }}
-            >
-              <Box
-                sx={{ height: 60, background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)" }}
-              />
-              <Box sx={{ display: "flex", justifyContent: "center", mt: "-28px", mb: 1.5 }}>
+          <aside className="orders-page__sidebar">
+            <div className="app-shell-card orders-page__user-card">
+              <div className="orders-page__user-banner" />
+              <div className="orders-page__avatar-wrap">
                 {authMember?.memberImage ? (
                   <Avatar
                     src={`${serverApi}/${authMember.memberImage}`}
-                    sx={{
-                      width: 56,
-                      height: 56,
-                      border: "3px solid #1a1a2e",
-                      boxShadow: "0 2px 12px rgba(0,0,0,0.4)",
-                    }}
+                    className="orders-page__avatar"
                   />
                 ) : (
-                  <Box
-                    sx={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: "50%",
-                      bgcolor: "rgba(37,99,235,0.2)",
-                      border: "3px solid #1a1a2e",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      boxShadow: "0 2px 12px rgba(0,0,0,0.4)",
-                    }}
-                  >
-                    <PersonOutlineIcon sx={{ color: "#60a5fa", fontSize: 26 }} />
-                  </Box>
+                  <div className="orders-page__avatar-fallback">
+                    <PersonOutlineIcon className="orders-page__avatar-icon" />
+                  </div>
                 )}
-              </Box>
+              </div>
 
-              <Box sx={{ textAlign: "center", pb: 2.5, px: 2.5 }}>
-                <Typography sx={{ fontSize: 15, fontWeight: 700, color: "#e8eaf0" }}>
-                  {authMember?.memberNick ?? "Member"}
-                </Typography>
-                <Typography sx={{ fontSize: 12, color: "#8892a4", mb: 2 }}>
-                  {authMember?.memberType ?? "User"}
-                </Typography>
-
-                <Box sx={{ height: "1px", bgcolor: "rgba(255,255,255,0.06)", mb: 2 }} />
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    justifyContent: "center",
-                    mb: 2,
-                  }}
-                >
-                  <LocationOnOutlinedIcon sx={{ fontSize: 15, color: "#2563eb" }} />
-                  <Typography sx={{ fontSize: 13, color: "#8892a4" }}>
+              <div className="orders-page__user-content">
+                <Typography className="orders-page__user-name">{authMember?.memberNick}</Typography>
+                <Typography className="orders-page__user-role">{authMember?.memberType}</Typography>
+                <div className="app-shell-divider orders-page__user-divider" />
+                <div className="orders-page__user-row">
+                  <LocationOnOutlinedIcon className="orders-page__user-row-icon" />
+                  <Typography className="orders-page__user-row-text">
                     {authMember?.memberAddress ?? "No address"}
                   </Typography>
-                </Box>
+                </div>
+              </div>
+            </div>
 
-                {/* Stats */}
-                <Stack
-                  direction="row"
-                  sx={{
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                  }}
-                >
-                  {[
-                    {
-                      label: "Total",
-                      value: String(
-                        pausedOrders.length + processOrders.length + finishedOrders.length
-                      ),
-                    },
-                    { label: "Done", value: String(finishedOrders.length) },
-                    { label: "Active", value: String(pausedOrders.length + processOrders.length) },
-                  ].map((s, i) => (
-                    <Box
-                      key={i}
-                      sx={{
-                        flex: 1,
-                        py: 1.2,
-                        borderRight: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                        bgcolor: "rgba(255,255,255,0.02)",
-                      }}
-                    >
-                      <Typography sx={{ fontSize: 16, fontWeight: 700, color: "#e8eaf0" }}>
-                        {s.value}
-                      </Typography>
-                      <Typography sx={{ fontSize: 10, color: "#8892a4", mt: 0.2 }}>
-                        {s.label}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Stack>
-              </Box>
-            </Box>
-
-            {/* Status legend */}
-            <Box
-              sx={{
-                bgcolor: "#1a1a2e",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "16px",
-                p: 2.5,
-              }}
-            >
-              <Typography sx={{ fontSize: 13, fontWeight: 700, color: "#e8eaf0", mb: 1.5 }}>
-                Order Status
-              </Typography>
-              {[
-                {
-                  label: "Paused",
-                  color: "#f59e0b",
-                  bg: "rgba(245,158,11,0.12)",
-                  count: pausedOrders.length,
-                  icon: <PauseCircleOutlineIcon sx={{ fontSize: 15, color: "#f59e0b" }} />,
-                },
-                {
-                  label: "Processing",
-                  color: "#38bdf8",
-                  bg: "rgba(56,189,248,0.12)",
-                  count: processOrders.length,
-                  icon: <AccessTimeIcon sx={{ fontSize: 15, color: "#38bdf8" }} />,
-                },
-                {
-                  label: "Finished",
-                  color: "#4ade80",
-                  bg: "rgba(74,222,128,0.12)",
-                  count: finishedOrders.length,
-                  icon: <CheckCircleOutlineIcon sx={{ fontSize: 15, color: "#4ade80" }} />,
-                },
-              ].map((s, i) => (
-                <Box
-                  key={i}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    mb: i < 2 ? 1.2 : 0,
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    {s.icon}
-                    <Typography sx={{ fontSize: 13, color: "#8892a4" }}>{s.label}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      bgcolor: s.bg,
-                      color: s.color,
-                      fontSize: 12,
-                      fontWeight: 700,
-                      borderRadius: "99px",
-                      px: 1.5,
-                      py: 0.3,
-                    }}
-                  >
-                    {s.count}
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        </Stack>
+            <div className="app-shell-card orders-page__stats-card">
+              <Typography className="orders-page__stats-title">Order Overview</Typography>
+              <div className="orders-page__stats-list">
+                <div className="orders-page__stats-row">
+                  <div className="orders-page__stats-label">
+                    <PauseCircleOutlineIcon className="orders-page__stats-icon orders-page__stats-icon--paused" />
+                    <span>Paused</span>
+                  </div>
+                  <span className="orders-page__stats-value">{pausedOrders.length}</span>
+                </div>
+                <div className="orders-page__stats-row">
+                  <div className="orders-page__stats-label">
+                    <AccessTimeIcon className="orders-page__stats-icon orders-page__stats-icon--processing" />
+                    <span>Processing</span>
+                  </div>
+                  <span className="orders-page__stats-value">{processOrders.length}</span>
+                </div>
+                <div className="orders-page__stats-row">
+                  <div className="orders-page__stats-label">
+                    <CheckCircleOutlineIcon className="orders-page__stats-icon orders-page__stats-icon--finished" />
+                    <span>Finished</span>
+                  </div>
+                  <span className="orders-page__stats-value">{finishedOrders.length}</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
       </Container>
-    </Box>
+    </section>
   );
 }

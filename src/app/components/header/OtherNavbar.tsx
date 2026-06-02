@@ -72,76 +72,33 @@ export default function OtherNavbar(props: OtherNavbarProps) {
 
   const isActive = (path: string) => location.pathname === path;
   const allLinks = authMember ? [...navLinks, ...authNavLinks] : navLinks;
+  const avatarSrc = authMember?.memberImage
+    ? `${serverApi}/${authMember.memberImage}`
+    : "/icons/default-user.svg";
 
   return (
     <>
-      <AppBar
-        position="sticky"
-        elevation={0}
-        sx={{
-          bgcolor: "rgba(10,15,30,0.95)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-        }}
-      >
-        <Toolbar sx={{ px: "0 !important", minHeight: "64px !important" }}>
-          <Container maxWidth="lg" sx={{ display: "flex", alignItems: "center" }}>
-            {/* Logo */}
-            <Box
-              onClick={() => navigate("/")}
-              sx={{
-                fontFamily: "'Orbitron', sans-serif",
-                fontWeight: 700,
-                fontSize: 16,
-                letterSpacing: 2,
-                color: "#fff",
-                cursor: "pointer",
-              }}
-            >
-              <Box component="span" sx={{ color: "#3b82f6" }}>
-                X-
-              </Box>
+      <AppBar position="sticky" elevation={0} className="app-navbar">
+        <Toolbar className="app-navbar__toolbar">
+          <Container maxWidth="lg" className="app-navbar__container">
+            <Box onClick={() => navigate("/")} className="app-navbar__logo">
+              <span className="app-navbar__logo-accent">X-</span>
               LAPTOP
             </Box>
 
-            {/* Desktop Links */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 0.5, ml: 4 }}>
+            <Box className="app-navbar__links">
               {allLinks.map(({ label, path }) => (
                 <Button
                   key={label}
                   onClick={() => navigate(path)}
-                  sx={{
-                    fontSize: 14,
-                    fontWeight: isActive(path) ? 500 : 400,
-                    color: isActive(path) ? "#3b82f6" : "#94a3b8",
-                    textTransform: "none",
-                    px: 2,
-                    borderRadius: 2,
-                    position: "relative",
-                    "&:hover": { color: "#fff", bgcolor: "rgba(255,255,255,0.06)" },
-                    "&::after": isActive(path)
-                      ? {
-                          content: '""',
-                          position: "absolute",
-                          bottom: 4,
-                          left: 14,
-                          right: 14,
-                          height: 2,
-                          bgcolor: "#3b82f6",
-                          borderRadius: 1,
-                        }
-                      : {},
-                  }}
+                  className={`app-navbar__link${isActive(path) ? " is-active" : ""}`}
                 >
                   {label}
                 </Button>
               ))}
             </Box>
 
-            {/* Desktop Right */}
-            <Box
-              sx={{ display: { xs: "none", md: "flex" }, gap: 1, ml: "auto", alignItems: "center" }}
-            >
+            <Box className="app-navbar__actions">
               <Basket
                 cartItems={cartItems}
                 onAdd={onAdd}
@@ -154,30 +111,14 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 <>
                   <Button
                     onClick={() => setSignupOpen(true)}
-                    sx={{
-                      fontSize: 14,
-                      color: "#e8eaf0",
-                      textTransform: "none",
-                      px: 2.5,
-                      borderRadius: 2,
-                      border: "1px solid rgba(255,255,255,0.15)",
-                      "&:hover": { bgcolor: "rgba(255,255,255,0.08)" },
-                    }}
+                    className="app-navbar__auth-button app-navbar__auth-button--ghost"
                   >
                     Sign Up
                   </Button>
                   <Button
                     variant="contained"
                     onClick={() => setLoginOpen(true)}
-                    sx={{
-                      fontSize: 14,
-                      fontWeight: 500,
-                      textTransform: "none",
-                      px: 2.5,
-                      borderRadius: 2,
-                      bgcolor: "#3b82f6",
-                      "&:hover": { bgcolor: "#2563eb" },
-                    }}
+                    className="app-navbar__auth-button app-navbar__auth-button--primary"
                   >
                     Login
                   </Button>
@@ -185,54 +126,28 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               ) : (
                 <>
                   <Avatar
-                    src={
-                      authMember?.memberImage
-                        ? `${serverApi}/${authMember.memberImage}`
-                        : "/icons/default-user.svg"
-                    }
+                    src={avatarSrc}
                     onClick={handleLogoutClick}
-                    sx={{
-                      width: 38,
-                      height: 38,
-                      cursor: "pointer",
-                      border: "2px solid rgba(59,130,246,0.5)",
-                      "&:hover": { border: "2px solid #3b82f6" },
-                    }}
+                    className="app-navbar__avatar"
                   />
                   <Menu
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleCloseLogout}
-                    PaperProps={{
-                      sx: {
-                        bgcolor: "#1a1a2e",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        borderRadius: "10px",
-                        mt: 1,
-                      },
-                    }}
+                    PaperProps={{ className: "app-navbar__menu-paper" }}
                   >
                     <MenuItem
                       onClick={() => {
                         navigate("/member-page");
                         handleCloseLogout();
                       }}
-                      sx={{
-                        fontSize: 14,
-                        color: "#e8eaf0",
-                        "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
-                      }}
+                      className="app-navbar__menu-item app-navbar__menu-item--default"
                     >
                       My Page
                     </MenuItem>
                     <MenuItem
                       onClick={handleLogoutRequest}
-                      sx={{
-                        fontSize: 14,
-                        color: "#f87171",
-                        gap: 1,
-                        "&:hover": { bgcolor: "rgba(248,113,113,0.08)" },
-                      }}
+                      className="app-navbar__menu-item app-navbar__menu-item--danger"
                     >
                       <LogoutIcon fontSize="small" /> Logout
                     </MenuItem>
@@ -241,10 +156,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               )}
             </Box>
 
-            {/* Mobile */}
-            <Box
-              sx={{ display: { xs: "flex", md: "none" }, ml: "auto", gap: 1, alignItems: "center" }}
-            >
+            <Box className="app-navbar__mobile">
               <Basket
                 cartItems={cartItems}
                 onAdd={onAdd}
@@ -254,61 +166,37 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               />
               <IconButton
                 onClick={() => setDrawerOpen(true)}
-                sx={{ border: "1px solid rgba(255,255,255,0.15)", borderRadius: 2, p: 0.75 }}
+                className="app-navbar__hamburger"
+                size="small"
               >
-                <MenuIcon sx={{ fontSize: 20, color: "#94a3b8" }} />
+                <MenuIcon className="app-navbar__hamburger-icon" />
               </IconButton>
             </Box>
           </Container>
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Drawer */}
       <Drawer
         anchor="right"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        PaperProps={{
-          sx: {
-            width: 260,
-            pt: 1,
-            bgcolor: "#0f1117",
-            borderLeft: "1px solid rgba(255,255,255,0.08)",
-          },
-        }}
+        PaperProps={{ className: "app-navbar__drawer-paper" }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            px: 2,
-            pb: 1,
-          }}
-        >
+        <div className="app-navbar__drawer-top">
           {authMember ? (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Avatar
-                src={
-                  authMember?.memberImage
-                    ? `${serverApi}/${authMember.memberImage}`
-                    : "/icons/default-user.svg"
-                }
-                sx={{ width: 32, height: 32, border: "2px solid rgba(59,130,246,0.5)" }}
-              />
-              <Box sx={{ fontSize: 13, color: "#e8eaf0" }}>
-                {authMember?.memberNick ?? "Member"}
-              </Box>
-            </Box>
+            <div className="app-navbar__drawer-user">
+              <Avatar src={avatarSrc} className="app-navbar__drawer-avatar" />
+              <div className="app-navbar__drawer-name">{authMember.memberNick ?? "Member"}</div>
+            </div>
           ) : (
-            <Box />
+            <div />
           )}
           <IconButton onClick={() => setDrawerOpen(false)} size="small">
-            <CloseIcon sx={{ fontSize: 20, color: "#94a3b8" }} />
+            <CloseIcon className="app-navbar__drawer-close" />
           </IconButton>
-        </Box>
+        </div>
 
-        <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
+        <Divider className="app-navbar__drawer-divider" />
 
         <List dense>
           {allLinks.map(({ label, path }) => (
@@ -318,13 +206,12 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                   navigate(path);
                   setDrawerOpen(false);
                 }}
-                sx={{ px: 2.5, py: 1.25, "&:hover": { bgcolor: "rgba(255,255,255,0.05)" } }}
+                className="app-navbar__drawer-link"
               >
                 <ListItemText
                   primary={label}
                   primaryTypographyProps={{
-                    fontSize: 14,
-                    color: isActive(path) ? "#3b82f6" : "#94a3b8",
+                    className: `app-navbar__drawer-link-text${isActive(path) ? " is-active" : ""}`,
                   }}
                 />
               </ListItemButton>
@@ -332,9 +219,9 @@ export default function OtherNavbar(props: OtherNavbarProps) {
           ))}
         </List>
 
-        <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
+        <Divider className="app-navbar__drawer-divider" />
 
-        <Box sx={{ px: 2, py: 2, display: "flex", flexDirection: "column", gap: 1 }}>
+        <div className="app-navbar__drawer-actions">
           {!authMember ? (
             <>
               <Button
@@ -343,13 +230,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                   setSignupOpen(true);
                   setDrawerOpen(false);
                 }}
-                sx={{
-                  textTransform: "none",
-                  color: "#e8eaf0",
-                  borderRadius: 2,
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
-                }}
+                className="app-navbar__drawer-button app-navbar__drawer-button--ghost"
               >
                 Sign Up
               </Button>
@@ -360,12 +241,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                   setLoginOpen(true);
                   setDrawerOpen(false);
                 }}
-                sx={{
-                  textTransform: "none",
-                  borderRadius: 2,
-                  bgcolor: "#3b82f6",
-                  "&:hover": { bgcolor: "#2563eb" },
-                }}
+                className="app-navbar__drawer-button app-navbar__drawer-button--primary"
               >
                 Login
               </Button>
@@ -376,18 +252,12 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               variant="outlined"
               startIcon={<LogoutIcon />}
               onClick={handleLogoutRequest}
-              sx={{
-                textTransform: "none",
-                borderRadius: 2,
-                color: "#f87171",
-                borderColor: "rgba(248,113,113,0.3)",
-                "&:hover": { bgcolor: "rgba(248,113,113,0.08)", borderColor: "#f87171" },
-              }}
+              className="app-navbar__drawer-button app-navbar__drawer-button--danger"
             >
               Logout
             </Button>
           )}
-        </Box>
+        </div>
       </Drawer>
     </>
   );

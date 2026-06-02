@@ -1,8 +1,60 @@
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
+:root {
+  --xl-bg: #0a0f1e;
+  --xl-bg-soft: #0f1117;
+  --xl-surface: #1a1a2e;
+  --xl-surface-alt: #1e293b;
+  --xl-border: rgba(255, 255, 255, 0.08);
+  --xl-border-strong: rgba(59, 130, 246, 0.35);
+  --xl-text: #e8eaf0;
+  --xl-text-soft: #94a3b8;
+  --xl-text-muted: #8892a4;
+  --xl-text-faint: #64748b;
+  --xl-blue: #2563eb;
+  --xl-blue-bright: #3b82f6;
+  --xl-blue-soft: rgba(59, 130, 246, 0.12);
+  --xl-success: #4ade80;
+  --xl-warning: #f59e0b;
+  --xl-danger: #f87171;
+  --xl-radius-sm: 10px;
+  --xl-radius-md: 14px;
+  --xl-radius-lg: 16px;
+  --xl-shadow-card: 0 12px 40px rgba(0, 0, 0, 0.28);
+  --xl-shadow-blue: 0 12px 40px rgba(59, 130, 246, 0.15);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
+  background: #f8f9ff;
 }
-/* Swiper fix */
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
 .swiper {
   width: 100%;
   height: 100%;
@@ -11,6 +63,3 @@ body {
 .swiper-slide {
   height: auto;
 }
-@import "swiper/css";
-@import "swiper/css/navigation";
-@import "swiper/css/pagination";

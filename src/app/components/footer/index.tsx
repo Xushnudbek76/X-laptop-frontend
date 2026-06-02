@@ -1,5 +1,3 @@
-import { Box, Stack, Typography } from "@mui/material";
-
 const footerLinks = {
   Company: ["About us", "Careers", "Press", "Blog"],
   Products: ["Laptops", "Gaming", "Business", "Accessories"],
@@ -24,59 +22,20 @@ const socials = [
 
 export default function Footer() {
   return (
-    <Box sx={{ background: "#0a0f1e", pt: 7 }}>
-      <Stack sx={{ maxWidth: "1200px", mx: "auto", px: 3 }}>
-        {/* Main Grid */}
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "2fr 1fr 1fr 1fr" },
-            gap: { xs: 4, md: 6 },
-            pb: 6,
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
-          }}
-        >
-          {/* Brand Column */}
-          <Box>
-            <Typography
-              sx={{
-                fontSize: "20px",
-                fontWeight: 800,
-                color: "#fff",
-                letterSpacing: "1px",
-                mb: 1.5,
-              }}
-            >
-              X<span style={{ color: "#3b82f6" }}>-</span>LAPTOP
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: "13.5px",
-                color: "#64748b",
-                lineHeight: 1.75,
-                mb: 2.5,
-                maxWidth: "260px",
-              }}
-            >
-              Your trusted destination for premium laptops. Cutting-edge technology, expert reviews,
-              and unbeatable deals — all in one place.
-            </Typography>
+    <footer className="app-footer">
+      <div className="app-footer__inner">
+        <div className="app-footer__grid">
+          <div>
+            <h2 className="app-footer__brand-title">
+              X<span className="app-navbar__logo-accent">-</span>LAPTOP
+            </h2>
+            <p className="app-footer__brand-copy">
+              Your trusted destination for premium laptops. Cutting-edge technology, expert
+              reviews, and unbeatable deals - all in one place.
+            </p>
 
-            {/* Email */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
-              <Box
-                sx={{
-                  width: 34,
-                  height: 34,
-                  borderRadius: "9px",
-                  background: "rgba(59,130,246,0.12)",
-                  border: "1px solid rgba(59,130,246,0.25)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
+            <div className="app-footer__email-row">
+              <div className="app-footer__email-icon">
                 <svg
                   width="15"
                   height="15"
@@ -90,126 +49,51 @@ export default function Footer() {
                   <rect x="2" y="4" width="20" height="16" rx="2" />
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
-              </Box>
-              <Typography
-                component="a"
-                href="mailto:xushnudbek76n@gmail.com"
-                sx={{
-                  fontSize: "13px",
-                  color: "#93c5fd",
-                  textDecoration: "none",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
+              </div>
+              <a href="mailto:xushnudbek76n@gmail.com" className="app-footer__email-link">
                 xushnudbek76n@gmail.com
-              </Typography>
-            </Box>
+              </a>
+            </div>
 
-            {/* Socials */}
-            <Box sx={{ display: "flex", gap: 1.2, mt: 2.5 }}>
-              {socials.map((s) => (
-                <Box
-                  key={s.label}
-                  sx={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: "10px",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                    "&:hover": {
-                      background: "rgba(59,130,246,0.15)",
-                      borderColor: "rgba(59,130,246,0.4)",
-                    },
-                  }}
-                >
+            <div className="app-footer__socials">
+              {socials.map((social) => (
+                <div key={social.label} className="app-footer__social" aria-label={social.label}>
                   <svg
                     width="15"
                     height="15"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#94a3b8"
+                    stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <path d={s.path} />
+                    <path d={social.path} />
                   </svg>
-                </Box>
+                </div>
               ))}
-            </Box>
-          </Box>
+            </div>
+          </div>
 
-          {/* Link Columns */}
           {Object.entries(footerLinks).map(([title, links]) => (
-            <Box key={title}>
-              <Typography
-                sx={{
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  color: "#3b82f6",
-                  letterSpacing: "2px",
-                  textTransform: "uppercase",
-                  mb: 2.2,
-                }}
-              >
-                {title}
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1.4 }}>
+            <div key={title}>
+              <h3 className="app-footer__column-title">{title}</h3>
+              <div className="app-footer__column-links">
                 {links.map((link) => (
-                  <Typography
-                    key={link}
-                    component="a"
-                    href="#"
-                    sx={{
-                      fontSize: "13.5px",
-                      color: "#94a3b8",
-                      textDecoration: "none",
-                      transition: "color 0.2s",
-                      "&:hover": { color: "#ffffff" },
-                    }}
-                  >
+                  <a key={link} href="#" className="app-footer__column-link">
                     {link}
-                  </Typography>
+                  </a>
                 ))}
-              </Box>
-            </Box>
+              </div>
+            </div>
           ))}
-        </Box>
+        </div>
 
-        {/* Bottom Bar */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            py: 2.5,
-          }}
-        >
-          <Typography sx={{ fontSize: "12.5px", color: "#475569" }}>
-            © 2025 X-Laptop. All rights reserved.
-          </Typography>
-          <Box
-            sx={{
-              fontSize: "11.5px",
-              color: "#3b82f6",
-              background: "rgba(59,130,246,0.1)",
-              border: "1px solid rgba(59,130,246,0.25)",
-              px: 1.5,
-              py: 0.5,
-              borderRadius: "20px",
-              fontWeight: 700,
-              letterSpacing: "0.5px",
-            }}
-          >
-            Est. 2025
-          </Box>
-        </Box>
-      </Stack>
-    </Box>
+        <div className="app-footer__bottom">
+          <div className="app-footer__copyright">© 2025 X-Laptop. All rights reserved.</div>
+          <div className="app-footer__tag">Est. 2025</div>
+        </div>
+      </div>
+    </footer>
   );
 }

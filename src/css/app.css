@@ -1,0 +1,123 @@
+.app-page {
+  min-height: 100vh;
+}
+
+.app-page--dark {
+  background: var(--xl-bg);
+  color: var(--xl-text);
+}
+
+.app-page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px;
+  background: #111827;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.app-page-header__icon {
+  color: var(--xl-blue);
+  font-size: 22px !important;
+}
+
+.app-page-header__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--xl-text);
+}
+
+.app-shell-card {
+  background: var(--xl-surface);
+  border: 1px solid var(--xl-border);
+  border-radius: var(--xl-radius-lg);
+}
+
+.app-shell-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app-empty-state {
+  padding: 64px 16px;
+  text-align: center;
+  background: var(--xl-surface);
+  border: 1px solid var(--xl-border);
+  border-radius: var(--xl-radius-lg);
+}
+
+.app-empty-state__icon {
+  margin-bottom: 8px;
+  font-size: 40px !important;
+  color: var(--xl-text-muted);
+}
+
+.app-empty-state__text {
+  font-size: 14px;
+  color: var(--xl-text-muted);
+}
+
+.app-dialog-paper {
+  min-width: 340px;
+  background: var(--xl-surface) !important;
+  border: 1px solid var(--xl-border);
+  border-radius: var(--xl-radius-lg) !important;
+}
+
+.app-dialog-title {
+  color: var(--xl-text) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+
+.app-dialog-text {
+  color: var(--xl-text-muted) !important;
+  font-size: 14px !important;
+}
+
+.app-dialog-actions {
+  gap: 8px;
+  padding: 0 24px 20px !important;
+}
+
+.app-dialog-button {
+  border-radius: var(--xl-radius-sm) !important;
+  text-transform: none !important;
+}
+
+.app-dialog-button--ghost {
+  color: var(--xl-text-muted) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.app-dialog-button--ghost:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.app-dialog-button--primary {
+  font-weight: 600 !important;
+  color: #fff !important;
+  background: var(--xl-blue) !important;
+  box-shadow: none !important;
+}
+
+.app-dialog-button--primary:hover {
+  background: #1d4ed8 !important;
+}
+
+.app-dialog-button--danger {
+  font-weight: 600 !important;
+  color: #fff !important;
+  background: #ef4444 !important;
+  box-shadow: none !important;
+}
+
+.app-dialog-button--danger:hover {
+  background: #dc2626 !important;
+}
+
+@media (min-width: 900px) {
+  .app-page-header {
+    padding: 20px 32px;
+  }
+}

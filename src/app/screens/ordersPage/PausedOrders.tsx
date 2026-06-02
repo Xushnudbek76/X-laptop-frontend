@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Box,
   Button,
   Typography,
   Dialog,
@@ -82,7 +81,7 @@ export default function PausedOrders({ setValue }: PausedOrdersProps) {
   };
 
   return (
-    <TabPanel value="1" sx={{ p: 0 }}>
+    <TabPanel value="1" className="orders-page__panel">
       {pausedOrders.map((order: Order) => (
         <OrderCard
           key={order._id}
@@ -93,18 +92,7 @@ export default function PausedOrders({ setValue }: PausedOrdersProps) {
                 variant="outlined"
                 size="small"
                 onClick={() => setConfirmDialog({ open: true, orderId: order._id, type: "cancel" })}
-                sx={{
-                  borderRadius: "10px",
-                  textTransform: "none",
-                  fontSize: 12,
-                  fontWeight: 600,
-                  borderColor: "rgba(255,255,255,0.12)",
-                  color: "#8892a4",
-                  "&:hover": {
-                    bgcolor: "rgba(255,255,255,0.05)",
-                    borderColor: "rgba(255,255,255,0.2)",
-                  },
-                }}
+                className="orders-page__action orders-page__action--ghost"
               >
                 Cancel
               </Button>
@@ -112,15 +100,7 @@ export default function PausedOrders({ setValue }: PausedOrdersProps) {
                 variant="contained"
                 size="small"
                 onClick={() => setConfirmDialog({ open: true, orderId: order._id, type: "pay" })}
-                sx={{
-                  borderRadius: "10px",
-                  textTransform: "none",
-                  fontSize: 12,
-                  fontWeight: 600,
-                  bgcolor: "#2563eb",
-                  "&:hover": { bgcolor: "#1d4ed8" },
-                  boxShadow: "none",
-                }}
+                className="orders-page__action orders-page__action--primary"
               >
                 Pay Now
               </Button>
@@ -130,66 +110,42 @@ export default function PausedOrders({ setValue }: PausedOrdersProps) {
       ))}
 
       {pausedOrders.length === 0 && (
-        <Box
-          sx={{
-            textAlign: "center",
-            py: 8,
-            bgcolor: "#1a1a2e",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "16px",
-          }}
-        >
-          <PauseCircleOutlineIcon sx={{ fontSize: 40, color: "#8892a4", mb: 1 }} />
-          <Typography sx={{ fontSize: 14, color: "#8892a4" }}>No paused orders</Typography>
-        </Box>
+        <div className="app-empty-state">
+          <PauseCircleOutlineIcon className="app-empty-state__icon" />
+          <Typography className="app-empty-state__text">No paused orders</Typography>
+        </div>
       )}
 
       <Dialog
         open={confirmDialog.open}
         onClose={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}
-        PaperProps={{
-          sx: {
-            bgcolor: "#1a1a2e",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "16px",
-            minWidth: 340,
-          },
-        }}
+        PaperProps={{ className: "app-dialog-paper" }}
       >
-        <DialogTitle sx={{ color: "#e8eaf0", fontWeight: 700, fontSize: 17 }}>
+        <DialogTitle className="app-dialog-title">
           {confirmDialog.type === "pay" ? "💳 Confirm Payment" : "🗑️ Cancel Order"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ color: "#8892a4", fontSize: 14 }}>
+          <DialogContentText className="app-dialog-text">
             {confirmDialog.type === "pay"
               ? "Are you sure you want to proceed with payment? This will move your order to processing."
               : "Are you sure you want to cancel this order? This action cannot be undone."}
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2.5, gap: 1 }}>
+        <DialogActions className="app-dialog-actions">
           <Button
             onClick={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}
-            sx={{
-              textTransform: "none",
-              borderRadius: "10px",
-              color: "#8892a4",
-              border: "1px solid rgba(255,255,255,0.1)",
-              "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
-            }}
+            className="app-dialog-button app-dialog-button--ghost"
           >
             Go Back
           </Button>
           <Button
             variant="contained"
             onClick={handleConfirm}
-            sx={{
-              textTransform: "none",
-              borderRadius: "10px",
-              fontWeight: 600,
-              bgcolor: confirmDialog.type === "pay" ? "#2563eb" : "#ef4444",
-              "&:hover": { bgcolor: confirmDialog.type === "pay" ? "#1d4ed8" : "#dc2626" },
-              boxShadow: "none",
-            }}
+            className={`app-dialog-button ${
+              confirmDialog.type === "pay"
+                ? "app-dialog-button--primary"
+                : "app-dialog-button--danger"
+            }`}
           >
             {confirmDialog.type === "pay" ? "Yes, Pay Now" : "Yes, Cancel"}
           </Button>

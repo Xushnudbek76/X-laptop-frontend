@@ -1,0 +1,322 @@
+.help-page {
+  padding-bottom: 80px;
+}
+
+.help-page__hero {
+  padding: 40px 16px 32px;
+  text-align: center;
+}
+
+.help-page__title {
+  margin: 0 0 8px;
+  color: var(--xl-text);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.help-page__subtitle {
+  max-width: 480px;
+  margin: 0 auto;
+  color: var(--xl-text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.help-page__container {
+  max-width: 900px;
+}
+
+.help-page__tabs-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.help-page__tabs-shell {
+  display: inline-flex;
+  padding: 6px;
+  border: 1px solid var(--xl-border);
+  border-radius: 14px;
+  background: var(--xl-surface);
+}
+
+.help-page__tabs-shell .MuiTabs-indicator {
+  display: none;
+}
+
+.help-page__tabs-shell .MuiTab-root {
+  min-width: 80px;
+  min-height: 38px;
+  padding: 6px 16px;
+  border-radius: 10px;
+  color: var(--xl-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+  transition: all 0.2s;
+}
+
+.help-page__tabs-shell .MuiTab-root.Mui-selected {
+  color: var(--xl-text) !important;
+  background: var(--xl-blue);
+}
+
+.help-page__panel {
+  padding: 0 !important;
+}
+
+.help-page__terms {
+  max-height: none;
+  padding: 20px;
+}
+
+.help-page__terms-item {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  color: var(--xl-text-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.help-page__terms-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.help-page__faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.help-page__faq-item {
+  overflow: hidden;
+  border: 1px solid var(--xl-border);
+  border-radius: 12px !important;
+  background: var(--xl-surface) !important;
+}
+
+.help-page__faq-item::before {
+  display: none;
+}
+
+.help-page__faq-item.Mui-expanded {
+  border-color: rgba(37, 99, 235, 0.4);
+}
+
+.help-page__faq-summary {
+  padding: 4px 16px !important;
+}
+
+.help-page__faq-summary .MuiAccordionSummary-content {
+  margin: 12px 0 !important;
+}
+
+.help-page__faq-expand {
+  color: var(--xl-blue-bright);
+  font-size: 20px !important;
+}
+
+.help-page__faq-question {
+  color: var(--xl-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.help-page__faq-details {
+  padding: 0 16px 20px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.help-page__faq-answer {
+  color: var(--xl-text-muted);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.help-page__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.help-page__contact-info {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+}
+
+.help-page__contact-title {
+  margin-bottom: 4px;
+  color: var(--xl-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.help-page__contact-copy {
+  color: var(--xl-text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.help-page__contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.help-page__contact-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.help-page__contact-icon-shell {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  border-radius: 8px;
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.help-page__contact-icon {
+  color: var(--xl-blue-bright);
+  font-size: 16px !important;
+}
+
+.help-page__contact-label {
+  margin-bottom: 2px;
+  color: var(--xl-text-muted);
+  font-size: 11px;
+}
+
+.help-page__contact-value {
+  color: var(--xl-text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.help-page__form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+}
+
+.help-page__form-title {
+  color: var(--xl-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.help-page__field-label {
+  margin-bottom: 6px;
+  color: var(--xl-text-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.help-page__field .MuiOutlinedInput-root {
+  color: var(--xl-text);
+  font-size: 14px;
+  background: #0f1628;
+  border-radius: 10px;
+}
+
+.help-page__field .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.help-page__field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(37, 99, 235, 0.4);
+}
+
+.help-page__field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--xl-blue);
+}
+
+.help-page__field input::placeholder,
+.help-page__field textarea::placeholder {
+  color: var(--xl-text-muted);
+  opacity: 1;
+}
+
+.help-page__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.help-page__submit {
+  padding: 10px 32px !important;
+  border-radius: 10px !important;
+  background: var(--xl-blue) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.help-page__submit:hover {
+  background: #1d4ed8 !important;
+}
+
+@media (min-width: 900px) {
+  .help-page__hero {
+    padding-top: 64px;
+    padding-bottom: 48px;
+  }
+
+  .help-page__title {
+    font-size: 40px;
+  }
+
+  .help-page__subtitle {
+    font-size: 16px;
+  }
+
+  .help-page__tabs-wrap {
+    margin-bottom: 40px;
+  }
+
+  .help-page__tabs-shell .MuiTab-root {
+    min-width: 100px;
+    padding-right: 24px;
+    padding-left: 24px;
+    font-size: 13px;
+  }
+
+  .help-page__terms {
+    max-height: 560px;
+    padding: 32px;
+    overflow-y: auto;
+  }
+
+  .help-page__terms::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .help-page__terms::-webkit-scrollbar-thumb {
+    background: rgba(37, 99, 235, 0.4);
+    border-radius: 999px;
+  }
+
+  .help-page__contact {
+    flex-direction: row;
+  }
+
+  .help-page__contact-info {
+    width: 240px;
+    flex: 0 0 auto;
+    padding: 24px;
+  }
+
+  .help-page__form {
+    padding: 24px;
+  }
+}

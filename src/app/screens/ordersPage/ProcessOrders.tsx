@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Box,
   Button,
   Typography,
   Dialog,
@@ -61,33 +60,22 @@ export default function ProcessOrders({ setValue }: ProcessOrdersProps) {
   };
 
   return (
-    <TabPanel value="2" sx={{ p: 0 }}>
+    <TabPanel value="2" className="orders-page__panel">
       {processOrders.map((order: Order) => (
         <OrderCard
           key={order._id}
           order={order}
           actions={
             <>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mr: 0.5 }}>
-                <AccessTimeIcon sx={{ fontSize: 13, color: "#8892a4" }} />
-                <Typography sx={{ fontSize: 12, color: "#8892a4" }}>
-                  {new Date(order.createdAt).toLocaleDateString()}
-                </Typography>
-              </Box>
+              <div className="orders-page__date">
+                <AccessTimeIcon className="orders-page__date-icon" />
+                <Typography>{new Date(order.createdAt).toLocaleDateString()}</Typography>
+              </div>
               <Button
                 variant="contained"
                 size="small"
                 onClick={() => setConfirmDialog({ open: true, orderId: order._id })}
-                sx={{
-                  borderRadius: "10px",
-                  textTransform: "none",
-                  fontSize: 12,
-                  fontWeight: 600,
-                  bgcolor: "#0ea5e9",
-                  "&:hover": { bgcolor: "#0284c7" },
-                  boxShadow: "none",
-                  whiteSpace: "nowrap",
-                }}
+                className="orders-page__action orders-page__action--info"
               >
                 Verify & Fulfil
               </Button>
@@ -97,64 +85,34 @@ export default function ProcessOrders({ setValue }: ProcessOrdersProps) {
       ))}
 
       {processOrders.length === 0 && (
-        <Box
-          sx={{
-            textAlign: "center",
-            py: 8,
-            bgcolor: "#1a1a2e",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "16px",
-          }}
-        >
-          <AccessTimeIcon sx={{ fontSize: 40, color: "#8892a4", mb: 1 }} />
-          <Typography sx={{ fontSize: 14, color: "#8892a4" }}>No orders in process</Typography>
-        </Box>
+        <div className="app-empty-state">
+          <AccessTimeIcon className="app-empty-state__icon" />
+          <Typography className="app-empty-state__text">No orders in process</Typography>
+        </div>
       )}
 
       <Dialog
         open={confirmDialog.open}
         onClose={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}
-        PaperProps={{
-          sx: {
-            bgcolor: "#1a1a2e",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: "16px",
-            minWidth: 340,
-          },
-        }}
+        PaperProps={{ className: "app-dialog-paper" }}
       >
-        <DialogTitle sx={{ color: "#e8eaf0", fontWeight: 700, fontSize: 17 }}>
-          ✅ Verify & Fulfil Order
-        </DialogTitle>
+        <DialogTitle className="app-dialog-title">✅ Verify & Fulfil Order</DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ color: "#8892a4", fontSize: 14 }}>
+          <DialogContentText className="app-dialog-text">
             Confirm that you have received your order and want to mark it as finished?
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2.5, gap: 1 }}>
+        <DialogActions className="app-dialog-actions">
           <Button
             onClick={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}
-            sx={{
-              textTransform: "none",
-              borderRadius: "10px",
-              color: "#8892a4",
-              border: "1px solid rgba(255,255,255,0.1)",
-              "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
-            }}
+            className="app-dialog-button app-dialog-button--ghost"
           >
             Go Back
           </Button>
           <Button
             variant="contained"
             onClick={handleConfirm}
-            sx={{
-              textTransform: "none",
-              borderRadius: "10px",
-              fontWeight: 600,
-              bgcolor: "#0ea5e9",
-              "&:hover": { bgcolor: "#0284c7" },
-              boxShadow: "none",
-            }}
+            className="app-dialog-button app-dialog-button--primary"
           >
             Yes, Confirm
           </Button>

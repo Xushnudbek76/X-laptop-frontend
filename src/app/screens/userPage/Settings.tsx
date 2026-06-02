@@ -1,24 +1,11 @@
 import { useState } from "react";
-import { Box, Button, TextField, Typography, Avatar, CircularProgress } from "@mui/material";
+import { Button, TextField, Typography, Avatar, CircularProgress } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { toast } from "sonner";
 import { useGlobals } from "../../components/hooks/useGlobals";
 import type { MemberUpdateInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import { serverApi } from "../../../lib/config";
-
-const inputSx = {
-  "& .MuiOutlinedInput-root": {
-    bgcolor: "rgba(255,255,255,0.04)",
-    borderRadius: "10px",
-    color: "#e8eaf0",
-    "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
-    "&:hover fieldset": { borderColor: "rgba(37,99,235,0.5)" },
-    "&.Mui-focused fieldset": { borderColor: "#2563eb" },
-  },
-  "& .MuiInputLabel-root": { color: "#8892a4" },
-  "& .MuiInputLabel-root.Mui-focused": { color: "#3b82f6" },
-};
 
 export function Settings() {
   const { authMember, setAuthMember } = useGlobals();
@@ -58,9 +45,7 @@ export function Settings() {
       }
       setLoading(true);
       const memberService = new MemberService();
-      console.log("Submitting update with input:", memberUpdateInput);
       const result = await memberService.updateMember(memberUpdateInput);
-      console.log("Update result:", result);
       setAuthMember(result);
       toast.success("Profile updated successfully!");
     } catch (error) {
@@ -72,51 +57,34 @@ export function Settings() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-      {/* Avatar Upload */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-        <Avatar
-          src={image}
-          sx={{ width: 80, height: 80, border: "3px solid rgba(37,99,235,0.4)" }}
-        />
-        <Box>
-          <Typography sx={{ fontSize: 13, fontWeight: 600, color: "#e8eaf0", mb: 0.5 }}>
-            Profile Photo
-          </Typography>
-          <Typography sx={{ fontSize: 12, color: "#8892a4", mb: 1 }}>
-            JPG, JPEG, PNG formats only
-          </Typography>
+    <div className="user-settings">
+      <div className="user-settings__avatar-row">
+        <Avatar src={image} className="user-settings__avatar" />
+        <div>
+          <Typography className="user-settings__avatar-title">Profile Photo</Typography>
+          <Typography className="user-settings__avatar-copy">JPG, JPEG, PNG formats only</Typography>
           <Button
             component="label"
             size="small"
             startIcon={<CloudUploadIcon fontSize="small" />}
-            sx={{
-              textTransform: "none",
-              fontSize: 12,
-              fontWeight: 600,
-              borderRadius: "8px",
-              color: "#3b82f6",
-              border: "1px solid rgba(59,130,246,0.3)",
-              bgcolor: "rgba(59,130,246,0.08)",
-              "&:hover": { bgcolor: "rgba(59,130,246,0.15)" },
-            }}
+            className="user-settings__upload"
           >
             Upload Image
             <input type="file" hidden accept="image/*" onChange={handleImageViewer} />
           </Button>
-        </Box>
-      </Box>
+        </div>
+      </div>
 
-      {/* Fields */}
       <TextField
         fullWidth
         label="Username"
         variant="outlined"
         value={memberUpdateInput.memberNick}
         onChange={(e) => setMemberUpdateInput((prev) => ({ ...prev, memberNick: e.target.value }))}
-        sx={inputSx}
+        className="user-settings__field"
       />
-      <Box sx={{ display: "flex", gap: 2 }}>
+
+      <div className="user-settings__row">
         <TextField
           fullWidth
           label="Phone"
@@ -125,7 +93,7 @@ export function Settings() {
           onChange={(e) =>
             setMemberUpdateInput((prev) => ({ ...prev, memberPhone: e.target.value }))
           }
-          sx={inputSx}
+          className="user-settings__field"
         />
         <TextField
           fullWidth
@@ -135,9 +103,10 @@ export function Settings() {
           onChange={(e) =>
             setMemberUpdateInput((prev) => ({ ...prev, memberAddress: e.target.value }))
           }
-          sx={inputSx}
+          className="user-settings__field"
         />
-      </Box>
+      </div>
+
       <TextField
         fullWidth
         label="Description"
@@ -146,29 +115,18 @@ export function Settings() {
         rows={3}
         value={memberUpdateInput.memberDesc}
         onChange={(e) => setMemberUpdateInput((prev) => ({ ...prev, memberDesc: e.target.value }))}
-        sx={inputSx}
+        className="user-settings__field"
       />
 
       <Button
         variant="contained"
         onClick={handleSubmit}
         disabled={loading}
-        startIcon={loading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : null}
-        sx={{
-          alignSelf: "flex-end",
-          px: 4,
-          py: 1.2,
-          bgcolor: "#2563eb",
-          borderRadius: "10px",
-          fontWeight: 600,
-          textTransform: "none",
-          fontSize: 14,
-          "&:hover": { bgcolor: "#1d4ed8" },
-          "&.Mui-disabled": { bgcolor: "rgba(37,99,235,0.3)", color: "#8892a4" },
-        }}
+        startIcon={loading ? <CircularProgress size={16} className="user-settings__spinner" /> : null}
+        className="user-settings__submit"
       >
         Save Changes
       </Button>
-    </Box>
+    </div>
   );
 }

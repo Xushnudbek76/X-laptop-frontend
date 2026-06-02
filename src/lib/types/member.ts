@@ -36,5 +36,5 @@ export interface MemberUpdateInput {
   memberPhone?: string;
   memberAddress?: string;
   memberDesc?: string;
-  memberImage?: string;
+  memberImage?: string | File;
 }

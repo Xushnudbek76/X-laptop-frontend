@@ -1,0 +1,114 @@
+.auth-modal__backdrop {
+  background: rgba(3, 8, 18, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.auth-modal__panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(420px, 90vw);
+  padding: 32px;
+  outline: none;
+  transform: translate(-50%, -50%);
+  background: var(--xl-surface);
+  border: 1px solid var(--xl-border);
+  border-radius: 20px;
+}
+
+.auth-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.auth-modal__title {
+  color: var(--xl-text);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.auth-modal__subtitle {
+  margin-top: 4px;
+  color: var(--xl-text-muted);
+  font-size: 13px;
+}
+
+.auth-modal__close {
+  color: var(--xl-text-muted) !important;
+}
+
+.auth-modal__close:hover {
+  color: var(--xl-text) !important;
+}
+
+.auth-modal__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-modal__field .MuiOutlinedInput-root {
+  color: var(--xl-text);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--xl-radius-sm);
+}
+
+.auth-modal__field .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.auth-modal__field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+.auth-modal__field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--xl-blue);
+}
+
+.auth-modal__field .MuiInputLabel-root {
+  color: var(--xl-text-muted);
+}
+
+.auth-modal__field .MuiInputLabel-root.Mui-focused {
+  color: var(--xl-blue-bright);
+}
+
+.auth-modal__visibility {
+  color: var(--xl-text-muted) !important;
+}
+
+.auth-modal__error {
+  padding: 8px 12px;
+  color: var(--xl-danger);
+  font-size: 13px;
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: 8px;
+}
+
+.auth-modal__submit {
+  margin-top: 8px !important;
+  padding: 11px 16px !important;
+  border-radius: var(--xl-radius-sm) !important;
+  background: var(--xl-blue) !important;
+  color: #fff !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.auth-modal__submit:hover {
+  background: #1d4ed8 !important;
+}
+
+.auth-modal__submit.Mui-disabled {
+  color: var(--xl-text-muted) !important;
+  background: rgba(37, 99, 235, 0.4) !important;
+}
+
+.auth-modal__submit-spinner {
+  color: #fff !important;
+}

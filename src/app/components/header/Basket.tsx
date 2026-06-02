@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Stack, Typography, IconButton, Drawer } from "@mui/material";
+import { Box, Button, Typography, IconButton, Drawer } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -54,13 +54,9 @@ export default function Basket(props: BasketProps) {
 
   return (
     <>
-      <IconButton
-        onClick={() => setOpen(true)}
-        size="small"
-        sx={{ border: "1px solid rgba(255,255,255,0.1)", borderRadius: 2, p: 0.75 }}
-      >
+      <IconButton onClick={() => setOpen(true)} size="small" className="basket-trigger">
         <Badge badgeContent={cartItems.length} color="error">
-          <ShoppingCartOutlinedIcon sx={{ fontSize: 18, color: "#94a3b8" }} />
+          <ShoppingCartOutlinedIcon className="basket-trigger__icon" />
         </Badge>
       </IconButton>
 
@@ -68,268 +64,119 @@ export default function Basket(props: BasketProps) {
         anchor="right"
         open={open}
         onClose={() => setOpen(false)}
-        PaperProps={{
-          sx: {
-            width: { xs: "100vw", sm: 420 },
-            bgcolor: "#0d1117",
-            color: "#fff",
-            display: "flex",
-            flexDirection: "column",
-          },
-        }}
+        PaperProps={{ className: "basket-drawer" }}
       >
-        {/* Header */}
-        <Box
-          sx={{
-            px: 3,
-            py: 2.5,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            borderBottom: "1px solid rgba(255,255,255,0.07)",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <ShoppingCartIcon sx={{ color: "#3b82f6", fontSize: 22 }} />
-            <Typography sx={{ fontWeight: 800, fontSize: 18, color: "#f1f5f9" }}>
-              Your Cart
-            </Typography>
+        <div className="basket-drawer__header">
+          <div className="basket-drawer__header-main">
+            <ShoppingCartIcon className="basket-drawer__header-icon" />
+            <Typography className="basket-drawer__header-title">Your Cart</Typography>
             {cartItems.length > 0 && (
-              <Box
-                sx={{
-                  bgcolor: "rgba(59,130,246,0.15)",
-                  border: "1px solid rgba(59,130,246,0.3)",
-                  color: "#60a5fa",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  borderRadius: "20px",
-                  px: 1.2,
-                  py: 0.2,
-                }}
-              >
-                {cartItems.length} items
-              </Box>
+              <div className="basket-drawer__count">{cartItems.length} items</div>
             )}
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          </div>
+
+          <div className="basket-drawer__header-actions">
             {cartItems.length > 0 && (
-              <IconButton
-                onClick={onDeleteAll}
-                size="small"
-                sx={{
-                  color: "#f87171",
-                  bgcolor: "rgba(239,68,68,0.08)",
-                  border: "1px solid rgba(239,68,68,0.2)",
-                  borderRadius: "8px",
-                  "&:hover": { bgcolor: "rgba(239,68,68,0.15)" },
-                }}
-              >
+              <IconButton onClick={onDeleteAll} size="small" className="basket-drawer__clear">
                 <DeleteForeverIcon fontSize="small" />
               </IconButton>
             )}
-            <IconButton
-              onClick={() => setOpen(false)}
-              size="small"
-              sx={{ color: "#64748b", "&:hover": { color: "#fff" } }}
-            >
+            <IconButton onClick={() => setOpen(false)} size="small" className="basket-drawer__close">
               <CancelIcon />
             </IconButton>
-          </Box>
-        </Box>
+          </div>
+        </div>
 
-        {/* Items */}
-        <Box sx={{ flex: 1, overflowY: "auto", px: 2, py: 2 }}>
+        <div className="basket-drawer__body">
           {cartItems.length === 0 ? (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "100%",
-                gap: 2,
-                py: 8,
-              }}
-            >
-              <ShoppingCartIcon sx={{ fontSize: 56, color: "rgba(255,255,255,0.08)" }} />
-              <Typography sx={{ color: "#475569", fontSize: 15, fontWeight: 600 }}>
-                Your cart is empty
-              </Typography>
+            <div className="basket-drawer__empty">
+              <ShoppingCartIcon className="basket-drawer__empty-icon" />
+              <Typography className="basket-drawer__empty-text">Your cart is empty</Typography>
               <Button
+                variant="outlined"
+                size="small"
                 onClick={() => {
                   setOpen(false);
                   navigate("/laptops");
                 }}
-                variant="outlined"
-                size="small"
-                sx={{
-                  color: "#3b82f6",
-                  borderColor: "rgba(59,130,246,0.4)",
-                  borderRadius: "10px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  "&:hover": { borderColor: "#3b82f6", bgcolor: "rgba(59,130,246,0.08)" },
-                }}
+                className="basket-drawer__browse"
               >
                 Browse Laptops
               </Button>
-            </Box>
+            </div>
           ) : (
-            <Stack gap={1.5}>
+            <div className="basket-drawer__stack">
               {cartItems.map((item: CartItem) => {
                 const imagePath = `${serverApi}/${item.laptopImages?.[0]}`;
+
                 return (
-                  <Box
-                    key={item._id}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 2,
-                      bgcolor: "#161b27",
-                      borderRadius: "14px",
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      p: 1.5,
-                      position: "relative",
-                      transition: "border-color 0.2s",
-                      "&:hover": { borderColor: "rgba(59,130,246,0.25)" },
-                    }}
-                  >
-                    {/* Image */}
+                  <div key={item._id} className="basket-drawer__item">
                     <Box
                       component="img"
                       src={imagePath}
                       alt={item.laptopName}
-                      sx={{
-                        width: 64,
-                        height: 64,
-                        borderRadius: "10px",
-                        objectFit: "cover",
-                        flexShrink: 0,
-                        bgcolor: "#1e293b",
-                      }}
+                      className="basket-drawer__image"
                     />
 
-                    {/* Info */}
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography
-                        sx={{
-                          fontSize: 13,
-                          fontWeight: 700,
-                          color: "#e2e8f0",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          mb: 0.5,
-                        }}
-                      >
-                        {item.laptopName}
-                      </Typography>
-                      <Typography sx={{ fontSize: 14, fontWeight: 800, color: "#3b82f6", mb: 1 }}>
+                    <div className="basket-drawer__item-copy">
+                      <Typography className="basket-drawer__item-name">{item.laptopName}</Typography>
+                      <Typography className="basket-drawer__item-total">
                         ${((item.laptopPrice ?? 0) * (item.quantity ?? 1)).toLocaleString()}
                       </Typography>
 
-                      {/* Qty controls */}
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <div className="basket-drawer__qty">
                         <IconButton
                           size="small"
                           onClick={() => onRemove(item)}
-                          sx={{
-                            width: 26,
-                            height: 26,
-                            borderRadius: "7px",
-                            bgcolor: "rgba(255,255,255,0.06)",
-                            color: "#94a3b8",
-                            "&:hover": { bgcolor: "rgba(255,255,255,0.1)", color: "#fff" },
-                          }}
+                          className="basket-drawer__qty-button basket-drawer__qty-button--ghost"
                         >
-                          <RemoveIcon sx={{ fontSize: 14 }} />
+                          <RemoveIcon />
                         </IconButton>
-                        <Typography
-                          sx={{
-                            fontSize: 13,
-                            fontWeight: 700,
-                            color: "#f1f5f9",
-                            minWidth: 20,
-                            textAlign: "center",
-                          }}
-                        >
-                          {item.quantity}
-                        </Typography>
+                        <Typography className="basket-drawer__qty-value">{item.quantity}</Typography>
                         <IconButton
                           size="small"
                           onClick={() => onAdd(item)}
-                          sx={{
-                            width: 26,
-                            height: 26,
-                            borderRadius: "7px",
-                            bgcolor: "rgba(59,130,246,0.15)",
-                            color: "#60a5fa",
-                            "&:hover": { bgcolor: "rgba(59,130,246,0.25)", color: "#fff" },
-                          }}
+                          className="basket-drawer__qty-button basket-drawer__qty-button--primary"
                         >
-                          <AddIcon sx={{ fontSize: 14 }} />
+                          <AddIcon />
                         </IconButton>
-                        <Typography sx={{ fontSize: 11, color: "#475569", ml: 0.5 }}>
+                        <Typography className="basket-drawer__qty-price">
                           × ${item.laptopPrice.toLocaleString()}
                         </Typography>
-                      </Box>
-                    </Box>
+                      </div>
+                    </div>
 
-                    {/* Delete */}
                     <IconButton
                       size="small"
                       onClick={() => onDelete(item)}
-                      sx={{
-                        position: "absolute",
-                        top: 8,
-                        right: 8,
-                        color: "#475569",
-                        width: 22,
-                        height: 22,
-                        "&:hover": { color: "#f87171" },
-                      }}
+                      className="basket-drawer__remove"
                     >
-                      <CancelIcon sx={{ fontSize: 16 }} />
+                      <CancelIcon />
                     </IconButton>
-                  </Box>
+                  </div>
                 );
               })}
-            </Stack>
+            </div>
           )}
-        </Box>
+        </div>
 
-        {/* Footer */}
         {cartItems.length > 0 && (
-          <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.07)", px: 3, py: 2.5 }}>
-            <Box
-              sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}
-            >
-              <Typography sx={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>
-                Total
-              </Typography>
-              <Typography sx={{ fontSize: 20, fontWeight: 900, color: "#f1f5f9" }}>
+          <div className="basket-drawer__footer">
+            <div className="basket-drawer__total">
+              <Typography className="basket-drawer__total-label">Total</Typography>
+              <Typography className="basket-drawer__total-value">
                 ${totalPrice.toLocaleString()}
               </Typography>
-            </Box>
+            </div>
             <Button
               fullWidth
               startIcon={<ShoppingCartIcon />}
               onClick={proceedOrderHandler}
-              sx={{
-                bgcolor: "#2563eb",
-                color: "#fff",
-                fontWeight: 700,
-                borderRadius: "12px",
-                py: 1.4,
-                textTransform: "none",
-                fontSize: 15,
-                "&:hover": { bgcolor: "#1d4ed8" },
-                boxShadow: "0 4px 20px rgba(37,99,235,0.35)",
-              }}
+              className="basket-drawer__checkout"
             >
               Checkout
             </Button>
-          </Box>
+          </div>
         )}
       </Drawer>
     </>

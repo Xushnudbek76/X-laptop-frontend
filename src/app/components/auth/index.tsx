@@ -23,19 +23,6 @@ import { useGlobals } from "../hooks/useGlobals";
 
 const memberService = new MemberService();
 
-const inputSx = {
-  "& .MuiOutlinedInput-root": {
-    bgcolor: "rgba(255,255,255,0.04)",
-    borderRadius: "10px",
-    color: "#e8eaf0",
-    "& fieldset": { borderColor: "rgba(255,255,255,0.1)" },
-    "&:hover fieldset": { borderColor: "rgba(37,99,235,0.5)" },
-    "&.Mui-focused fieldset": { borderColor: "#2563eb" },
-  },
-  "& .MuiInputLabel-root": { color: "#8892a4" },
-  "& .MuiInputLabel-root.Mui-focused": { color: "#3b82f6" },
-};
-
 interface AuthenticationModalProps {
   signupOpen: boolean;
   loginOpen: boolean;
@@ -67,7 +54,6 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     try {
       const result = await memberService.login(loginInput);
       toast.success("Logged in successfully!");
-
       handleLoginClose();
       setAuthMember(result);
     } catch (err: unknown) {
@@ -94,56 +80,35 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     }
   };
 
-  const modalBoxSx = {
-    position: "absolute" as const,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: { xs: "90vw", sm: 420 },
-    bgcolor: "#1a1a2e",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: "20px",
-    p: 4,
-    outline: "none",
-  };
-
   return (
     <>
-      {/* ── Login Modal ── */}
       <Modal
         open={loginOpen}
         onClose={handleLoginClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
-        slotProps={{ backdrop: { timeout: 400 } }}
+        slotProps={{ backdrop: { timeout: 400, className: "auth-modal__backdrop" } }}
       >
         <Fade in={loginOpen}>
-          <Box sx={modalBoxSx}>
-            {/* Header */}
-            <Box
-              sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}
-            >
-              <Box>
-                <Box sx={{ fontSize: 22, fontWeight: 700, color: "#e8eaf0" }}>Welcome back</Box>
-                <Box sx={{ fontSize: 13, color: "#8892a4", mt: 0.5 }}>Sign in to your account</Box>
-              </Box>
-              <IconButton
-                onClick={handleLoginClose}
-                sx={{ color: "#8892a4", "&:hover": { color: "#e8eaf0" } }}
-              >
+          <Box className="auth-modal__panel">
+            <div className="auth-modal__header">
+              <div>
+                <div className="auth-modal__title">Welcome back</div>
+                <div className="auth-modal__subtitle">Sign in to your account</div>
+              </div>
+              <IconButton onClick={handleLoginClose} className="auth-modal__close">
                 <CloseIcon fontSize="small" />
               </IconButton>
-            </Box>
+            </div>
 
-            {/* Fields */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <div className="auth-modal__fields">
               <TextField
                 fullWidth
                 label="Username"
                 variant="outlined"
                 value={loginInput.memberNick}
                 onChange={(e) => setLoginInput({ ...loginInput, memberNick: e.target.value })}
-                sx={inputSx}
+                className="auth-modal__field"
               />
               <TextField
                 fullWidth
@@ -153,12 +118,13 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 value={loginInput.memberPassword}
                 onChange={(e) => setLoginInput({ ...loginInput, memberPassword: e.target.value })}
                 onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+                className="auth-modal__field"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         onClick={() => setShowPassword(!showPassword)}
-                        sx={{ color: "#8892a4" }}
+                        className="auth-modal__visibility"
                       >
                         {showPassword ? (
                           <VisibilityOffIcon fontSize="small" />
@@ -169,87 +135,58 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                     </InputAdornment>
                   ),
                 }}
-                sx={inputSx}
               />
 
-              {error && (
-                <Box
-                  sx={{
-                    fontSize: 13,
-                    color: "#f87171",
-                    bgcolor: "rgba(248,113,113,0.1)",
-                    border: "1px solid rgba(248,113,113,0.2)",
-                    borderRadius: "8px",
-                    px: 1.5,
-                    py: 1,
-                  }}
-                >
-                  {error}
-                </Box>
-              )}
+              {error && <div className="auth-modal__error">{error}</div>}
 
               <Button
                 fullWidth
                 variant="contained"
-                startIcon={
-                  loading ? <CircularProgress size={16} sx={{ color: "#fff" }} /> : <LoginIcon />
-                }
                 disabled={loading}
                 onClick={handleLogin}
-                sx={{
-                  bgcolor: "#2563eb",
-                  borderRadius: "10px",
-                  py: 1.4,
-                  fontWeight: 600,
-                  textTransform: "none",
-                  fontSize: 15,
-                  mt: 1,
-                  "&:hover": { bgcolor: "#1d4ed8" },
-                  "&.Mui-disabled": { bgcolor: "rgba(37,99,235,0.4)", color: "#8892a4" },
-                }}
+                startIcon={
+                  loading ? (
+                    <CircularProgress size={16} className="auth-modal__submit-spinner" />
+                  ) : (
+                    <LoginIcon />
+                  )
+                }
+                className="auth-modal__submit"
               >
                 Sign In
               </Button>
-            </Box>
+            </div>
           </Box>
         </Fade>
       </Modal>
 
-      {/* ── Signup Modal ── */}
       <Modal
         open={signupOpen}
         onClose={handleSignupClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
-        slotProps={{ backdrop: { timeout: 400 } }}
+        slotProps={{ backdrop: { timeout: 400, className: "auth-modal__backdrop" } }}
       >
         <Fade in={signupOpen}>
-          <Box sx={modalBoxSx}>
-            {/* Header */}
-            <Box
-              sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}
-            >
-              <Box>
-                <Box sx={{ fontSize: 22, fontWeight: 700, color: "#e8eaf0" }}>Create account</Box>
-                <Box sx={{ fontSize: 13, color: "#8892a4", mt: 0.5 }}>Join X-Laptop today</Box>
-              </Box>
-              <IconButton
-                onClick={handleSignupClose}
-                sx={{ color: "#8892a4", "&:hover": { color: "#e8eaf0" } }}
-              >
+          <Box className="auth-modal__panel">
+            <div className="auth-modal__header">
+              <div>
+                <div className="auth-modal__title">Create account</div>
+                <div className="auth-modal__subtitle">Join X-Laptop today</div>
+              </div>
+              <IconButton onClick={handleSignupClose} className="auth-modal__close">
                 <CloseIcon fontSize="small" />
               </IconButton>
-            </Box>
+            </div>
 
-            {/* Fields */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <div className="auth-modal__fields">
               <TextField
                 fullWidth
                 label="Username"
                 variant="outlined"
                 value={signupInput.memberNick}
                 onChange={(e) => setSignupInput({ ...signupInput, memberNick: e.target.value })}
-                sx={inputSx}
+                className="auth-modal__field"
               />
               <TextField
                 fullWidth
@@ -257,7 +194,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 variant="outlined"
                 value={signupInput.memberPhone}
                 onChange={(e) => setSignupInput({ ...signupInput, memberPhone: e.target.value })}
-                sx={inputSx}
+                className="auth-modal__field"
               />
               <TextField
                 fullWidth
@@ -267,12 +204,13 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 value={signupInput.memberPassword}
                 onChange={(e) => setSignupInput({ ...signupInput, memberPassword: e.target.value })}
                 onKeyDown={(e) => e.key === "Enter" && handleSignup()}
+                className="auth-modal__field"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         onClick={() => setShowPassword(!showPassword)}
-                        sx={{ color: "#8892a4" }}
+                        className="auth-modal__visibility"
                       >
                         {showPassword ? (
                           <VisibilityOffIcon fontSize="small" />
@@ -283,52 +221,27 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                     </InputAdornment>
                   ),
                 }}
-                sx={inputSx}
               />
 
-              {error && (
-                <Box
-                  sx={{
-                    fontSize: 13,
-                    color: "#f87171",
-                    bgcolor: "rgba(248,113,113,0.1)",
-                    border: "1px solid rgba(248,113,113,0.2)",
-                    borderRadius: "8px",
-                    px: 1.5,
-                    py: 1,
-                  }}
-                >
-                  {error}
-                </Box>
-              )}
+              {error && <div className="auth-modal__error">{error}</div>}
 
               <Button
                 fullWidth
                 variant="contained"
+                disabled={loading}
+                onClick={handleSignup}
                 startIcon={
                   loading ? (
-                    <CircularProgress size={16} sx={{ color: "#fff" }} />
+                    <CircularProgress size={16} className="auth-modal__submit-spinner" />
                   ) : (
                     <PersonAddIcon />
                   )
                 }
-                disabled={loading}
-                onClick={handleSignup}
-                sx={{
-                  bgcolor: "#2563eb",
-                  borderRadius: "10px",
-                  py: 1.4,
-                  fontWeight: 600,
-                  textTransform: "none",
-                  fontSize: 15,
-                  mt: 1,
-                  "&:hover": { bgcolor: "#1d4ed8" },
-                  "&.Mui-disabled": { bgcolor: "rgba(37,99,235,0.4)", color: "#8892a4" },
-                }}
+                className="auth-modal__submit"
               >
                 Sign Up
               </Button>
-            </Box>
+            </div>
           </Box>
         </Fade>
       </Modal>

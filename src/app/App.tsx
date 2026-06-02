@@ -13,6 +13,10 @@ import { toast, Toaster } from "sonner";
 import AuthenticationModal from "./components/auth";
 import MemberService from "./services/MemberService";
 import { useGlobals } from "./components/hooks/useGlobals";
+import "../css/app.css";
+import "../css/navbar.css";
+import "../css/footer.css";
+import "../css/auth.css";
 function App() {
   const location = useLocation();
   const {

@@ -12,6 +12,7 @@ import type { Member } from "../../../lib/types/member";
 import ItemService from "../../services/ProductService";
 import MemberService from "../../services/MemberService";
 import type { CartItem } from "../../../lib/types/cart";
+import "../../../css/home.css";
 
 interface HomePageProps {
   onAdd: (item: CartItem) => void;
@@ -56,7 +57,7 @@ export default function HomePage(props: HomePageProps) {
       .catch((err) => console.log(err));
   }, [setNewLaptops, setTopLaptops, setTopUsers]);
   return (
-    <div className="homepage">
+    <div className="home-page">
       <MostPopular handleAddToCart={onAdd} />
       <NewLaptops handleAddToCart={onAdd} />
       <CompanyVideo />
