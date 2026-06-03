@@ -14,7 +14,6 @@ import type { Swiper as SwiperType } from "swiper";
 import { FreeMode, Navigation } from "swiper/modules";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useParams } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -198,9 +197,6 @@ export default function ChosenLaptop(props: ItemProps) {
                 className={`chosen-laptop__primary${isAdded ? " is-added" : ""}`}
               >
                 {isAdded ? "Added to Basket" : "Add to Basket"}
-              </Button>
-              <Button variant="outlined" className="chosen-laptop__secondary">
-                <FavoriteBorderIcon fontSize="small" />
               </Button>
             </div>
           </div>

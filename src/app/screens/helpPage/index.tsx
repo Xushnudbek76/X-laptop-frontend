@@ -19,6 +19,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { faq } from "../../../lib/data/faq";
 import { terms } from "../../../lib/data/terms";
+import "../../../css/help.css";
 
 export default function HelpPage() {
   const [value, setValue] = useState("1");

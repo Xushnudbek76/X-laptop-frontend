@@ -11,6 +11,7 @@ import { Settings } from "./Settings";
 import { useNavigate } from "react-router-dom";
 import { useGlobals } from "../../components/hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
+import "../../../css/userPage.css";
 
 export default function UserPage() {
   const navigate = useNavigate();

@@ -3,11 +3,15 @@
 }
 
 .help-page__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 40px 16px 32px;
   text-align: center;
 }
 
 .help-page__title {
+  width: 100%;
   margin: 0 0 8px;
   color: var(--xl-text);
   font-size: 28px;
@@ -16,11 +20,13 @@
 }
 
 .help-page__subtitle {
-  max-width: 480px;
+  width: 100%;
+  max-width: 640px;
   margin: 0 auto;
   color: var(--xl-text-muted);
   font-size: 14px;
   line-height: 1.7;
+  text-align: center;
 }
 
 .help-page__container {

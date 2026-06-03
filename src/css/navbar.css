@@ -552,44 +552,57 @@
 }
 
 .app-hero__content {
-  text-align: center;
+  display: flex;
+  width: 100%;
+  max-width: 720px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .app-hero__eyebrow {
-  margin-bottom: 20px;
-  color: var(--xl-blue-bright);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  width: 100%;
+  margin-bottom: 24px !important;
+  color: var(--xl-blue-bright) !important;
+  font-size: clamp(12px, 1vw, 15px) !important;
+  font-weight: 800 !important;
+  letter-spacing: clamp(3px, 0.42vw, 6px) !important;
+  text-transform: uppercase !important;
 }
 
 .app-hero__title,
 .app-hero__accent {
-  margin: 0;
-  font-size: 52px;
-  font-weight: 900;
-  line-height: 1;
+  width: 100%;
+  margin: 0 !important;
+  font-size: clamp(54px, 9vw, 96px) !important;
+  font-weight: 900 !important;
+  line-height: 0.92 !important;
+  letter-spacing: -0.065em !important;
 }
 
 .app-hero__title {
-  color: #fff;
+  color: #fff !important;
 }
 
 .app-hero__accent {
-  margin-bottom: 28px;
-  color: var(--xl-blue-bright);
+  margin-bottom: 36px !important;
+  color: var(--xl-blue-bright) !important;
 }
 
 .app-hero__description {
-  max-width: 380px;
-  margin: 0 auto 40px;
-  color: var(--xl-text-soft);
-  font-size: 16px;
-  line-height: 1.7;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 0 40px !important;
+  color: var(--xl-text-soft) !important;
+  font-size: clamp(15px, 1.45vw, 19px) !important;
+  font-weight: 700 !important;
+  line-height: 1.55 !important;
+  letter-spacing: -0.04em !important;
 }
 
 .app-hero__cta {
+  align-self: flex-start;
   padding: 12px 28px !important;
   border-radius: 8px !important;
   background: var(--xl-blue-bright) !important;
@@ -605,7 +618,8 @@
 
 .app-hero__stats {
   display: flex;
-  justify-content: center;
+  width: 100%;
+  justify-content: flex-start;
   margin-top: 52px;
 }
 
@@ -679,7 +693,7 @@
   }
 
   .app-hero__content {
-    text-align: left;
+    margin: 0;
   }
 
   .app-hero__description {
@@ -697,14 +711,14 @@
 
   .app-hero__title,
   .app-hero__accent {
-    font-size: 72px;
+    font-size: clamp(72px, 6.6vw, 98px) !important;
   }
 }
 
 @media (min-width: 1200px) {
   .app-hero__title,
   .app-hero__accent {
-    font-size: 88px;
+    font-size: clamp(84px, 5.8vw, 108px) !important;
   }
 
   .app-hero__stat {

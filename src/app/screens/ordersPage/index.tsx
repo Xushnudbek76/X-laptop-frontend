@@ -20,6 +20,7 @@ import OrderService from "../../services/OrderService";
 import { useNavigate } from "react-router-dom";
 import { serverApi } from "../../../lib/config";
 import { retrievePausedOrders, retrieveProcessOrders, retrieveFinishedOrders } from "./selector";
+import "../../../css/orders.css";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
