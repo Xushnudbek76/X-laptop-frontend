@@ -139,6 +139,130 @@ npm run dev
 
 The application will be available at `http://localhost:5173`.
 
+## VPS Deployment
+
+This frontend is a Vite static app. For a real VPS, the recommended setup is:
+
+- build the frontend into `dist/`
+- serve `dist/` with **Nginx**
+- proxy `/api` from Nginx to your backend app
+- use `VITE_API_URL=/api` in production so login cookies work on the same domain
+
+### 1. Production env
+
+Create a production env file from the example:
+
+```bash
+cp .env.production.example .env.production
+```
+
+Recommended value:
+
+```bash
+VITE_API_URL=/api
+```
+
+If your backend is on another domain, use a full URL instead:
+
+```bash
+VITE_API_URL=https://api.example.com
+```
+
+### 2. Build the frontend
+
+You can build locally and upload `dist/`, or build directly on the VPS.
+
+```bash
+yarn install
+yarn build
+```
+
+### 3. Upload project to the VPS
+
+Example target path:
+
+```bash
+/var/www/x-laptop/current
+```
+
+Typical flow on the VPS:
+
+```bash
+cd /var/www
+git clone <your-repo-url> x-laptop
+cd x-laptop
+yarn install
+cp .env.production.example .env.production
+# edit .env.production
+yarn build
+```
+
+### 4. Install and configure Nginx
+
+Use the provided template:
+
+```bash
+sudo cp deploy/nginx.x-laptop.conf /etc/nginx/sites-available/x-laptop
+```
+
+Then edit these values:
+
+- `server_name example.com www.example.com`
+- `root /var/www/x-laptop/current/dist`
+- `proxy_pass http://127.0.0.1:3003/` to match your backend port
+
+Enable the site:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/x-laptop /etc/nginx/sites-enabled/x-laptop
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+### 5. Important note for auth and cookies
+
+This app uses `withCredentials: true` for authentication and order/profile requests.
+
+Best production setup:
+
+- frontend: `https://example.com`
+- backend API through Nginx: `https://example.com/api`
+
+That avoids most CORS and cookie issues.
+
+If you use a separate API domain like `https://api.example.com`, your backend must also be configured correctly for credentialed CORS:
+
+- `Access-Control-Allow-Origin` must be the exact frontend origin, not `*`
+- `Access-Control-Allow-Credentials: true`
+- cookies should usually be `Secure`
+- cross-site cookies usually require `SameSite=None`
+
+### 6. HTTPS
+
+After Nginx works on port 80, add SSL with Certbot:
+
+```bash
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d example.com -d www.example.com
+```
+
+### 7. Update flow
+
+For each new deployment:
+
+```bash
+cd /var/www/x-laptop/current
+git pull
+yarn install
+yarn build
+sudo systemctl reload nginx
+```
+
+### 8. Backend requirement
+
+This frontend will not function by itself. Your backend must already be running on the VPS, and the Nginx `/api/` proxy must point to it.
+
 ## Available Scripts
 
 | Command | Description |

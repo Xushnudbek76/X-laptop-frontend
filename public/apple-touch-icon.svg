@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="X-Laptop">
+  <rect width="180" height="180" rx="42" fill="#0b1020"/>
+  <path d="M41 130 82 40h40L81 130H41Z" fill="url(#bolt)"/>
+  <path d="M95 40h40l-36 67H75L95 40Z" fill="#8b5cf6" opacity=".92"/>
+  <path d="M43 140h94l12 16H31l12-16Z" fill="#67e8f9"/>
+  <text x="117" y="124" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="900" text-anchor="middle">XL</text>
+  <defs>
+    <linearGradient id="bolt" x1="41" x2="129" y1="130" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4f46e5"/>
+      <stop offset=".55" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+</svg>
