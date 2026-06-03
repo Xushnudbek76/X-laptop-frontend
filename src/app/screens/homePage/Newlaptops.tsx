@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import type { Item } from "../../../lib/types/item";
 import { serverApi } from "../../../lib/config";
 import type { CartItem } from "../../../lib/types/cart";
+import { useNavigate } from "react-router-dom";
 
 const NewLaptopsRetriever = createSelector(retrieveNewLaptops, (newLaptops) => ({ newLaptops }));
 
@@ -18,13 +19,14 @@ interface NewLaptopCardProps {
 
 function NewLaptopCard({ laptop, handleAddToCart }: NewLaptopCardProps) {
   const image = `${serverApi}/${laptop.laptopImages[0]}`;
+  const navigate = useNavigate();
   const conditionClass =
     laptop.laptopCondition === "NEW"
       ? "home-laptop-card__rating home-laptop-card__rating--status home-laptop-card__rating--new"
       : "home-laptop-card__rating home-laptop-card__rating--status home-laptop-card__rating--used";
 
   return (
-    <div className="home-laptop-card">
+    <div className="home-laptop-card" onClick={() => navigate(`/laptops/${laptop._id}`)}>
       <div className="home-laptop-card__visual">
         <img src={image} alt={laptop.laptopName} className="home-laptop-card__image" />
         <div className="home-laptop-card__overlay" />
@@ -59,7 +61,10 @@ function NewLaptopCard({ laptop, handleAddToCart }: NewLaptopCardProps) {
 
         <IconButton
           size="small"
-          onClick={() => handleAddToCart({ ...laptop, quantity: 1 })}
+          onClick={(event) => {
+            event.stopPropagation();
+            handleAddToCart({ ...laptop, quantity: 1 });
+          }}
           className="home-laptop-card__action"
         >
           <ShoppingCartOutlinedIcon />
