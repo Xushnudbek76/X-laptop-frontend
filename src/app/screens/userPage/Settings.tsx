@@ -5,13 +5,13 @@ import { toast } from "sonner";
 import { useGlobals } from "../../components/hooks/useGlobals";
 import type { MemberUpdateInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 
 export function Settings() {
   const { authMember, setAuthMember } = useGlobals();
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string>(
-    authMember?.memberImage ? `${serverApi}/${authMember.memberImage}` : "/icons/default-user.svg"
+    authMember?.memberImage ? resolveAssetUrl(authMember.memberImage) : "/icons/default-user.svg"
   );
   const [memberUpdateInput, setMemberUpdateInput] = useState<MemberUpdateInput>({
     memberNick: authMember?.memberNick ?? "",
@@ -47,6 +47,7 @@ export function Settings() {
       const memberService = new MemberService();
       const result = await memberService.updateMember(memberUpdateInput);
       setAuthMember(result);
+      if (result.memberImage) setImage(resolveAssetUrl(result.memberImage));
       toast.success("Profile updated successfully!");
     } catch (error) {
       console.log(error);

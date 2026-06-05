@@ -6,7 +6,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { retrieveNewLaptops } from "./selector";
 import { useSelector } from "react-redux";
 import type { Item } from "../../../lib/types/item";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 import type { CartItem } from "../../../lib/types/cart";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ interface NewLaptopCardProps {
 }
 
 function NewLaptopCard({ laptop, handleAddToCart }: NewLaptopCardProps) {
-  const image = `${serverApi}/${laptop.laptopImages[0]}`;
+  const image = resolveAssetUrl(laptop.laptopImages[0]);
   const navigate = useNavigate();
   const conditionClass =
     laptop.laptopCondition === "NEW"

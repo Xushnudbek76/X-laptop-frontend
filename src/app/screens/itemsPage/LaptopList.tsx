@@ -18,7 +18,7 @@ import { type Dispatch, createSelector } from "@reduxjs/toolkit";
 import { setProducts } from "./slice";
 import type { Item, ProductInquiry } from "../../../lib/types/item";
 import { retrieveProducts } from "./selector";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 import ItemService from "../../services/ProductService";
 import { LaptopCategory, LaptopRam, LaptopStorage } from "../../../lib/enums/item.enum";
 import type { CartItem } from "../../../lib/types/cart";
@@ -296,7 +296,7 @@ export default function LaptopList(props: ItemsProps) {
         ) : (
           <div className={cardGridClass}>
             {products.map((laptop: Item) => {
-              const image = `${serverApi}/${laptop.laptopImages[0]}`;
+              const image = resolveAssetUrl(laptop.laptopImages[0]);
               const inStock = laptop.laptopLeftCount > 0;
               const isAdded = cartAdded.includes(laptop._id);
               const isWishlisted = wishlist.includes(laptop._id);

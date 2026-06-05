@@ -9,7 +9,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 import type { CartItem } from "../../../lib/types/cart";
 import OrderService from "../../services/OrderService";
 import { useGlobals } from "../hooks/useGlobals";
@@ -107,7 +107,7 @@ export default function Basket(props: BasketProps) {
           ) : (
             <div className="basket-drawer__stack">
               {cartItems.map((item: CartItem) => {
-                const imagePath = `${serverApi}/${item.laptopImages?.[0]}`;
+                const imagePath = resolveAssetUrl(item.laptopImages?.[0]);
 
                 return (
                   <div key={item._id} className="basket-drawer__item">

@@ -18,7 +18,7 @@ import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
 import { useGlobals } from "../../components/hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import { useNavigate } from "react-router-dom";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 import { retrievePausedOrders, retrieveProcessOrders, retrieveFinishedOrders } from "./selector";
 import "../../../css/orders.css";
 
@@ -119,7 +119,7 @@ export default function OrdersPage() {
               <div className="orders-page__avatar-wrap">
                 {authMember?.memberImage ? (
                   <Avatar
-                    src={`${serverApi}/${authMember.memberImage}`}
+                    src={resolveAssetUrl(authMember.memberImage)}
                     className="orders-page__avatar"
                   />
                 ) : (

@@ -10,7 +10,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Settings } from "./Settings";
 import { useNavigate } from "react-router-dom";
 import { useGlobals } from "../../components/hooks/useGlobals";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 import "../../../css/userPage.css";
 
 export default function UserPage() {
@@ -45,7 +45,7 @@ export default function UserPage() {
               <div className="user-page__avatar-wrap">
                 {authMember.memberImage ? (
                   <Avatar
-                    src={`${serverApi}/${authMember.memberImage}`}
+                    src={resolveAssetUrl(authMember.memberImage)}
                     className="user-page__avatar"
                   />
                 ) : (

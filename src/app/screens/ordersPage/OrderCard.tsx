@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import type { Order, OrderItem } from "../../../lib/types/orders";
 import type { Item } from "../../../lib/types/item";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 
 const fmt = (n: number) => `$${n.toLocaleString()}`;
 
@@ -24,7 +24,7 @@ export default function OrderCard({ order, actions }: OrderCardProps) {
         {order.orderItems.map((item: OrderItem) => {
           const laptop = order.itemData?.find((entry: Item) => entry._id === item.itemId);
           const imagePath = laptop?.laptopImages?.[0]
-            ? `${serverApi}/${laptop.laptopImages[0]}`
+            ? resolveAssetUrl(laptop.laptopImages[0])
             : null;
 
           return (

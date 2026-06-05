@@ -3,7 +3,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { retrieveTopUsers } from "./selector";
 import { useSelector } from "react-redux";
 import type { Member } from "../../../lib/types/member";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 
 const ActiveUsersRetriever = createSelector(retrieveTopUsers, (topUsers) => ({ topUsers }));
 
@@ -22,7 +22,7 @@ export default function ActiveUsers() {
           <div className="top-users__grid">
             {topUsers.map((member: Member) => {
               const image = member.memberImage
-                ? `${serverApi}/${member.memberImage}`
+                ? resolveAssetUrl(member.memberImage)
                 : "/images/default-avatar.png";
 
               return (

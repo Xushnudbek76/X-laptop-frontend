@@ -25,7 +25,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import type { CartItem } from "../../../lib/types/cart";
 import Basket from "./Basket";
 import { useGlobals } from "../hooks/useGlobals";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -80,7 +80,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   }, [authMember, handleCloseLogout]);
 
   const avatarSrc = authMember?.memberImage
-    ? `${serverApi}/${authMember.memberImage}`
+    ? resolveAssetUrl(authMember.memberImage)
     : "/icons/default-user.svg";
 
   return (

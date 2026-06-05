@@ -21,7 +21,7 @@ import type { CartItem } from "../../../lib/types/cart";
 import type { Item } from "../../../lib/types/item";
 import { LaptopStatus } from "../../../lib/enums/item.enum";
 import ItemService from "../../services/ProductService";
-import { serverApi } from "../../../lib/config";
+import { resolveAssetUrl } from "../../../lib/config";
 
 const itemService = new ItemService();
 
@@ -102,7 +102,7 @@ export default function ChosenLaptop(props: ItemProps) {
                   <SwiperSlide key={index}>
                     <Box
                       component="img"
-                      src={`${serverApi}/${src}`}
+                      src={resolveAssetUrl(src)}
                       alt={`${item.laptopName}-${index}`}
                       className="chosen-laptop__main-image"
                     />
@@ -123,7 +123,7 @@ export default function ChosenLaptop(props: ItemProps) {
                   >
                     <Box
                       component="img"
-                      src={`${serverApi}/${src}`}
+                      src={resolveAssetUrl(src)}
                       alt={`thumb-${index}`}
                       className={`chosen-laptop__thumb${activeIndex === index ? " is-active" : ""}`}
                     />
