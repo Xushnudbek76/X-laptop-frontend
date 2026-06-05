@@ -101,7 +101,6 @@ export default function LaptopList(props: ItemsProps) {
   const [category, setCategory] = useState("All");
   const [ram, setRam] = useState("All");
   const [storage, setStorage] = useState("All");
-  const [wishlist, setWishlist] = useState<string[]>([]);
   const [cartAdded, setCartAdded] = useState<string[]>([]);
   const [gridView, setGridView] = useState(true);
 
@@ -173,10 +172,6 @@ export default function LaptopList(props: ItemsProps) {
       laptopCategory: undefined,
       search: "",
     });
-  };
-
-  const toggleWishlist = (id: string) => {
-    setWishlist((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
   const addToCart = (e: React.MouseEvent, laptop: Item) => {
@@ -299,7 +294,6 @@ export default function LaptopList(props: ItemsProps) {
               const image = resolveAssetUrl(laptop.laptopImages[0]);
               const inStock = laptop.laptopLeftCount > 0;
               const isAdded = cartAdded.includes(laptop._id);
-              const isWishlisted = wishlist.includes(laptop._id);
               const cartClass = [
                 "laptops-page__cart-button",
                 isAdded ? "is-added" : "",
@@ -327,17 +321,6 @@ export default function LaptopList(props: ItemsProps) {
                       </div>
                     )}
 
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleWishlist(laptop._id);
-                      }}
-                      className={`laptops-page__wishlist${isWishlisted ? " is-active" : ""}`}
-                    >
-                      <svg className="laptops-page__wishlist-icon" viewBox="0 0 24 24">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                      </svg>
-                    </div>
                   </div>
 
                   <div className="laptops-page__card-body">
