@@ -40,7 +40,6 @@ export default function ChosenLaptop(props: ItemProps) {
 
   useEffect(() => {
     if (!laptopId) return;
-    setLoading(true);
     itemService
       .getItem(laptopId)
       .then((data) => setItem(data))

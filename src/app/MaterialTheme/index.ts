@@ -25,7 +25,6 @@ const xlaptop = {
     text: {
       primary: "#1a1a2e",
       secondary: "#3b82f6",
-      // @ts-ignore
       dark: common.black,
       muted: "#64748b",
     },

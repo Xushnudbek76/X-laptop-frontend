@@ -16,6 +16,7 @@ vi.mock("../app/services/ProductService", () => ({
 
 vi.mock("../lib/config", () => ({
   serverApi: "http://localhost:3003",
+  resolveAssetUrl: (path?: string) => (path ? `http://localhost:3003/${path}` : ""),
 }));
 
 const mockItem = {
