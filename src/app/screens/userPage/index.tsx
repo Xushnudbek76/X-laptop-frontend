@@ -25,8 +25,10 @@ export default function UserPage() {
   return (
     <section className="user-page app-page app-page--dark">
       <div className="app-page-header">
-        <PersonOutlineIcon className="app-page-header__icon" />
-        <Typography className="app-page-header__title">My Profile</Typography>
+        <div className="app-page-header__inner">
+          <PersonOutlineIcon className="app-page-header__icon" />
+          <Typography className="app-page-header__title">My Profile</Typography>
+        </div>
       </div>
 
       <Container maxWidth="lg" className="user-page__container">

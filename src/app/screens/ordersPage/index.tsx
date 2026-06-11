@@ -72,8 +72,10 @@ export default function OrdersPage() {
   return (
     <section className="orders-page app-page app-page--dark">
       <div className="app-page-header">
-        <ShoppingBagOutlinedIcon className="app-page-header__icon" />
-        <Typography className="app-page-header__title">My Orders</Typography>
+        <div className="app-page-header__inner">
+          <ShoppingBagOutlinedIcon className="app-page-header__icon" />
+          <Typography className="app-page-header__title">My Orders</Typography>
+        </div>
       </div>
 
       <Container maxWidth="lg" className="orders-page__container">
