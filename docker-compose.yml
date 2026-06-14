@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build:
+      context: .
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+    image: x-laptop-frontend:latest
+    container_name: x-laptop-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    environment:
+      BACKEND_UPSTREAM: ${BACKEND_UPSTREAM:-http://x-laptop-backend:3003}
+    networks:
+      - x-laptop
+
+networks:
+  x-laptop:
+    name: x-laptop-network
