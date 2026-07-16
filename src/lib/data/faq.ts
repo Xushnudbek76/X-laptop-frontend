@@ -7,12 +7,12 @@ export const faq: { question: string; answer: string }[] = [
   {
     question: "What is your return and refund policy?",
     answer:
-      "We offer a 30-day return policy for all products, provided they are returned in their original condition with all packaging and accessories included. To initiate a return, contact our support team at support@xlaptop.com. Refunds are processed within 5–7 business days after we receive and inspect the returned item.",
+      "We offer a 30-day return policy for all products, provided they are returned in their original condition with all packaging and accessories included. To initiate a return, contact our support team at x-laptop@gmail.com. Refunds are processed within 5-7 business days after we receive and inspect the returned item.",
   },
   {
     question: "How long does shipping take?",
     answer:
-      "Standard domestic shipping within South Korea typically takes 1–3 business days. For international orders, delivery times vary by destination — generally between 7 and 14 business days. Expedited shipping options are available at checkout for an additional fee.",
+      "Standard domestic shipping within Poland typically takes 1-3 business days. For international orders, delivery times vary by destination - generally between 7 and 14 business days. Expedited shipping options are available at checkout for an additional fee.",
   },
   {
     question: "Do your laptops come with a warranty?",
