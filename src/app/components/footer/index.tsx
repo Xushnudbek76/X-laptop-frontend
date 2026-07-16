@@ -50,8 +50,8 @@ export default function Footer() {
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
               </div>
-              <a href="mailto:xushnudbek76n@gmail.com" className="app-footer__email-link">
-                xushnudbek76n@gmail.com
+              <a href="mailto:x-laptop@gmail.com" className="app-footer__email-link">
+                x-laptop@gmail.com
               </a>
             </div>
 

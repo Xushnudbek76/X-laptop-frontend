@@ -1,9 +1,9 @@
 import { Container, Typography } from "@mui/material";
 
 const STORES = [
-  { name: "X-Laptop Seoul", address: "123 Gangnam-daero, Seoul", coords: "37.498,127.027" },
-  { name: "X-Laptop Suwon", address: "45 Ingye-ro, Suwon", coords: "37.263,127.028" },
-  { name: "X-Laptop Busan", address: "78 Haeundae-ro, Busan", coords: "35.158,129.160" },
+  { name: "X-Laptop Warsaw", address: "Marszalkowska 99, Warsaw", coords: "52.2297,21.0122" },
+  { name: "X-Laptop Krakow", address: "Rynek Glowny 12, Krakow", coords: "50.0614,19.9366" },
+  { name: "X-Laptop Gdansk", address: "Dluga 45, Gdansk", coords: "54.3520,18.6466" },
 ];
 
 export default function StoreMap() {
@@ -19,7 +19,7 @@ export default function StoreMap() {
           <div className="laptops-page__map">
             <iframe
               title="X-Laptop Store Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253041.97290388512!2d126.72834086059566!3d37.56653565004597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2012d5c39cf%3A0x7e11eca1405bf29b!2sSeoul%2C%20South%20Korea!5e0!3m2!1sen!2s!4v1712000000000"
+              src="https://www.google.com/maps?q=Poland&output=embed"
               allowFullScreen
               loading="lazy"
               className="laptops-page__map-frame"

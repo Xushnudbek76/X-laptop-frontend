@@ -25,9 +25,9 @@ export default function HelpPage() {
   const [value, setValue] = useState("1");
 
   const contacts = [
-    { icon: <EmailIcon className="help-page__contact-icon" />, label: "Email", value: "support@xlaptop.com" },
-    { icon: <PhoneIcon className="help-page__contact-icon" />, label: "Phone", value: "+82 10-1234-5678" },
-    { icon: <LocationOnIcon className="help-page__contact-icon" />, label: "Location", value: "Suwon, South Korea" },
+    { icon: <EmailIcon className="help-page__contact-icon" />, label: "Email", value: "x-laptop@gmail.com" },
+    { icon: <PhoneIcon className="help-page__contact-icon" />, label: "Phone", value: "+48 22 123 45 67" },
+    { icon: <LocationOnIcon className="help-page__contact-icon" />, label: "Location", value: "Warsaw, Poland" },
   ];
 
   return (
